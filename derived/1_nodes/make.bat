@@ -1,0 +1,1 @@
+"C:\Program Files\R\R-3.5.1\bin\R.exe" CMD BATCH H:\message_trade\derived\1_nodes.r
