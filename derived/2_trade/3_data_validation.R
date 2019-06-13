@@ -29,5 +29,14 @@ web <- web[c('iso.country', 'year', 'flow', 'energy', 'value')]
 
 all.df <- left_join(baci, web, by = c('iso.country', 'year', 'trade', 'energy'))
 
+# List of countries that are not in IEA
+not_iea <- dplyr::group_by(all.df, iso.country) %>%
+           dplyr::summarize(max_iea = max(iea_value, na.rm = T))
+not_iea <- subset(not_iea, max_iea == 0 | is.infinite(max_iea))
+
+countrynames <- read.csv(file.path(raw, "ConversionTables/web_countries.csv"), 
+                         stringsAsFactors = F)[c('iso.country', 'web.country')]
+not_iea <- left_join(not_iea, countrynames, by = c('iso.country'))
+
 # Export csv for tableau
 write.csv(all.df, file.path(output, 'derived/data_validation/iea_trade_data.csv'))
