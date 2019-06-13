@@ -181,11 +181,21 @@
       <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
       <column-instance column='[iea_value]' derivation='CountD' name='[ctd:iea_value:qk]' pivot='key' type='quantitative' />
       <column-instance column='[energy]' derivation='None' name='[none:energy:nk]' pivot='key' type='nominal' />
+      <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
       <column-instance column='[iea_value]' derivation='Sum' name='[sum:iea_value:qk]' pivot='key' type='quantitative' />
       <column-instance column='[q_e]' derivation='Sum' name='[sum:q_e:qk]' pivot='key' type='quantitative' />
+      <group hidden='true' name='[Exclusions (Energy,Year)]' name-style='unqualified' user:auto-column='exclude'>
+        <groupfilter function='crossjoin'>
+          <groupfilter function='level-members' level='[none:energy:nk]' />
+          <groupfilter function='level-members' level='[none:year:ok]' />
+        </groupfilter>
+      </group>
       <extract count='-1' enabled='false' units='records'>
-        <connection access_mode='readonly' authentication='auth-none' author-locale='en_US' class='hyper' dbname='C:/Users/shepard/Documents/My Tableau Repository/Datasources/iea_trade_data.hyper' default-settings='yes' schema='Extract' sslmode='' tablename='Extract' update-time='' username='tableau_internal_user'>
+        <connection access_mode='readonly' authentication='auth-none' author-locale='en_US' class='hyper' dbname='C:/Users/shepard/Documents/My Tableau Repository/Datasources/iea_trade_data.hyper' default-settings='yes' schema='Extract' sslmode='' tablename='Extract' update-time='06/12/2019 10:21:50 AM' username='tableau_internal_user'>
           <relation name='Extract' table='[Extract].[Extract]' type='table' />
+          <refresh>
+            <refresh-event add-from-file-path='iea_trade_data' increment-value='%null%' refresh-type='create' rows-inserted='34073' timestamp-start='2019-06-12 10:21:50.103' />
+          </refresh>
           <metadata-records>
             <metadata-record class='column'>
               <remote-name>F1</remote-name>
@@ -310,7 +320,7 @@
           </metadata-records>
         </connection>
       </extract>
-      <layout dim-ordering='alphabetic' dim-percentage='0.473552' measure-ordering='alphabetic' measure-percentage='0.526448' show-structure='true' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.447103' measure-ordering='alphabetic' measure-percentage='0.552897' show-structure='true' />
       <style>
         <style-rule element='mark'>
           <encoding attr='color' field='[:Measure Names]' type='palette'>
@@ -336,6 +346,9 @@
             </map>
             <map to='#76b7b2'>
               <bucket>&quot;NG&quot;</bucket>
+            </map>
+            <map to='#b07aa1'>
+              <bucket>&quot;HYD&quot;</bucket>
             </map>
             <map to='#e15759'>
               <bucket>&quot;CRU&quot;</bucket>
@@ -374,10 +387,15 @@
         <column-instance column='[iso.country]' derivation='None' name='[none:iso.country:nk]' pivot='key' type='nominal' />
       </datasource-dependencies>
       <filter class='categorical' column='[federated.0em5byl1xicath1fctvho1w6tdby].[none:energy:nk]'>
-        <groupfilter from='&quot;BIO&quot;' function='range' level='[none:energy:nk]' to='&quot;PET&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+        <groupfilter function='union' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+          <groupfilter from='&quot;BIO&quot;' function='range' level='[none:energy:nk]' to='&quot;CRU&quot;' />
+          <groupfilter function='member' level='[none:energy:nk]' member='&quot;HYD&quot;' />
+          <groupfilter function='member' level='[none:energy:nk]' member='&quot;NG&quot;' />
+          <groupfilter function='member' level='[none:energy:nk]' member='&quot;PET&quot;' />
+        </groupfilter>
       </filter>
       <filter class='categorical' column='[federated.0em5byl1xicath1fctvho1w6tdby].[none:iso.country:nk]'>
-        <groupfilter function='member' level='[none:iso.country:nk]' member='&quot;AUT&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+        <groupfilter function='member' level='[none:iso.country:nk]' member='&quot;JPN&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
       </filter>
     </shared-view>
   </shared-views>
@@ -429,6 +447,11 @@
             <format attr='font-size' field='[federated.0em5byl1xicath1fctvho1w6tdby].[none:year:ok]' value='11' />
             <format attr='font-size' field='[federated.0em5byl1xicath1fctvho1w6tdby].[sum:q_e:qk]' value='11' />
             <format attr='font-size' field='[federated.0em5byl1xicath1fctvho1w6tdby].[sum:iea_value:qk]' value='11' />
+          </style-rule>
+          <style-rule element='table'>
+            <format attr='omit-on-special' field='[federated.0em5byl1xicath1fctvho1w6tdby].[sum:iea_value:qk]' value='false' />
+            <format attr='break-on-special' field='[federated.0em5byl1xicath1fctvho1w6tdby].[sum:iea_value:qk]' value='false' />
+            <format attr='show-null-value-warning' field='[federated.0em5byl1xicath1fctvho1w6tdby].[sum:iea_value:qk]' value='false' />
           </style-rule>
           <style-rule element='worksheet'>
             <format attr='display-field-labels' scope='cols' value='false' />
@@ -678,8 +701,8 @@
         <devicelayout auto-generated='true' name='Phone'>
           <size maxheight='800' minheight='800' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='21' type='layout-basic' w='100000' x='0' y='0'>
-              <zone h='97916' id='22' param='vert' type='layout-flow' w='98934' x='533' y='1042'>
+            <zone h='100000' id='23' type='layout-basic' w='100000' x='0' y='0'>
+              <zone h='97916' id='24' param='vert' type='layout-flow' w='98934' x='533' y='1042'>
                 <zone fixed-size='280' h='89584' id='3' is-fixed='true' name='Exports' w='49466' x='533' y='5208'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
@@ -762,6 +785,7 @@
         </edge>
         <edge name='right'>
           <strip size='160'>
+            <card param='[federated.0em5byl1xicath1fctvho1w6tdby].[none:energy:nk]' type='filter' />
             <card mode='dropdown' param='[federated.0em5byl1xicath1fctvho1w6tdby].[none:iso.country:nk]' type='filter' />
             <card pane-specification-id='3' param='[federated.0em5byl1xicath1fctvho1w6tdby].[:Measure Names]' type='shape' />
             <card pane-specification-id='3' param='[federated.0em5byl1xicath1fctvho1w6tdby].[none:energy:nk]' type='color' />
@@ -809,7 +833,7 @@
           <zoom type='entire-view' />
         </viewpoint>
       </viewpoints>
-      <active id='10' />
+      <active id='12' />
       <simple-id uuid='{69E74565-65AD-4ED5-9013-A9C000817137}' />
     </window>
   </windows>
