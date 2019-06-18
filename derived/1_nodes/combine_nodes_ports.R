@@ -54,5 +54,12 @@ all.nodes$col[all.nodes$type == 'INLANDPORT.NODE'] <- 'forestgreen'
 plot(wrld_simpl)
 points(all.nodes.map, col = all.nodes$col)
 
+# Assign node names
+all.nodes <- dplyr::group_by(all.nodes, long, lat) %>% dplyr::mutate(count = n())
+all.nodes <- subset(all.nodes, count == 1)
+all.nodes$count <- NULL
+
+all.nodes$node.name <- seq(length = nrow(unique(all.nodes[c('long', 'lat')])))
+
 # Write file
 write.csv(all.nodes, file.path(temp, 'ports_nodes.csv'))

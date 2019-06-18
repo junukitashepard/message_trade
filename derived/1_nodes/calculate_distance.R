@@ -25,6 +25,9 @@ node.interval <- 5 # degrees
 nodes <- read.csv(file.path(temp, 'ports_nodes.csv'), stringsAsFactors = F)
 data(wrld_simpl)
 
+# Remove inland ports
+#nodes <- subset(nodes, type != 'INLANDPORT.NODE')
+
 # Fill df of all combinations of nodes
 longlat.df <- data.frame(long1 = character(0),
                          lat1 = character(0),
@@ -52,15 +55,13 @@ for (i in 1:pri) {
   base.type <- df$type[i]
   
   df <- df[(i+1):nrow(df), ]
-  df$diff.lat <- abs(df$lat - base.lat)
-  df$diff.long <- abs(df$long - base.long)
-  df$diff.avg <- (df$diff.lat + df$diff.long)/2
-  
-  # Top four closest nodes
-  df <- arrange(df, diff.avg)
-  df.close <- df[1:4,]
-  #df.close <- subset(df.close, diff.avg <= node.interval)
-  
+  df$diff <- distHaversine(df[c('long', 'lat')], c(base.long, base.lat))
+
+  # Top ten closest nodes
+  df <- arrange(df, diff)
+  df.close <- df[1:20,]
+  df.close <- subset(df.close, !is.na(long) & !is.na(lat))
+
   # Divide edges into 100 and make sure none are over land
   base.latlong <- cbind(base.lat, base.long)
   
@@ -71,8 +72,8 @@ for (i in 1:pri) {
       close.lat <- df.close$lat[j]
       close.long <- df.close$long[j]
       
-      fill.lat <- seq(from = base.lat, to = close.lat, length.out = 10)
-      fill.long <- seq(from = base.long, to = close.long, length.out = 10)
+      fill.lat <- seq(from = base.lat, to = close.lat, length.out = 4)
+      fill.long <- seq(from = base.long, to = close.long, length.out = 4)
       close.longlat <- expand.grid(fill.long, fill.lat)
       names(close.longlat) <- c('long', 'lat')
       
@@ -119,6 +120,6 @@ sink()
 
 
 
-  
+check <- readRDS(file.path(temp, "node_combinations.rds"))
   
   

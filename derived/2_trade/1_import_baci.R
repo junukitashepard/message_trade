@@ -131,7 +131,7 @@ for (y in 1996:2014) {
 }
 
 # Write files
-saveRDS(trade, file.path(temp, 'trade.rds'))
+saveRDS(trade, file.path(output, 'derived/trade/trade.rds'))
 saveRDS(trade_bytype, file.path(temp, 'trade_bytype.rds'))
 
 
