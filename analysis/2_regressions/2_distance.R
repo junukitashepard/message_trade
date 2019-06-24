@@ -11,6 +11,7 @@ library('dplyr')
 library('magrittr')
 library('maptools')
 library('jsfunctions')
+library('openxlsx')
 
 raw <-      paste0(wd, "raw")
 input <-    paste0(wd, "output/analysis/distance_regress")
@@ -41,7 +42,7 @@ distreg <- function(export.region = "all", import.region = "all", energy.type = 
   assign('coef', summary(m)$coefficients['distance',])
   
   # Add mean(Y)
-  assign('meany', mean(regdf$q_e))
+  assign('meany', median(regdf$q_e))
   
   coef <- c(coef, meany)
   
@@ -73,19 +74,40 @@ run_reg <- function(exporters = "all", importers = "all") {
   return(model_base)
 }
 
+wb <- loadWorkbook(file.path(output, 'distance_regression.xlsx'))
+
 # All regions
 all_regions <- run_reg()
+all_regions <- as.data.frame(all_regions)
+
+writeData(wb, sheet = "All regions", all_regions, 
+          startRow = 3, startCol = 2,
+          colNames = FALSE, rowNames = FALSE)
 
 # By importing region
 region.list <- c('AFR', 'CPA', 'EEU', 'LAM', 'MEA', 'NAM', 'PAO', 'PAS', 'SAS', 'WEU')
 
+i <- 3
 for (r in region.list) {
   print(paste0("Running regression for importer = ", r))
-  assign(paste0('M_', r), run_reg(importers = r), envir = parent.frame())
+  assign(paste0('M_mat'), run_reg(importers = r))
+  M_mat <- as.data.frame(M_mat)
+  writeData(wb, sheet = "Importing region", M_mat,
+            startRow = i, startCol = 2,
+            colNames = FALSE, rowNames = FALSE)
+  i <- i + 9
 }
 
 # By exporting region
+i <- 3
 for (r in region.list) {
   print(paste0("Running regression for exporter = ", r))
-  assign(paste0('M_', r), run_reg(exporters = r), envir = parent.frame())
+  assign(paste0('X_mat'), run_reg(exporters = r))
+  X_mat <- as.data.frame(X_mat)
+  writeData(wb, sheet = "Exporting region", X_mat,
+            startRow = i, startCol = 2,
+            colNames = FALSE, rowNames = FALSE)
+  i <- i + 9
 }
+
+saveWorkbook(wb, file.path(output, 'distance_regression_filled.xlsx'), overwrite = T)
