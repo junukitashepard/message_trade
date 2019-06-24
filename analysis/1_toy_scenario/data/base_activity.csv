@@ -1,0 +1,4 @@
+﻿node_loc,year_act,coal_ppl,gas_ppl,oil_ppl,hydro_ppl,bio_ppl,wind_ppl,solar_pv_ppl,import,cfl,mode,time,unit
+ASIA,2010,60,40,10,20,5,5,5,0,0,standard,year,GWa
+OECD,2010,60,40,10,20,5,5,5,0,0,standard,year,GWa
+REF,2010,60,40,10,20,5,5,5,0,0,standard,year,GWa

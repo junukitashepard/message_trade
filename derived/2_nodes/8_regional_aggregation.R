@@ -52,6 +52,8 @@ names(ijports)[11:12] <- c('port1.iso', 'port2.iso')
 
 ijports <- subset(ijports, !is.na(port1.iso) & !is.na(port2.iso))
 
+saveRDS(ijports, file.path(output, 'nodes/ij_ports_fixednames.rds'))
+
 # Link region names to countries 
 #################################
 regional.spec <- read.csv(file.path(raw, 'UserInputs/regional_specification.csv'), stringsAsFactors = F)
@@ -70,7 +72,7 @@ ijports <- subset(ijports, !is.na(msg_region1) & !is.na(msg_region2) &
 # Link to energy and collapse by region
 ########################################
 # Function, energy2ports: link trade flow to port
-energy2ports <- function(energy.type) {
+energy2ports <- function(energy.type, allports = F) {
   
   environment(assert) <- environment(isid) <- environment()
   
@@ -115,20 +117,21 @@ energy2ports <- function(energy.type) {
   p.df.X <- dplyr::group_by(p.df.X, year, msg_region1, msg_region2) %>%
             dplyr::mutate(max.share = max(share, na.rm = T))
   
-  p.df.M <- unique(subset(p.df.M, max.share == share & max.share != 0))
-  p.df.X <- unique(subset(p.df.X, max.share == share & max.share != 0))
+  if (allports == FALSE) {
+    p.df.M <- unique(subset(p.df.M, max.share == share & max.share != 0))
+    p.df.X <- unique(subset(p.df.X, max.share == share & max.share != 0))
+    
+    if (energy.type == 'BIO') {
+      p.df.M <- group_by(p.df.M, msg_region1, msg_region2, year) %>% mutate(count = row_number())
+      p.df.M <- subset(p.df.M, count == 1) # should drop 1 obs
+      p.df.M$count <- NULL
+    }
+    
+    isid('p.df.M', c('msg_region1', 'msg_region2', 'year'))
+    isid('p.df.X', c('msg_region1', 'msg_region2', 'year'))
   
-  if (energy.type == 'BIO') {
-    p.df.M <- group_by(p.df.M, msg_region1, msg_region2, year) %>% mutate(count = row_number())
-    p.df.M <- subset(p.df.M, count == 1) # should drop 1 obs
-    p.df.M$count <- NULL
+    p.df.M$max.share <- p.df.X$max.share <- NULL
   }
-  
-  isid('p.df.M', c('msg_region1', 'msg_region2', 'year'))
-  isid('p.df.X', c('msg_region1', 'msg_region2', 'year'))
-  
-  p.df.M$max.share <- p.df.X$max.share <- NULL
-  
   p.df.M$energy <- energy.type
   p.df.X$energy <- energy.type
   
@@ -149,7 +152,7 @@ m.df <- data.frame(year = numeric(0),
                    port_imports = numeric(0), region_trade = numeric(0), share = numeric(0), energy = character(0))
 
 for (e in c('BIO', 'COAL', 'CRU', 'NG', 'PET')) {
-  energy2ports(e)
+  energy2ports(e, allports = T)
   
   assign('x.in', get(paste0(e, '.exports')))
   assign('m.in', get(paste0(e, '.imports')))
@@ -164,7 +167,7 @@ write.csv(m.df, file.path(output, "nodes/import_paths.csv"))
 
 # Add coordinates and intermediate notes
 x.df.co <- x.df[c('year', 'energy', 'msg_region1', 'msg_region2', 
-                  'port1', 'port1.country', 'port1.iso', 'port1.long', 'port1.lat', 'region_trade')]
+                  'port1', 'port1.country', 'port1.iso', 'port1.long', 'port1.lat', 'region_trade', 'share')]
 
 m.df.co <- m.df[c('year', 'energy', 'msg_region1', 'msg_region2', 
                   'port2', 'port2.country', 'port2.iso', 'port2.long', 'port2.lat')]

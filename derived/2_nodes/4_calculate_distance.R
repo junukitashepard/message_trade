@@ -59,10 +59,10 @@ for (i in 1:pri) {
 
   # Top ten closest nodes
   df <- arrange(df, diff)
-  df.close <- df[1:20,]
+  df.close <- df[1:10,]
   df.close <- subset(df.close, !is.na(long) & !is.na(lat))
 
-  # Divide edges into 100 and make sure none are over land
+  # Divide edges into 4 and make sure none of the middle points are over land
   base.latlong <- cbind(base.lat, base.long)
   
   land.list <- list()
@@ -72,8 +72,8 @@ for (i in 1:pri) {
       close.lat <- df.close$lat[j]
       close.long <- df.close$long[j]
       
-      fill.lat <- seq(from = base.lat, to = close.lat, length.out = 4)
-      fill.long <- seq(from = base.long, to = close.long, length.out = 4)
+      fill.lat <- seq.int(from = base.lat, to = close.lat, length.out = 4)[2:3]
+      fill.long <- seq.int(from = base.long, to = close.long, length.out = 4)[2:3]
       close.longlat <- expand.grid(fill.long, fill.lat)
       names(close.longlat) <- c('long', 'lat')
       
