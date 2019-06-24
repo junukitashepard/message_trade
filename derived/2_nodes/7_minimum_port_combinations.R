@@ -38,11 +38,11 @@ spath$distance <- geosphere::distHaversine(spath[c('node.long', 'node.lat')],
 spath <- dplyr::group_by(spath, route_id) %>%
          dplyr::mutate(min.dist = min(distance, na.rm = T))
 
-max.dist <- geosphere::distHaversine(c(50, 0),
-                                    c(50+node.interval,0))
-max.dist <- sqrt(max.dist^2 + max.dist^2)
+# max.dist <- geosphere::distHaversine(c(50, 0),
+#                                     c(50+node.interval,0))
+# max.dist <- sqrt(max.dist^2 + max.dist^2)
 
-spath <- subset(spath, min.dist <= max.dist & !is.na(min.dist))
+spath <- subset(spath, !is.na(min.dist))
 hist(spath$min.dist)
 
 # Collapse distance to port-port level
