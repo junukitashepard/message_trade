@@ -14,7 +14,7 @@ output <-   paste0(wd, "output/")
 temp <-     paste0(wd, "temp/")
 
 # User inputs
-node.interval <- 5 # degrees
+node.interval <- 2 # degrees
 ##############################
 # Set up nodes
 long <- seq(from = -180, to = 180, by = node.interval)
