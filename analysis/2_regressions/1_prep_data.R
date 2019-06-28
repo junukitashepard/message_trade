@@ -14,7 +14,7 @@ library('jsfunctions')
 
 raw <-      paste0(wd, "raw")
 input <-    paste0(wd, "output/derived")
-output <-   paste0(wd, "output/analysis/distance_regress")
+output <-   paste0(wd, "output/analysis/regress")
 temp <-     paste0(wd, "temp/")
 
 ##############################
