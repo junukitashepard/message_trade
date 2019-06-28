@@ -21,6 +21,10 @@ temp <-     paste0(wd, "temp/")
 ##############################
 # Import file
 trade <- readRDS(file.path(input, "distance_regdf.rds"))
+trade$distance <- trade$distance/1000
+
+trade$var_cost[is.infinite(trade$var_cost)] <- NA
+trade <- subset(trade, !is.na(var_cost) & !is.infinite(var_cost))
 
 # Simple regression function
 distreg <- function(export.region = "all", import.region = "all", energy.type = "all",
@@ -28,7 +32,7 @@ distreg <- function(export.region = "all", import.region = "all", energy.type = 
   
   assign('regdf', trade)
   
-  assign('form', "q_e ~ distance + factor(iso.i) + factor(iso.j) + factor(year)")
+  assign('form', "var_cost ~ distance + factor(iso.i) + factor(iso.j) + factor(year)")
   
   if (export.region != "all") {regdf <- subset(regdf, msg.region.i %in% export.region)}
   if (import.region != "all") {regdf <- subset(regdf, msg.region.j %in% import.region)}

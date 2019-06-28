@@ -1,0 +1,5 @@
+--- Job MESSAGEix_TRADE.gms Start 06/26/19 14:27:46 26.1.0 rf2b37b9 WEX-WEI x86 64bit/MS Windows
+*** Unable to open input file (RC=2) MESSAGEix_TRADE.gms
+*** SysMsg: No such file or directory
+*** Status: Terminated due to parameter errors
+--- Job MESSAGEix_TRADE.gms Stop 06/26/19 14:27:46 elapsed 0:00:00.009
