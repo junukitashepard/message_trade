@@ -87,7 +87,26 @@ td <- subset(td, i != 'SWZ' & j != 'SWZ') # Swaziland data not available in trad
 
 td$any <- 1
 
-td.out <- dplyr::group_by(td, i, j, year_start, outcome) %>%
+# Output file should disaggregate EU
+eudf <- data.frame(country = character(0), year = numeric(0))
+
+for (y in 1990:2015) {
+  assign('df', data.frame(country = character(nrow(unique(eu_nations[as.character(y)])))))
+  df$country <- as.vector(unique(eu_nations[as.character(y)]))[,1]
+  df$year <- y
+  eudf <- rbind(as.data.frame(eudf), as.data.frame(df))
+}
+eudf$eu <- 'EU'
+eudf <- subset(eudf, country != "")
+
+td.in <- left_join(td, eudf, by = c('i' = 'eu', 'year_start' = 'year'))
+  td.in$i[td.in$i == 'EU'] <- td.in$country[td.in$i == 'EU']
+  td.in$country <- NULL
+td.in <- left_join(td.in, eudf, by = c('j' = 'eu', 'year_start' = 'year'))
+  td.in$j[td.in$j == 'EU'] <- td.in$country[td.in$j == 'EU']
+  td.in$country <- NULL
+  
+td.out <- dplyr::group_by(td.in, i, j, year_start, outcome) %>%
           dplyr::summarise(energy = sum(energy),
                            any = sum(any))
 saveRDS(td.out, file.path(output, 'trade_disputes.rds'))

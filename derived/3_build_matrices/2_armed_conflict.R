@@ -14,7 +14,7 @@ library('maptools')
 library('jsfunctions')
 
 raw <-      paste0(wd, "raw")
-output <-   paste0(wd, "output/derived/trade/")
+output <-   paste0(wd, "output/derived/")
 output.matrix <- paste0(wd, "output/derived/matrices")
 temp <-     paste0(wd, "temp/")
 ##########################################
@@ -133,6 +133,9 @@ cf <- dplyr::group_by(cf, i, j, year) %>%
       dplyr::summarise(minor = sum(minor), war = sum(war))
 
 isid('cf', c('i', 'j', 'year'))
+
+# Save file
+saveRDS(cf, file.path(output, 'conflicts/armed_conflicts.rds'))
 
 # Allow i-j and j-i
 cf2 <- cf
