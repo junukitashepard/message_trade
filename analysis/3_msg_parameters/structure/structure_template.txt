@@ -1,0 +1,31 @@
+# Setting up import text file for parameter building
+
+parname <- # Required
+varlist <- # Required
+technology <- # Required
+value <- # Required
+unit <- # Required
+
+# Node and year columns
+year_act <- 
+year_vtg <- 
+year_rel <-
+node_loc <-
+node_origin <-c('R14_AFR', 'R14_CAS', 'R14_CPA', 'R14_EEU', 'R14_LAM', 'R14_MEA', 'R14_PAO', 'R14_PAS', 'R14_RUS', 'R14_SAS', 'R14_SCS', 'R14_UBM', 'R14_WEU')
+node_dest <-c('R14_AFR', 'R14_CAS', 'R14_CPA', 'R14_EEU', 'R14_LAM', 'R14_MEA', 'R14_PAO', 'R14_PAS', 'R14_RUS', 'R14_SAS', 'R14_SCS', 'R14_UBM', 'R14_WEU')
+node_rel <-c('R14_AFR', 'R14_CAS', 'R14_CPA', 'R14_EEU', 'R14_LAM', 'R14_MEA', 'R14_PAO', 'R14_PAS', 'R14_RUS', 'R14_SAS', 'R14_SCS', 'R14_UBM', 'R14_WEU')
+
+# For value and unit
+value_constant <-
+value_unit.df <- 
+unique_identifiers <-
+
+# Auxiliary columns
+mode <-
+time <-
+time_origin <-
+time_dest <-
+commodity <-
+level <-
+emission <- 
+relation <-  

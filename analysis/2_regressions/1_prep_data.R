@@ -182,3 +182,4 @@ isid('df', c('iso.i', 'iso.j', 'year', 'energy'))
 # Write file
 saveRDS(df, file.path(output, "regdf.rds"))
 
+

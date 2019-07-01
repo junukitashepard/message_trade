@@ -165,7 +165,13 @@ for (e in c('BIO', 'COAL', 'CRU', 'NG', 'PET')) {
 write.csv(x.df, file.path(output, "nodes/export_paths.csv"))
 write.csv(m.df, file.path(output, "nodes/import_paths.csv"))
 
-# Add coordinates and intermediate notes
+# Aggregate to regional level
+all.trade <- unique(x.df[c('year', 'msg_region1', 'msg_region2', 'energy', 'region_trade')])
+assert("mean(all.trade$region_trade) == mean(unique(m.df[c('year', 'msg_region1', 'msg_region2', 'energy', 'region_trade')])$region_trade)")
+
+write.csv(all.trade, file.path(output, "trade/regional_trade.csv"))
+
+# Add coordinates and intermediate nodes
 x.df.co <- x.df[c('year', 'energy', 'msg_region1', 'msg_region2', 
                   'port1', 'port1.country', 'port1.iso', 'port1.long', 'port1.lat', 'region_trade', 'share')]
 
