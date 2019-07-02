@@ -16,10 +16,13 @@ temp <-     paste0(wd, "temp/")
 raw <-      paste0(wd, "raw/")
 
 # Import code crosswalk
-energyhs4 <- read.csv(file.path(raw, "BACI/energy2hs4.csv"), stringsAsFactors = F)
+energyhs4 <- read.csv(file.path(raw, "BACI/energy2hs4_MSG.csv"), stringsAsFactors = F)
 energyhs4$hs4 <- as.character(energyhs4$hs4)
 energyhs4 <- subset(energyhs4, !is.na(hs4))
 energyhs4$hs6 <- as.character(energyhs4$hs6)
+
+energyhs4$tra.energy <- energyhs4$energy
+energyhs4$energy <- energyhs4$msg.energy # USE MESSAGE ENERGY COMMODITIES 
 
 # Import country crosswalk
 countries <- read.csv(file.path(raw, "ConversionTables/web_countries.csv"), stringsAsFactors = F)
@@ -60,8 +63,8 @@ trade2physical <- function(y) {
   baci <- left_join(baci, countries, by = c('i' = 'baci.country')) # exporter only
 
   # Convert q to energy (TJ) using NCV from IEA 
-  baci <- left_join(baci, ncv, by = c('iso.country', 'hs6_desc' = 'product', 'energy'))
-  baci <- left_join(baci, ncv.r, by = c('hs6_desc' = 'product', 'energy' = 'energy'))
+  baci <- left_join(baci, ncv, by = c('iso.country', 'hs6_desc' = 'product', 'tra.energy' = 'energy'))
+  baci <- left_join(baci, ncv.r, by = c('hs6_desc' = 'product', 'tra.energy' = 'energy'))
 
   baci$global.ncv[baci$energy == 'NUC'] <- 500 # Uranium is a global heating value
   
@@ -69,7 +72,7 @@ trade2physical <- function(y) {
   baci$global.ncv <- NULL
 
   check <- subset(baci, is.na(ncv))
-  assert('check$energy == "ELEC" | check$energy == "HYD"')
+  assert('nrow(check) == 0 | (check$energy == "elec")')
   
   baci$q_e <- baci$ncv * baci$q
 

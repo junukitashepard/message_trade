@@ -1,11 +1,11 @@
-####################################
-# Build parameters: output #
-####################################
+#####################################
+# Build parameters: capacity_factor #
+#####################################
 rm(list = ls())
 
 setwd('H:/message_trade/analysis/3_msg_parameters')
 
-output <- 'H:/data/output/analysis/msg_parameters/output/'
+output <- 'H:/data/output/analysis/msg_parameters/capacity_factor/'
 
 # Import functions
 source('build_parameters.R')
@@ -15,11 +15,17 @@ export_technologies <- c('oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp
 import_technologies <- c('oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp')
 regions <- c('afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'pao', 'pas', 'rus', 'sas', 'scs', 'ubm', 'weu')
 
+# Set global variables # PUT IN SEPARATE FILES IF NECESSRY
+parname <- 'capacity_factor'
+varlist <-  c('node_loc', 'technology', 'year_vtg', 'year_act', 'time', 'value', 'unit')
+year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+year_vtg <- year_act
+value <- 1
+unit <- '%'
+time <- 'year'
+
 # Build parameter for each trade technology
 for (t in c(export_technologies, import_technologies)) {
-  
-  # Import trade technology information
-  source(paste0('structure/output/output_', t, '.R'))
   
   # Set up output file       
   print(paste0('TRADE TECH. = ', t))
@@ -37,17 +43,15 @@ for (t in c(export_technologies, import_technologies)) {
       for (r_from in regions[regions != r_to]) {
         
         print(paste0('FROM = ', r_from))
-        assign('commodity.in', paste0(sub("_[^_]+$", "", t), '_', r_to))
+        
         assign('technology.in', paste0(t, '_', r_to))
         
         assign('node_loc.in', paste0('R14_', toupper(r_from)))
-        assign('node_dest.in', node_dest)
         
         assign('parout', build_parameter(parname = parname, varlist = varlist, technology = technology.in,
-                                         node_loc = node_loc.in, node_dest = node_dest.in,
+                                         node_loc = node_loc.in,
                                          year_act = year_act, year_vtg = year_vtg,
-                                         mode = mode, time = time, time_dest = time_dest,
-                                         commodity = commodity.in, level = level,
+                                         time = time, 
                                          value = value, unit = unit))
         parout <- subset(parout, year_act - year_vtg <= 40)
         parout <- subset(parout, year_act >= 1990)
@@ -59,27 +63,27 @@ for (t in c(export_technologies, import_technologies)) {
     # IMPORTS
     if (grepl('imp', t)) {
       
-      assign('commodity.in', paste0(sub("_[^_]+$", "", t)))
       assign('technology.in', t)
       
       assign('node_loc.in', paste0('R14_', toupper(r_to)))
-      assign('node_dest.in', paste0('R14_', toupper(r_to)))
+      assign('varlist', c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')) # re-assign without year_vtg
       
       assign('parout', build_parameter(parname = parname, varlist = varlist, technology = technology.in,
-                                       node_loc = node_loc.in, node_dest = node_dest.in,
+                                       node_loc = node_loc.in,
                                        year_act = year_act,
-                                       mode = mode, time = time, time_dest = time_dest,
-                                       commodity = commodity.in, level = level,
+                                       time = time, 
                                        value = value, unit = unit))
       parout$year_vtg <- parout$year_act
       parin <- rbind(parin, parout)
     }
-      
-      
+    
+    
     parsave <- rbind(parsave, parin)
   }
+  
+  parsave <- unique(parsave)
   
   saveRDS(parsave, file.path(output, paste0(t, '.rds')))
 }
 #
-check <- readRDS(file.path(output, 'oil_exp.rds'))
+check <- readRDS(file.path(output, 'oil_imp.rds'))

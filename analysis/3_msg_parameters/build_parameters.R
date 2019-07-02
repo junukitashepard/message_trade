@@ -117,6 +117,8 @@ build_parameter <- function(parname, varlist, technology, unique_identifiers = N
                            commodity = NULL, level = NULL,
                            emission = NULL, relation = NULL) {
   
+  environment(empty_par) <- environment(node_year_fill) <- environment(value_unit_fill) <- environment(aux_fill) <- environment()
+  
   assign('parout', empty_par(parname = parname, varlist = varlist) %>%
            
                     node_year_fill(parname = parname, varlist = varlist, technology = technology,

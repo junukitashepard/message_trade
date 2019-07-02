@@ -151,7 +151,7 @@ m.df <- data.frame(year = numeric(0),
                    msg_region1 = character(0), msg_region2 = character(0),
                    port_imports = numeric(0), region_trade = numeric(0), share = numeric(0), energy = character(0))
 
-for (e in c('BIO', 'COAL', 'CRU', 'NG', 'PET')) {
+for (e in c('coal', 'elec', 'foil', 'LNG', 'oil')) {
   energy2ports(e, allports = T)
   
   assign('x.in', get(paste0(e, '.exports')))
