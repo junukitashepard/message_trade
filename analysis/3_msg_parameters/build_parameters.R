@@ -1,6 +1,6 @@
-######################################
-# Set up data for MESSAGE parameters #
-######################################
+###################################################
+# Functions to set up data for MESSAGE parameters #
+###################################################
 # Set up empty parameter
 empty_par <- function(parname, varlist) {
   
@@ -79,7 +79,7 @@ value_unit_fill <- function(df, parname, varlist, technology,
 }
 
 # Fill auxiliary variables
-aux_fill <- function(df, varlist, unique_identifiers = NULL,
+aux_fill <- function(df, varlist, unique_identifiers = NULL, 
                      mode = NULL, time = NULL, time_origin = NULL, time_dest = NULL,
                      commodity = NULL, level = NULL,
                      emission = NULL, relation = NULL) {
@@ -104,6 +104,7 @@ aux_fill <- function(df, varlist, unique_identifiers = NULL,
       }
     }
   }
+  
   return(df)
 }
 

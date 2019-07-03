@@ -83,4 +83,4 @@ for (t in c(export_technologies, import_technologies)) {
 }
 
 #
-check <- readRDS(file.path(output, 'oil_exp.rds'))
+check <- readRDS(file.path(output, 'oil_imp.rds'))

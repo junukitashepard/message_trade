@@ -18,5 +18,5 @@ value_constant <- TRUE
 mode <-'M1'
 time <- 'year'
 time_origin <- 'year'
-commodity <- 'foil'
+commodity <- 'fuleoil'
 level <- 'shipped-foil'  

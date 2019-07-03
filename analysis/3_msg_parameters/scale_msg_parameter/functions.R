@@ -35,7 +35,11 @@ scale_exp_parameter <- function(parname, msg.technology, tra.energy, varlist) {
   tradf$msg_region2 <- paste0('R14_', tradf$msg_region2)
   
   if (grepl('exp', msg.technology)) {
-    df <- left_join(df, tradf, by = c('node_loc' = 'msg_region1', 'year_act' = 'year'))
+    if ('year_act' %in% varlist) {
+      df <- left_join(df, tradf, by = c('node_loc' = 'msg_region1', 'year_act' = 'year'))
+    } else if ('year_vtg' %in% varlist) {
+      df <- left_join(df, tradf, by = c('node_loc' = 'msg_region1', 'year_vtg' = 'year'))
+    }
     df$technology <- paste0(msg.technology, '_', tolower(substr(df$msg_region2, 5, 7)))
   } 
   
@@ -90,7 +94,7 @@ expand_imp_parameter <- function(parname, msg.technology, tra.energy, varlist,
   environment(build_parameter) <- environment(isid) <- environment()
   
   tradf$year_act <- tradf$year
-  tradf$node_loc <- tradf$msg_region2
+  tradf$node_loc <- paste0('R14_', tradf$msg_region2)
   tradf$value <- tradf$imports
   tradf <- subset(tradf, !is.na(year_act) & !is.na(node_loc) & !is.na(value))
   tradf <- tradf[c('year_act', 'node_loc', 'value')]
