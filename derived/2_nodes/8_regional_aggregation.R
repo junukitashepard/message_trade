@@ -127,8 +127,8 @@ energy2ports <- function(energy.type, allports = F) {
       p.df.M$count <- NULL
     }
     
-    isid('p.df.M', c('msg_region1', 'msg_region2', 'year'))
-    isid('p.df.X', c('msg_region1', 'msg_region2', 'year'))
+    # isid('p.df.M', c('msg_region1', 'msg_region2', 'year'))
+    # isid('p.df.X', c('msg_region1', 'msg_region2', 'year'))
   
     p.df.M$max.share <- p.df.X$max.share <- NULL
   }
@@ -151,7 +151,9 @@ m.df <- data.frame(year = numeric(0),
                    msg_region1 = character(0), msg_region2 = character(0),
                    port_imports = numeric(0), region_trade = numeric(0), share = numeric(0), energy = character(0))
 
-for (e in c('coal', 'elec', 'foil', 'LNG', 'oil')) {
+# Run 1: Include all paths (even longer ones) #
+###############################################
+for (e in c('coal', 'foil', 'LNG', 'oil')) {
   energy2ports(e, allports = T)
   
   assign('x.in', get(paste0(e, '.exports')))
@@ -161,15 +163,42 @@ for (e in c('coal', 'elec', 'foil', 'LNG', 'oil')) {
   m.df <- rbind(as.data.frame(m.df), as.data.frame(m.in))
 }
 
-# Write files
-write.csv(x.df, file.path(output, "nodes/export_paths.csv"))
-write.csv(m.df, file.path(output, "nodes/import_paths.csv"))
-
 # Aggregate to regional level
 all.trade <- unique(x.df[c('year', 'msg_region1', 'msg_region2', 'energy', 'region_trade')])
 assert("mean(all.trade$region_trade) == mean(unique(m.df[c('year', 'msg_region1', 'msg_region2', 'energy', 'region_trade')])$region_trade)")
 
 write.csv(all.trade, file.path(output, "trade/regional_trade.csv"))
+
+# Write files
+write.csv(x.df, file.path(output, "nodes/export_paths_all.csv"))
+write.csv(m.df, file.path(output, "nodes/import_paths_all.csv"))
+
+# Run 2: Only include shortest path (even longer ones) #
+########################################################
+x.df <- data.frame(year = numeric(0), 
+                   port1 = numeric(0), port1.country = character(0), port1.iso = character(0), 
+                   port1.long = numeric(0), port1.lat = numeric(0),
+                   msg_region1 = character(0), msg_region2 = character(0),
+                   port_exports = numeric(0), region_trade = numeric(0), share = numeric(0), energy = character(0))
+m.df <- data.frame(year = numeric(0), 
+                   port2 = numeric(0), port2.country = character(0), port2.iso = character(0),
+                   port2.long = numeric(0), port2.lat = numeric(0),
+                   msg_region1 = character(0), msg_region2 = character(0),
+                   port_imports = numeric(0), region_trade = numeric(0), share = numeric(0), energy = character(0))
+
+for (e in c('coal', 'foil', 'LNG', 'oil')) {
+  energy2ports(e, allports = FALSE)
+  
+  assign('x.in', get(paste0(e, '.exports')))
+  assign('m.in', get(paste0(e, '.imports')))
+  
+  x.df <- rbind(as.data.frame(x.df), as.data.frame(x.in))
+  m.df <- rbind(as.data.frame(m.df), as.data.frame(m.in))
+}
+
+# Write files
+write.csv(x.df, file.path(output, "nodes/export_paths_sp.csv"))
+write.csv(m.df, file.path(output, "nodes/import_paths_sp.csv"))
 
 # Add coordinates and intermediate nodes
 x.df.co <- x.df[c('year', 'energy', 'msg_region1', 'msg_region2', 

@@ -8,18 +8,11 @@ Created on Mon Jul  1 13:16:10 2019
 # Update global MESSAGE-TRADE model #
 #####################################
 # load required packages 
-import itertools
-import pandas as pd
-import os
-import numpy as np
-
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 
 import ixmp as ixmp
 import message_ix as message_ix
-
-from message_ix.utils import make_df
 
 # Set directory for file output
 outpath = "H:/data/output/derived/parameters/"

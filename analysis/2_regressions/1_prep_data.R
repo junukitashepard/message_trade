@@ -44,9 +44,9 @@ trade <- left_join(trade, regional_spec, by = c('iso.i' = 'iso'))
 trade <- left_join(trade, regional_spec, by = c('iso.j' = 'iso'))
 names(trade)[10:11] <- c('msg.region.i', 'msg.region.j')
 
-# Calculate energy price ("variable cost") in $1000/GWa
-trade$q_e_gwa <- (((trade$q_e*1e12)/(3.6*1e6))*8760)/10e9
-trade$var_cost <- (trade$v)/trade$q_e_gwa
+# Calculate energy price ("variable cost") in $/GWa
+trade$q_e_gwa <- (trade$q_e * 277778 * 8760)/(10^6)
+trade$var_cost <- (trade$v*1000)/trade$q_e_gwa
 
 # Use leading year for conflict and disputes
 disputes$lead1.year = disputes$year + 1
