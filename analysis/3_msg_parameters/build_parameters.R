@@ -137,5 +137,17 @@ build_parameter <- function(parname, varlist, technology, unique_identifiers = N
   return(parout)
 }
 
-
+# Clean up variable workspace
+clean_up <- function(envir = parent.frame()) {
+  print('Clean up!')
+  for (v in c('parname', 'varlist', 'technology', 'year_act', 'year_vtg', 'year_rel', 
+              'node_loc', 'node_origin', 'node_dest', 'node_rel', 'value', 'unit', 'value_constant',
+              'unique_identifiers', 'time', 'time_origin', 'time_dest', 'commodity', 'level', 
+              'emission', 'relation', 'r_from', 'r_to', 'technology.in', 'node_loc.in', 'e',
+              'value_lo', 'value_up', 'mode')) {
+    if(exists(v)) {
+      rm(list = v, envir = .GlobalEnv)
+    }
+  }
+}
   

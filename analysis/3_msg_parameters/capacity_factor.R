@@ -1,29 +1,6 @@
 #####################################
 # Build parameters: capacity_factor #
 #####################################
-rm(list = ls())
-
-setwd('H:/message_trade/analysis/3_msg_parameters')
-
-output <- 'H:/data/output/analysis/msg_parameters/capacity_factor/'
-
-# Import functions
-source('build_parameters.R')
-
-# Set import and export technologies
-export_technologies <- c('oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp')
-import_technologies <- c('oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp')
-regions <- c('afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'pao', 'pas', 'rus', 'sas', 'scs', 'ubm', 'weu')
-
-# Set global variables # PUT IN SEPARATE FILES IF NECESSRY
-parname <- 'capacity_factor'
-varlist <-  c('node_loc', 'technology', 'year_vtg', 'year_act', 'time', 'value', 'unit')
-year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
-year_vtg <- year_act
-value <- 1
-unit <- '%'
-time <- 'year'
-
 # Build parameter for each trade technology
 for (t in c(export_technologies, import_technologies)) {
   
@@ -83,7 +60,9 @@ for (t in c(export_technologies, import_technologies)) {
   
   parsave <- unique(parsave)
   
-  saveRDS(parsave, file.path(output, paste0(t, '.rds')))
+  saveRDS(parsave, file.path(output, paste0('capacity_factor/', t, '.rds')))
+  write.csv(parsave, file.path(output, paste0('capacity_factor/', t, '.csv')))
 }
-#
-check <- readRDS(file.path(output, 'oil_imp.rds'))
+
+# Clean up
+clean_up()

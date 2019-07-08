@@ -2,28 +2,6 @@
 # Scale parameters based on trade volume (in GWa) #
 # historical_activity
 ###################################################
-rm(list = ls())
-wd <- "H:/data/"
-repo <- "H:/message_trade/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-
-input <-    paste0(wd, 'output/derived/')
-output <-   paste0(wd, "output/analysis/msg_parameters/")
-
-source(paste0(repo, 'analysis/3_msg_parameters/scale_msg_parameter/functions.R'))
-source(paste0(repo, 'analysis/3_msg_parameters/build_parameters.R'))
-
-# Import regionally aggregated trade data
-trade.df <- read.csv(file.path(input, 'trade/regional_trade.csv'), stringsAsFactors = F)
-
-# Energy commodities
-energy_list <- c('oil', 'coal', 'loil', 'foil', 'LNG')
-
 # Function: build historical_activity parameter
 build_historical_activity <- function(energy) {
   
@@ -52,9 +30,13 @@ build_historical_activity <- function(energy) {
   
   saveRDS(exports, file.path(output, paste0('historical_activity/', energy, '_exp.rds')))
   saveRDS(imports, file.path(output, paste0('historical_activity/', energy, '_imp.rds')))
+  write.csv(exports, file.path(output, paste0('historical_activity/', energy, '_exp.csv')))
+  write.csv(imports, file.path(output, paste0('historical_activity/', energy, '_imp.csv')))
 }
 
 # Run program
 for (e in energy_list) {
   build_historical_activity(e)
 }
+
+clean_up()

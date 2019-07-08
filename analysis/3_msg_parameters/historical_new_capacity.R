@@ -3,28 +3,6 @@
 # historical_new_capacity
 # (only for export technologies)
 ###################################################
-rm(list = ls())
-wd <- "H:/data/"
-repo <- "H:/message_trade/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-
-input <-    paste0(wd, 'output/derived/')
-output <-   paste0(wd, "output/analysis/msg_parameters/")
-
-source(paste0(repo, 'analysis/3_msg_parameters/scale_msg_parameter/functions.R'))
-source(paste0(repo, 'analysis/3_msg_parameters/build_parameters.R'))
-
-# Import regionally aggregated trade data
-trade.df <- read.csv(file.path(input, 'trade/regional_trade.csv'), stringsAsFactors = F)
-
-# Energy commodities
-energy_list <- c('oil', 'coal', 'loil', 'foil', 'LNG')
-
 # Function: build historical_new_capacity parameter
 build_historical_new_capacity <- function(energy) {
   
@@ -49,9 +27,13 @@ build_historical_new_capacity <- function(energy) {
   exports <- subset(exports, !is.na(value))
   
   saveRDS(exports, file.path(output, paste0('historical_new_capacity/', energy, '_exp.rds')))
+  write.csv(exports, file.path(output, paste0('historical_new_capacity/', energy, '_exp.csv')))
+  
 }
 
 # Run program
 for (e in energy_list) {
   build_historical_new_capacity(e)
 }
+
+clean_up()

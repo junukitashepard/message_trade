@@ -13,8 +13,6 @@ import message_ix as message_ix
 
 from message_ix.utils import make_df
 
-os.chdir('H:\\message_trade\\analysis\\')
-
 # Load and clone model/scenario # 
 #################################
 ene_mp = ixmp.Platform() # Connect to central ENE database
@@ -23,33 +21,16 @@ ene_mp = ixmp.Platform() # Connect to central ENE database
 base_scenario = message_ix.Scenario(ene_mp, 
                                     model = 'MESSAGEix_SSP2',
                                     scenario = 'test') 
-scenario = base_scenario.clone('MESSAGEix_TRADE', 'test')
+scenario = base_scenario.clone('MESSAGEix_TRADE', 'update_costs')
 
-# Investigate #
-###############
-# Look at parameter format
-t = scenario.par('input')
+# Change costs of MEA-WEU gas exports #
+#######################################
+vc_mea = scenario.par('var_cost', {'technology':'gas_exp_weu', 'node_loc':'R14_MEA'})
+vc_mea.value = 100
 
-scenario.idx_names('addon_lo')
+#vc_weu = scenario.par('var_cost', {'technology':'gas_imp', 'node_loc':'R14_WEU'})
+#vc_weu.value = 100
 
-# Parameters for given trade technology
-tec = 'gas_imp'
-region = 'R14_WEU'
-
-par_list = [x for x in scenario.par_list() if 'technology' in scenario.idx_sets(x)]
-
-par_dict = {}   # For collecting data and looking into them at the end
-for parname in par_list:
-    node_cols = [n for n in scenario.idx_names(parname) if 'node' in n] # node index(es)
-    if len(node_cols) > 1:
-        node_col = 'node_loc'
-    elif len(node_cols) == 1:
-        node_col = node_cols[0]
-
-    df = scenario.par(parname, {'technology':tec, node_col:region})
-    if not df['value'].dropna().empty:
-            par_dict[parname] = df
-            
 #%% 5) Exporting scenario data to GAMS gdx and solve the model
 # 5.1) An optional name for the scenario GDX files
 caseName = scenario.model + '__' + scenario.scenario + '__v' + str(scenario.version)
@@ -61,7 +42,9 @@ scenario.check_out()
 
 scenario.commit('No changes')
 scenario.solve(model='MESSAGE', case=caseName)
-#scenario.to_gdx('message_gdx\\','MsgData_' + caseName)
 
-from tools import Plots
-p = Plots(scenario, 'R14_WEU')
+from plotting import Plots
+p = Plots(scenario, 'R14_MEA')
+
+p.plot_activity(baseyear = False, subset = ['gas_exp_weu'])
+

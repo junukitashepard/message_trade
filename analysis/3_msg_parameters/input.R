@@ -1,25 +1,11 @@
 ####################################
 # Build parameters: input #
 ####################################
-rm(list = ls())
-
-setwd('H:/message_trade/analysis/3_msg_parameters')
-
-output <- 'H:/data/output/analysis/msg_parameters/input/'
-
-# Import functions
-source('build_parameters.R')
-
-# Set import and export technologies
-export_technologies <- c('oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp')
-import_technologies <- c('oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp')
-regions <- c('afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'pao', 'pas', 'rus', 'sas', 'scs', 'ubm', 'weu')
-
 # Build parameter for each trade technology
 for (t in c(export_technologies, import_technologies)) {
   
   # Import trade technology information
-  source(paste0('structure/input/input_', t, '.R'))
+  source(paste0(repo, 'analysis/3_msg_parameters/structure/input/input_', t, '.R'))
   
   # Set up output file       
   print(paste0('TRADE TECH. = ', t))
@@ -79,8 +65,8 @@ for (t in c(export_technologies, import_technologies)) {
     }
    parsave <- rbind(parsave, parin)
   }
-  saveRDS(parsave, file.path(output, paste0(t, '.rds')))
+  saveRDS(parsave, file.path(output, paste0('input/', t, '.rds')))
+  write.csv(parsave, file.path(output, paste0('input/', t, '.csv')))
 }
 
-#
-check <- readRDS(file.path(output, 'oil_imp.rds'))
+clean_up()

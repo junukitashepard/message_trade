@@ -2,28 +2,6 @@
 # Scale parameters based on trade volume (in GWa) #
 # bound_activity_lo and bound_activity_up
 ###################################################
-rm(list = ls())
-wd <- "H:/data/"
-repo <- "H:/message_trade/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-
-input <-    paste0(wd, 'output/derived/')
-output <-   paste0(wd, "output/analysis/msg_parameters/")
-
-source(paste0(repo, 'analysis/3_msg_parameters/scale_msg_parameter/functions.R'))
-source(paste0(repo, 'analysis/3_msg_parameters/build_parameters.R'))
-
-# Import regionally aggregated trade data
-trade.df <- read.csv(file.path(input, 'trade/regional_trade.csv'), stringsAsFactors = F)
-
-# Energy commodities
-energy_list <- c('oil', 'coal', 'loil', 'foil', 'LNG')
-
 # Function: build bound_activity_'x' parameters
 build_bound_activity <- function(lo_or_up, energy) {
   
@@ -54,6 +32,9 @@ build_bound_activity <- function(lo_or_up, energy) {
   
   saveRDS(exports, file.path(output, paste0('bound_activity_', lo_or_up, '/', energy, '_exp.rds')))
   saveRDS(imports, file.path(output, paste0('bound_activity_', lo_or_up, '/', energy, '_imp.rds')))
+  
+  write.csv(exports, file.path(output, paste0('bound_activity_', lo_or_up, '/', energy, '_exp.csv')))
+  write.csv(imports, file.path(output, paste0('bound_activity_', lo_or_up, '/', energy, '_imp.csv')))
 }
 
 # Run program

@@ -62,5 +62,7 @@ build_activity <- function(parname, lo_or_up, in.value, imports.too = TRUE) {
     parsave <- unique(parsave)
     
     saveRDS(parsave, file.path(output, paste0(parname, '/', t, '.rds')))
+    write.csv(parsave, file.path(output, paste0(parname, '/', t, '.csv')))
+    
   }
 }

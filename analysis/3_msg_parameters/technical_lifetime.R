@@ -2,26 +2,6 @@
 # Build parameters: technical lifetime #
 # (only for exports)
 ########################################
-rm(list = ls())
-wd <- 'H:/message_trade/analysis/3_msg_parameters'
-setwd(wd)
-
-output <- 'H:/data/output/analysis/msg_parameters/technical_lifetime/'
-
-# Import functions
-source('build_parameters.R')
-
-# Set import and export technologies
-export_technologies <- c('oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp')
-regions <- c('afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'pao', 'pas', 'rus', 'sas', 'scs', 'ubm', 'weu')
-
-# Set columns (this can be dataframe if it varies by node/year)
-parname <- 'technical_lifetime'
-varlist <- c('node_loc', 'technology', 'year_vtg', 'value', 'unit')
-value <- 40
-unit <- 'y'
-year_vtg <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
-
 # Build parameter for each trade technology
 for (t in export_technologies) {
   
@@ -55,5 +35,8 @@ for (t in export_technologies) {
   
   parsave <- unique(parsave)
   
-  saveRDS(parsave, file.path(output, paste0(t, '.rds')))
+  saveRDS(parsave, file.path(output, paste0('technical_lifetime/', t, '.rds')))
+  write.csv(parsave, file.path(output, paste0('technical_lifetime/', t, '.csv')))
 }
+
+clean_up()
