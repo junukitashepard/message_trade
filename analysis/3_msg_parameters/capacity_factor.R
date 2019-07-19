@@ -30,9 +30,11 @@ for (t in c(export_technologies, import_technologies)) {
                                          year_act = year_act, year_vtg = year_vtg,
                                          time = time, 
                                          value = value, unit = unit))
-        parout <- subset(parout, year_act - year_vtg <= 40)
+        # parout <- subset(parout, year_act - year_vtg < tech_lifetime & year_act - year_vtg >=0)
+        # parout <- subset(parout, year_act >= 1990)
+        parout$year_vtg <- parout$year_act
+        parout <- unique(parout)
         parout <- subset(parout, year_act >= 1990)
-        
         parin <- rbind(parin, parout)
       }
     }
@@ -51,6 +53,8 @@ for (t in c(export_technologies, import_technologies)) {
                                        time = time, 
                                        value = value, unit = unit))
       parout$year_vtg <- parout$year_act
+      parout <- unique(parout)
+      parout <- subset(parout, year_act >= 1990)
       parin <- rbind(parin, parout)
     }
     

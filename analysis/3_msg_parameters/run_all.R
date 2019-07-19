@@ -15,6 +15,8 @@ library('ggplot2')
 input <-   paste0(wd, "output/derived/")
 output <-   paste0(wd, "output/analysis/msg_parameters/")
 
+#sink(paste0(repo, 'analysis/3_msg_parameters/make_parameters.txt'))
+
 # Import functions 
 ###################
 source(paste0(repo, 'analysis/3_msg_parameters/scale_msg_parameter/functions.R'))
@@ -33,6 +35,9 @@ parameter_list <- c('bound_activity_lo', 'bound_activity_up',
                     'level_cost_activity_soft_lo', 'level_cost_activity_soft_up',
                     'output', 'soft_activity_lo', 'soft_activity_up', 'technical_lifetime')
 
+# Technical lifetime
+tech_lifetime = 5
+
 # List of energy commodities
 energy_list <- c('oil', 'coal', 'loil', 'foil', 'LNG')
 
@@ -41,7 +46,7 @@ export_technologies <- c('oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp
 import_technologies <- c('oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp')
 
 # List of regions
-regions <- c('afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'pao', 'pas', 'rus', 'sas', 'scs', 'ubm', 'weu')
+regions <- c('afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'nam', 'pao', 'pas', 'rus', 'sas', 'scs', 'ubm', 'weu')
 
 # Import data files 
 ####################
@@ -59,6 +64,7 @@ names(emit_lt) <- c('node_loc', 'technology', 'emission_factor', 'lifetime')
 # Build parameters!
 ####################
 # bound_activity_lo, bound_activity_up
+year_act_base <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
 source(paste0(repo, 'analysis/3_msg_parameters/bound_activity.R'))
 
 # capacity_factor
@@ -85,11 +91,12 @@ varlist <-  c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')
 year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
 unit <- '%'
 time <- 'year'
-value_lo = -0.05
-value_up = 0.02
+value_lo = -0.1
+value_up = 0.5
 source(paste0(repo, 'analysis/3_msg_parameters/growth_activity.R'))
 
 # historical_activity
+year_act_base <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
 source(paste0(repo, 'analysis/3_msg_parameters/historical_activity.R'))
 
 # historical_new_capacity
@@ -100,7 +107,7 @@ varlist <-  c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')
 year_act <- c(seq(1995, 2055, by = 5), seq(2060, 2110, by = 10))
 unit <- 'GWa'
 time <- 'year'
-value_lo = 2
+value_lo = 0
 value_up = 2
 source(paste0(repo, 'analysis/3_msg_parameters/initial_activity.R'))
 
@@ -120,25 +127,31 @@ year_act <- c(seq(2020, 2055, by = 5), seq(2060, 2110, by = 10)) # future only
 unit <- '???'
 time <- 'year'
 value_up <- 0.5
-value_lo <- 0.5
+value_lo <- -0.5
 source(paste0(repo, 'analysis/3_msg_parameters/level_cost_activity_soft.R'))
 
 # output
 source(paste0(repo, 'analysis/3_msg_parameters/output.R'))
+
+# ref_new_capacity
+source(paste0(repo, 'analysis/3_msg_parameters/ref_new_capacity.R'))
+
+# ref_activity
+source(paste0(repo, 'analysis/3_msg_parameters/ref_activity.R'))
 
 # soft_activity
 varlist <-  c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')
 year_act <- c(seq(2020, 2055, by = 5), seq(2060, 2110, by = 10)) # future only
 unit <- '???'
 time <- 'year'
-value_lo <- 0.05
-value_up <- 0.05
+value_lo <- -0.1
+value_up <- 0.1
 source(paste0(repo, 'analysis/3_msg_parameters/soft_activity.R'))
 
 # technical_lifetime
 parname <- 'technical_lifetime'
 varlist <- c('node_loc', 'technology', 'year_vtg', 'value', 'unit')
-value <- 40
+value <- tech_lifetime
 unit <- 'y'
 year_vtg <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
 source(paste0(repo, 'analysis/3_msg_parameters/technical_lifetime.R'))
@@ -154,3 +167,27 @@ time <- 'year'
 emission <- 'CO2'
 source(paste0(repo, 'analysis/3_msg_parameters/emission_factor.R'))
 
+# var_cost (exports)
+parname <- 'var_cost'
+varlist <- c('node_loc', 'technology', 'year_vtg', 'year_act', 'mode', 'time', 'value', 'unit')
+mode <- 'M1'
+unit <- 'USD/GWa'
+year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+year_vtg <- year_act
+time <- 'year'
+source(paste0(repo, 'analysis/3_msg_parameters/var_cost.R'))
+
+# var_cost (imports)
+parname <- 'var_cost'
+varlist <- c('node_loc', 'technology', 'year_vtg', 'year_act', 'mode', 'time', 'value', 'unit')
+mode <- 'M1'
+unit <- 'USD/GWa'
+year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+year_vtg <- year_act
+time <- 'year'
+value <- 0
+source(paste0(repo, 'analysis/3_msg_parameters/var_cost_imports.R'))
+
+# relation_activity (only change exports)
+source(paste0(repo, 'analysis/3_msg_parameters/relation_activity.R'))
+sink()

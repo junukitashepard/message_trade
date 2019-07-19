@@ -16,7 +16,7 @@ for (t in export_technologies) {
     
     # EXPORTS
     if (grepl('exp', t)) {
-      for (r_from in regions[regions != r_to]) {
+      for (r_from in regions) {
         
         assign('technology.in', paste0(t, '_', r_to))
         

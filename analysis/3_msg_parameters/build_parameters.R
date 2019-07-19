@@ -146,7 +146,7 @@ clean_up <- function(envir = parent.frame()) {
               'emission', 'relation', 'r_from', 'r_to', 'technology.in', 'node_loc.in', 'e',
               'value_lo', 'value_up', 'mode')) {
     if(exists(v)) {
-      rm(list = v, envir = .GlobalEnv)
+      suppressWarnings(rm(list = v, envir = .GlobalEnv))
     }
   }
 }

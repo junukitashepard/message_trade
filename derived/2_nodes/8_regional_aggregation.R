@@ -9,6 +9,7 @@ library('plyr')
 library('dplyr')
 library('magrittr')
 library('jsfunctions')
+library('ggplot2')
 
 input <-    paste0(wd, 'output/derived')
 output <-   paste0(wd, "output/derived")
@@ -113,9 +114,9 @@ energy2ports <- function(energy.type, allports = F) {
 
   # By year-region-region: select ports
   p.df.M <- dplyr::group_by(p.df.M, year, msg_region1, msg_region2) %>%
-            dplyr::mutate(max.share = max(share, na.rm = T))
+            dplyr::mutate(max.share = max(share, na.rm = T), rown = row_number())
   p.df.X <- dplyr::group_by(p.df.X, year, msg_region1, msg_region2) %>%
-            dplyr::mutate(max.share = max(share, na.rm = T))
+            dplyr::mutate(max.share = max(share, na.rm = T), rown = row_number())
   
   if (allports == FALSE) {
     p.df.M <- unique(subset(p.df.M, max.share == share & max.share != 0))
@@ -162,6 +163,34 @@ for (e in c('coal', 'foil', 'LNG', 'oil')) {
   x.df <- rbind(as.data.frame(x.df), as.data.frame(x.in))
   m.df <- rbind(as.data.frame(m.df), as.data.frame(m.in))
 }
+
+# Plot weighted distance by country and region
+x.df.co <- x.df[c('year', 'energy', 'msg_region1', 'msg_region2', 
+                  'port1', 'port1.country', 'port1.iso', 'port1.long', 'port1.lat', 'region_trade', 
+                  'share', 'port_exports')]
+
+m.df.co <- m.df[c('year', 'energy', 'msg_region1', 'msg_region2', 
+                  'port2', 'port2.country', 'port2.iso', 'port2.long', 'port2.lat')]
+
+co <- inner_join(x.df.co, m.df.co, by = c('year', 'energy', 'msg_region1', 'msg_region2'))
+co <- inner_join(co, unique(ijports[c('port1', 'port2', 'distance')]), by = c('port1', 'port2'))
+
+co_byregion <- group_by(co, msg_region1, msg_region2, year, energy) %>% 
+                summarise(wtd_distance = weighted.mean(distance, port_exports, na.rm = T))
+co_byregion <- group_by(co_byregion, msg_region1, msg_region2, energy) %>%
+               mutate(constant_mean = mean(wtd_distance, na.rm = T))
+co_byregion$diff_from_mean <- (co_byregion$wtd_distance-co_byregion$constant_mean)/co_byregion$constant_mean
+
+co_byregion <- subset(co_byregion, !is.na(year) & 
+                        msg_region1 == 'MEA' & msg_region2 == 'NAM')
+co_byregion$energy <- toupper(co_byregion$energy)
+
+plot <- ggplot(aes(x = year, y = diff_from_mean, colour = energy), data = co_byregion) + 
+        geom_line(size = 1.5) + 
+        labs(x = "Year", y = "% deviation from time-constant mean", 
+             title = 'Difference between time-variant distance and mean over time', subtitle = 'MEA to NAM', colour = 'Energy') + 
+        theme(legend.position = 'bottom', text = element_text(size = 20)) +
+        scale_color_brewer(palette = 'Paired')
 
 # Aggregate to regional level
 all.trade <- unique(x.df[c('year', 'msg_region1', 'msg_region2', 'energy', 'region_trade')])

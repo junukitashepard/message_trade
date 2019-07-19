@@ -1,16 +1,14 @@
 ###################################################
 # Scale parameters based on trade volume (in GWa) #
-# bound_activity_lo and bound_activity_up
+# ref_activity
 ###################################################
-# Function: build bound_activity_'x' parameters
-build_bound_activity <- function(lo_or_up, energy) {
+# Function: build historical_activity parameter
+build_ref_activity <- function(energy) {
   
   environment(scale_exp_parameter) <- environment(expand_imp_parameter) <- environment()
   
-  print(paste0('Energy = ', energy))
-  
   assign('varlist', c('node_loc', 'technology', 'year_act', 'mode', 'time', 'value', 'unit'))
-  assign('parname', paste0('bound_activity_', lo_or_up))
+  assign('parname', 'ref_activity')
   assign('tra.energy', energy)
   
   # EXPORTS
@@ -26,29 +24,19 @@ build_bound_activity <- function(lo_or_up, energy) {
                                          tra.energy = tra.energy,
                                          varlist = varlist))
   
-  # CHECK LATER: Arbitrary number to add to upper bound
-  if (lo_or_up == 'up') {
-    exports$value <- exports$value  +100
-    imports$value <- imports$value +100
-  } else {
-    exports$value <- 0
-    imports$value <- 0
-  }
-  
+  # Subset to keep only non-missing value
   exports <- subset(exports, !is.na(value))
   imports <- subset(imports, !is.na(value) & year_act %in% year_act_base)
   
-  saveRDS(exports, file.path(output, paste0('bound_activity_', lo_or_up, '/', energy, '_exp.rds')))
-  saveRDS(imports, file.path(output, paste0('bound_activity_', lo_or_up, '/', energy, '_imp.rds')))
-  
-  write.csv(exports, file.path(output, paste0('bound_activity_', lo_or_up, '/', energy, '_exp.csv')))
-  write.csv(imports, file.path(output, paste0('bound_activity_', lo_or_up, '/', energy, '_imp.csv')))
+  saveRDS(exports, file.path(output, paste0('ref_activity/', energy, '_exp.rds')))
+  saveRDS(imports, file.path(output, paste0('ref_activity/', energy, '_imp.rds')))
+  write.csv(exports, file.path(output, paste0('ref_activity/', energy, '_exp.csv')))
+  write.csv(imports, file.path(output, paste0('ref_activity/', energy, '_imp.csv')))
 }
 
 # Run program
 for (e in energy_list) {
-  print(paste0('## Building parameters for = ', e, ' ##'))
-  
-  build_bound_activity(lo_or_up = 'lo', energy = e)
-  build_bound_activity(lo_or_up = 'up', energy = e)
+  build_ref_activity(e)
 }
+
+clean_up()

@@ -23,7 +23,8 @@ for (t in c(export_technologies, import_technologies)) {
       for (r_from in regions[regions != r_to]) {
         
         print(paste0('FROM = ', r_from))
-        assign('commodity.in', paste0(sub("_[^_]+$", "", t), '_', r_to))
+        #assign('commodity.in', paste0(commodity, '_', r_to))
+        assign('commodity.in', paste0(commodity))
         assign('technology.in', paste0(t, '_', r_to))
         
         assign('node_loc.in', paste0('R14_', toupper(r_from)))
@@ -35,7 +36,11 @@ for (t in c(export_technologies, import_technologies)) {
                                          mode = mode, time = time, time_dest = time_dest,
                                          commodity = commodity.in, level = level,
                                          value = value, unit = unit))
-        parout <- subset(parout, year_act - year_vtg <= 40)
+        # parout <- subset(parout, year_act - year_vtg < tech_lifetime & year_act - year_vtg >=0)
+        # parout <- subset(parout, year_act >= 1990)
+        # 
+        parout$year_vtg <- parout$year_act
+        parout <- unique(parout)
         parout <- subset(parout, year_act >= 1990)
         
         parin <- rbind(parin, parout)
@@ -45,7 +50,7 @@ for (t in c(export_technologies, import_technologies)) {
     # IMPORTS
     if (grepl('imp', t)) {
       
-      assign('commodity.in', paste0(sub("_[^_]+$", "", t)))
+      assign('commodity.in', commodity)
       assign('technology.in', t)
       
       assign('node_loc.in', paste0('R14_', toupper(r_to)))
@@ -58,6 +63,8 @@ for (t in c(export_technologies, import_technologies)) {
                                        commodity = commodity.in, level = level,
                                        value = value, unit = unit))
       parout$year_vtg <- parout$year_act
+      parout <- unique(parout)
+      parout <- subset(parout, year_act >= 1990)
       parin <- rbind(parin, parout)
     }
       

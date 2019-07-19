@@ -35,7 +35,11 @@ for (t in c(export_technologies, import_technologies)) {
                                 mode = mode, time = time, time_origin = time_origin,
                                 commodity = commodity, level = level,
                                 value = value, unit = unit))
-        parout <- subset(parout, year_act - year_vtg <= 40)
+        # parout <- subset(parout, year_act - year_vtg < tech_lifetime & year_act - year_vtg >=0)
+        # parout <- subset(parout, year_act >= 1990)
+
+        parout$year_vtg <- parout$year_act
+        parout <- unique(parout)
         parout <- subset(parout, year_act >= 1990)
         
         parin <- rbind(parin, parout)
@@ -50,7 +54,8 @@ for (t in c(export_technologies, import_technologies)) {
         
       assign('node_loc.in', paste0('R14_', toupper(r_to)))
       assign('node_origin.in', node_origin)
-      assign('commodity.in', paste0(commodity, '_', r_to))
+      # assign('commodity.in', paste0(commodity, '_', r_to))
+      assign('commodity.in', paste0(commodity))
       
       assign('parout', build_parameter(parname = parname, varlist = varlist, technology = technology.in,
                                         node_loc = node_loc.in, node_origin = node_origin.in,
@@ -58,10 +63,11 @@ for (t in c(export_technologies, import_technologies)) {
                                         mode = mode, time = time, time_origin = time_origin,
                                         commodity = commodity.in, level = level,
                                         value = value, unit = unit))
-      parout <- unique(parout)
+
       parout$year_vtg <- parout$year_act
-        
-        parin <- rbind(parin, parout)
+      parout <- unique(parout)
+      parout <- subset(parout, year_act >= 1990)
+      parin <- rbind(parin, parout)
     }
    parsave <- rbind(parsave, parin)
   }

@@ -26,7 +26,7 @@ build_historical_activity <- function(energy) {
   
   # Subset to keep only non-missing value
   exports <- subset(exports, !is.na(value))
-  imports <- subset(imports, !is.na(value))
+  imports <- subset(imports, !is.na(value) & year_act %in% year_act_base)
   
   saveRDS(exports, file.path(output, paste0('historical_activity/', energy, '_exp.rds')))
   saveRDS(imports, file.path(output, paste0('historical_activity/', energy, '_imp.rds')))

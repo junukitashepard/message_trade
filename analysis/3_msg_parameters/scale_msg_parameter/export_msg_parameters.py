@@ -48,13 +48,23 @@ for t in ['oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp',
           'oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp']:
     export_parameter(parname = 'historical_activity', tecname = t)    
     
+# relation_activity
+for t in ['oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp',
+          'oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp']:
+    export_parameter(parname = 'relation_activity', tecname = t)    
+    
 # historical_new_capacity (export technologies only)
 for t in ['oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp']:
     export_parameter(parname = 'historical_new_capacity', tecname = t) 
 
+# ref_new_capacity
+for t in ['oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp']:
+    export_parameter(parname = 'ref_new_capacity', tecname = t) 
 
-
-
+# ref_activity
+for t in ['oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp',
+          'oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp']:
+    export_parameter(parname = 'ref_activity', tecname = t)   
 
 
 
