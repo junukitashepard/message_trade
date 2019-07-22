@@ -13,7 +13,11 @@ mean_var_cost <- group_by(paths, energy, node_loc, technology) %>%
 
 # Set up in MESSAGEix format #
 ##############################
-paths_msg <- expand.grid(year_act, unique(paste0('R14_', toupper(regions))), unique(paths$technology))
+all_technologies <- expand.grid(export_technologies, regions)
+all_technologies$technology <- paste0(all_technologies$Var1, "_", all_technologies$Var2)
+all_technologies <- all_technologies$technology
+
+paths_msg <- expand.grid(year_act, unique(paste0('R14_', toupper(regions))), unique(all_technologies))
   names(paths_msg) <- c('year_act', 'node_loc', 'technology')
   paths_msg[, 2:3] <- lapply(paths_msg[, 2:3], function(x) as.character(x))
   paths_msg <- subset(paths_msg, tolower(substr(node_loc, 5, 7)) != 
@@ -26,27 +30,27 @@ paths_msg <- left_join(paths_msg, paths[c('node_loc', 'technology', 'year', 'var
 paths_msg <- left_join(paths_msg, mean_var_cost, by = c('node_loc', 'technology'))
 paths_msg$var_cost[is.na(paths_msg$var_cost)] <- paths_msg$mean_var_cost[is.na(paths_msg$var_cost)]
 
-# For landlocked regions, only allow pipeline access to be normal price, otherwise very high
-pipelines <- read.csv(file.path(wd, "raw/UserInputs/pipeline_connections.csv"), stringsAsFactors = F)
-names(pipelines) <- c('node1', 'node2')
-pipelines2 <- pipelines[c('node2', 'node1')]
-  names(pipelines2) <- c('node1', 'node2')
-pipelines <- unique(rbind(pipelines, pipelines2))
-pipelines$partners <- paste0(pipelines$node1, " ", pipelines$node2)
-pipelines$pipeline <- 1
+# For landlocked regions, only allow land access to be normal price, otherwise very high
+landacc <- read.csv(file.path(wd, "raw/UserInputs/pipeline_connections.csv"), stringsAsFactors = F)
+names(landacc) <- c('node1', 'node2')
+landacc2 <- landacc[c('node2', 'node1')]
+  names(landacc2) <- c('node1', 'node2')
+landacc <- unique(rbind(landacc, landacc2))
+landacc$partners <- paste0(landacc$node1, " ", landacc$node2)
+landacc$landacc <- 1
 
 paths_msg$partners <- paste0(paths_msg$node_loc, " R14_", 
                              toupper(substr(paths_msg$technology, nchar(paths_msg$technology) - 2, nchar(paths_msg$technology))))
 
-paths_msg <- left_join(paths_msg, pipelines[c('partners', 'pipeline')], by = c('partners'))
+paths_msg <- left_join(paths_msg, landacc[c('partners', 'landacc')], by = c('partners'))
 
-paths_msg$var_cost[paths_msg$pipeline == 1] <- 0
+paths_msg$var_cost[paths_msg$pipeline == 1] <- mean(paths_msg$var_cost[paths_msg$var_cost > 0], na.rm  = T)
+# paths_msg$var_cost[paths_msg$pipeline == 1] <- 0
 paths_msg$var_cost[is.na(paths_msg$var_cost)] <- 2*max(paths_msg$var_cost, na.rm = T) # make it very high to ship to landlocked regions
 paths_msg$pipeline <- paths_msg$partners <- NULL
 
 # Truncate at zero
 paths_msg$var_cost[paths_msg$var_cost < 0] <- 0
-#paths_msg$var_cost <- paths_msg$var_cost/10
 
 # Put in MESSAGE format
 parout <- expand.grid(year_act, year_vtg)

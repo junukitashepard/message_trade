@@ -4,6 +4,7 @@
 rm(list = ls())
 wd <- "H:/data/"
 repo <- "H:/message_trade/"
+msg_dir <- "C:/ProgramData/Anaconda3/Lib/site-packages/message_ix/model/output"
 setwd(wd)
 
 library('plyr')
@@ -12,14 +13,27 @@ library('magrittr')
 library('jsfunctions')
 library('ggplot2')
 library('readxl')
+library('gdxrrw') # install from github (lolow/gdxtools)
 
 library('RColorBrewer')
 ncolors <- 14
 mycolors <- colorRampPalette(brewer.pal(8, 'Paired'))(ncolors)
 
-input <-   paste0(wd, "output/analysis/message")
+# Import file using gdxrrw
+read_MESSAGE <- function(msg_version, msg_variable) {
+  
+  assign('var_out', rgdx(file.path(msg_dir, paste0('MsgOutput_MESSAGEix_TRADE__trade_parameters__v', msg_version, '.gdx')),
+                      list(name = msg_variable)))
+  var_out <- rgdx.var(var_out)
+  
+  i <- sapply(var_out, is.factor)
+  var_out[i] <- lapply(var_out[i], as.character)
+  
+  return(var_out)
+}
 
-# Import file
+activity <- read_MESSAGE(msg_version = 70, msg_variable = 'ACT')
+
 assign('activity', read_xlsx(file.path(input, 'activity.xlsx'), sheet = 1))
 names(activity) <- c('node', 'technology', 'year_act', 'year_vtg', 'mode', 'time', 'level', 'marginal', 'lower')
 

@@ -21,47 +21,24 @@ import message_ix as message_ix
 inpath = "H:/data/output/analysis/msg_parameters/"
  
 # Parameters to be updated:
-#parameter_list_export = ['bound_activity_lo', 'bound_activity_up', 'capacity_factor',
-#                         'emission_factor', 'fix_cost', 'growth_activity_lo', 
-#                         'growth_activity_up', 'historical_activity', 'historical_new_capacity',
-#                         'initial_activity_lo', 'initial_activity_up', 'input', 
-#                         'inv_cost', 'level_cost_activity_soft_lo', 
-#                         'level_cost_activity_soft_up', 'output', 'ref_activity', 
-#                         'ref_new_capacity', 'relation_activity', 'soft_activity_lo', 
-#                         'soft_activity_up', 'technical_lifetime', 'var_cost']
-#
-#parameter_list_import = ['bound_activity_lo', 'bound_activity_up', 'capacity_factor',
-#                         'emission_factor', 'fix_cost', 'growth_activity_lo', 
-#                         'growth_activity_up', 'historical_activity', 
-#                         'initial_activity_lo', 'initial_activity_up', 'input', 
-#                         'output', 'relation_activity', 'ref_activity', 'var_cost']
-
-#parameter_list_export = ['bound_activity_lo', 'bound_activity_up', 'capacity_factor',
-#                         'emission_factor', 'fix_cost','input', 'historical_activity',
-#                         'inv_cost', 'output', 'growth_activity_lo', 'growth_activity_up',
-#                         'technical_lifetime', 'var_cost']
-#
-#parameter_list_import = ['bound_activity_lo', 'bound_activity_up', 'capacity_factor',
-#                         'emission_factor', 'fix_cost', 'growth_activity_lo', 'historical_activity', 
-#                         'growth_activity_up', 'input', 
-#                         'output', 'var_cost']
 bound_activity = ['bound_activity_lo', 'bound_activity_up']
 growth_activity = ['growth_activity_lo', 'growth_activity_up']
 initial_activity = ['initial_activity_lo', 'initial_activity_up']
 level_cost_activity = ['level_cost_activity_soft_lo', 'level_cost_activity_soft_up']
 soft_activity = ['soft_activity_lo', 'soft_activity_up']
 
-parameter_list_export = bound_activity + growth_activity + 
-                         ['capacity_factor', 'emission_factor', 'technical_lifetime'
+base_export_parameters = ['capacity_factor', 'emission_factor', 'technical_lifetime',
                          'input', 'output',
                          'fix_cost', 'inv_cost', 'var_cost',
                          'historical_activity', 'historical_new_capacity']
-
-parameter_list_import = bound_activity + growth_activity +
-                         ['capacity_factor', 'emission_factor', 
+base_import_parameters = ['capacity_factor', 'emission_factor', 
                          'input', 'output',
-                         'fix_cost', 'inv_cost', 'var_cost',
+                         'fix_cost', 'var_cost',
                          'historical_activity']
+
+parameter_list_export = bound_activity + growth_activity + base_export_parameters
+
+parameter_list_import = bound_activity + growth_activity + base_import_parameters
 
 
 export_technologies = ['oil_exp'] # Add other technologies in a bit
@@ -151,7 +128,7 @@ for par in parameter_list_import:
 # Solve model #
 ###############
  #MUST INSERT SCENARIO COMMIT COMMENT   
-scenario.commit('Add historical activity')
+scenario.commit('Bilateral oil schema without any costs')
     
 print("Scenario version = " + str(scenario.version))
 modelPath = 'C:\ProgramData\Anaconda3\Lib\site-packages\message_ix\model'
