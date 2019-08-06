@@ -65,4 +65,7 @@ plot_global <- function(energy, trade) {
 oil_imports <- plot_global(energy = 'oil', trade = 'imp')
 oil_exports <- plot_global(energy = 'oil', trade = 'exp')
 
+coal_imports <- plot_global(energy = 'coal', trade = 'imp')
+coal_exports <- plot_global(energy = 'coal', trade = 'exp')
+
 

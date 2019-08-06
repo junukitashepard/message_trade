@@ -8,9 +8,6 @@ input_reg <- paste0(wd, "output/analysis/regress")
 paths <- readRDS(file.path(input_reg, 'var_cost_from_reg.rds'))
 isid('paths', c('node_loc', 'technology', 'year'))
 
-mean_var_cost <- group_by(paths, energy, node_loc, technology) %>%
-                 summarise(mean_var_cost = mean(var_cost, na.rm = T))
-
 # Set up in MESSAGEix format #
 ##############################
 all_technologies <- expand.grid(export_technologies, regions)
@@ -26,9 +23,15 @@ paths_msg <- expand.grid(year_act, unique(paste0('R14_', toupper(regions))), uni
 paths_msg <- left_join(paths_msg, paths[c('node_loc', 'technology', 'year', 'var_cost')], 
                        by = c('node_loc', 'technology', 'year_act' = 'year'))
 
-# Fill in with mean where missing (particularly future values)
-paths_msg <- left_join(paths_msg, mean_var_cost, by = c('node_loc', 'technology'))
-paths_msg$var_cost[is.na(paths_msg$var_cost)] <- paths_msg$mean_var_cost[is.na(paths_msg$var_cost)]
+# Make loil = foil variable costs
+foil_costs <- subset(paths_msg, grepl('foil_exp', technology))
+foil_costs$technology <- stringr::str_replace(foil_costs$technology, 'foil_', 'loil_')
+foil_costs$foil_cost <- foil_costs$var_cost
+foil_costs$var_cost <- foil_costs$mean_var_cost <- NULL
+
+paths_msg <- left_join(paths_msg, foil_costs, by = c('year_act', 'node_loc', 'technology'))
+paths_msg$var_cost[is.na(paths_msg$var_cost) & !is.na(paths_msg$foil_cost)] <- paths_msg$foil_cost[is.na(paths_msg$var_cost) & !is.na(paths_msg$foil_cost)]
+paths_msg$foil_cost <- NULL
 
 # For landlocked regions, only allow land access to be normal price, otherwise very high
 landacc <- read.csv(file.path(wd, "raw/UserInputs/pipeline_connections.csv"), stringsAsFactors = F)
@@ -44,19 +47,31 @@ paths_msg$partners <- paste0(paths_msg$node_loc, " R14_",
 
 paths_msg <- left_join(paths_msg, landacc[c('partners', 'landacc')], by = c('partners'))
 
-paths_msg$var_cost[paths_msg$pipeline == 1] <- mean(paths_msg$var_cost[paths_msg$var_cost > 0], na.rm  = T)
-# paths_msg$var_cost[paths_msg$pipeline == 1] <- 0
+paths_msg$var_cost[paths_msg$landacc == 1] <- mean(paths_msg$var_cost[paths_msg$var_cost > 0], na.rm  = T)
+
+# Fill in with mean where missing (particularly future values)
+mean_var_cost <- group_by(paths_msg, node_loc, technology) %>%
+                 summarise(mean_var_cost = mean(var_cost, na.rm = T))
+mean_var_cost$mean_var_cost[is.nan(mean_var_cost$mean_var_cost)] <- NA
+paths_msg$var_cost[is.nan(paths_msg$var_cost)] <- NA
+
+paths_msg <- left_join(paths_msg, mean_var_cost, by = c('node_loc', 'technology'))
+paths_msg$var_cost[is.na(paths_msg$var_cost)] <- paths_msg$mean_var_cost[is.na(paths_msg$var_cost)]
+
 paths_msg$var_cost[is.na(paths_msg$var_cost)] <- 2*max(paths_msg$var_cost, na.rm = T) # make it very high to ship to landlocked regions
-paths_msg$pipeline <- paths_msg$partners <- NULL
+paths_msg$partners <- NULL
 
 # Truncate at zero
 paths_msg$var_cost[paths_msg$var_cost < 0] <- 0
 
-# Put in MESSAGE format
-parout <- expand.grid(year_act, year_vtg)
-names(parout) <- c('year_act', 'year_vtg')
+# Put in MESSAGE format #
+#########################
+# parout <- expand.grid(year_act, year_vtg)
+# names(parout) <- c('year_act', 'year_vtg')
+# parout <- inner_join(parout, paths_msg, by = c('year_act'))
 
-parout <- inner_join(parout, paths_msg, by = c('year_act'))
+parout <- paths_msg
+parout$year_vtg <- parout$year_act
 
 parout$value <- parout$var_cost
 parout$mode <- mode
@@ -66,7 +81,7 @@ parout$time <- time
 parout <- parout[c('node_loc', 'technology', 'year_vtg',
                          'year_act', 'mode', 'time', 'value', 'unit')]
 
-parout <- subset(parout, year_act - year_vtg <= tech_lifetime & year_act - year_vtg >=0)
+#parout <- subset(parout, year_act - year_vtg <= tech_lifetime & year_act - year_vtg >=0)
 
 # Save by technology
 for (t in export_technologies) {

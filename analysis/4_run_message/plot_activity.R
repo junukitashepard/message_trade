@@ -22,7 +22,7 @@ mycolors <- colorRampPalette(brewer.pal(8, 'Paired'))(ncolors)
 
 # Plot GLOBAL baseline #
 ########################
-activity <- read_MESSAGE(msg_version = 72, msg_variable = 'ACT') # Baseline (global schema)
+activity <- read_MESSAGE(msg_version = 97, msg_variable = 'ACT') # Baseline (global schema)
 
 activity$vintage <- as.numeric(activity$vintage)
 activity$year_all <- as.numeric(activity$year_all)
@@ -33,7 +33,7 @@ plot_activity <- function(energy, trade) {
   
   df <- subset(df, grepl(paste0(energy, '_exp_'), tec))
   if (energy == 'oil') {
-    df <- subset(df, substr(tec, 1, 3) == 'oil')
+    df <- subset(df, substr(tec, 1, 3) == energy)
   }
   
   df <- subset(df, as.numeric(year_all) > 2015)
@@ -71,6 +71,22 @@ plot_activity <- function(energy, trade) {
   return(allplots)
 }
 
+# Oil trade
 oil_exports <- plot_activity(energy = 'oil', trade = 'exp')
 oil_imports <- plot_activity(energy = 'oil', trade = 'imp')
 
+# Light oil trade
+loil_exports <- plot_activity(energy = 'loil', trade = 'exp')
+loil_imports <- plot_activity(energy = 'loil', trade = 'imp')
+
+# Fuel oil trade
+foil_exports <- plot_activity(energy = 'foil', trade = 'exp')
+foil_imports <- plot_activity(energy = 'foil', trade = 'imp')
+
+# LNG trade
+LNG_exports <- plot_activity(energy = 'LNG', trade = 'exp')
+LNG_imports <- plot_activity(energy = 'LNG', trade = 'imp')
+
+# Coal trade
+coal_exports <- plot_activity(energy = 'coal', trade = 'exp')
+coal_imports <- plot_activity(energy = 'coal', trade = 'imp')

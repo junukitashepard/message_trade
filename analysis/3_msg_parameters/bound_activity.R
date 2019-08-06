@@ -28,8 +28,8 @@ build_bound_activity <- function(lo_or_up, energy) {
   
   # CHECK LATER: Arbitrary number to add to upper bound
   if (lo_or_up == 'up') {
-    exports$value <- exports$value  +100
-    imports$value <- imports$value +100
+    exports$value <- exports$value  + 10000
+    imports$value <- imports$value + 10000
   } else {
     exports$value <- 0
     imports$value <- 0

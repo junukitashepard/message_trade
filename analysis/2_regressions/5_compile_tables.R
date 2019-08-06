@@ -23,6 +23,7 @@ source(paste0(wd, '4_regress.R'))
 ##############################
 # Import file
 trade <- readRDS(file.path(input, "regdf.rds"))
+trade <- subset(trade, var_cost < 1000) # less than $1b/GWa
 
 energy_list <- c('oil', 'coal', 'foil', 'LNG')
 region_list <- c('AFR', 'CPA', 'EEU', 'LAM', 'MEA', 'NAM', 'PAO', 'PAS', 'SAS', 'WEU')

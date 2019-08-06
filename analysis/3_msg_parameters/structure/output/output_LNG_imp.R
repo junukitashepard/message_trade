@@ -18,5 +18,5 @@ value_constant <- TRUE
 mode <-'M1'
 time <- 'year'
 time_dest <- 'year'
-# Commodity in R script
+commodity <- 'LNG'
 level <- 'secondary'  

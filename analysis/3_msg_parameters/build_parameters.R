@@ -64,7 +64,7 @@ value_unit_fill <- function(df, parname, varlist, technology,
   
   if (value_constant == T) {
     if (is.data.frame(value)) {stop("You specified that value is constant, not dataframe")}
-    df$value = value
+    df$value <- value
   } else {
     if (!is.data.frame(value)) {stop("You specified that value is dataframe, not constant")}
     isid('df', unique_identifiers)

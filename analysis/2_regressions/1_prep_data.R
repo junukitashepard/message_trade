@@ -45,7 +45,7 @@ trade <- left_join(trade, regional_spec, by = c('iso.j' = 'iso'))
 names(trade)[10:11] <- c('msg.region.i', 'msg.region.j')
 
 # Calculate energy price ("variable cost") in $/GWa
-trade$q_e_gwa <- (trade$q_e * 277778 * 8760)/(10^6)
+trade$q_e_gwa <- (trade$q_e * .277778 / 8760)
 trade$var_cost <- (trade$v*1000)/trade$q_e_gwa
 
 # Use leading year for conflict and disputes
@@ -178,6 +178,10 @@ df <- left_join(df, embedded.disputes, by = c('iso.i' = 'i', 'iso.j' = 'j', 'yea
 df <- left_join(df, embedded.conflict, by = c('iso.i' = 'i', 'iso.j' = 'j', 'year' = 'year'))
 assert('!is.na(df$i) & !is.na(df$j)')
 isid('df', c('iso.i', 'iso.j', 'year', 'energy'))
+
+# Make var_cost in $m/GWa #
+###########################
+df$var_cost <- df$var_cost/10^6
 
 # Write file
 saveRDS(df, file.path(output, "regdf.rds"))

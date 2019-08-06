@@ -62,7 +62,7 @@ make_regdf <- function(varlist, subset_p = NULL) {
     
     for (r in c('all', region_list)) {
       print(paste0("Running regression for exporter = ", r))
-      assign(paste0('X'), run_reg(variable = v, energy_list = energy_list, exporters = r))
+      assign(paste0('X'), run_reg(variable.rr = v, energy_list.rr = energy_list, exporters = r))
       X <- as.data.frame(X)
       
       X <- X[2:nrow(X), c('Estimate', 'Std. Error', 'Pr(>|t|)')]
@@ -87,7 +87,9 @@ make_regdf <- function(varlist, subset_p = NULL) {
 
 # Run program
 var_cost_df <- 
-make_regdf(varlist = c('distance', 'sanction_imposition'))
+make_regdf(varlist = c('distance',
+                       'sanction_imposition', 'sanction_threat', 
+                       'lag1.minorconflict', 'lag1.war'))
 
 # Visualize results
 plot_hist <- function(df, variable, vartitle, unit) {
@@ -102,8 +104,8 @@ plot_hist <- function(df, variable, vartitle, unit) {
   return(plot)
 }
 
-plot_hist(df = 'var_cost_df', variable = 'distance_eff', vartitle = 'distance', unit = '$/GWa/1000km')
-plot_hist(df = 'var_cost_df', variable = 'sanction_imposition_eff', vartitle = 'sanction imposition', unit = '$/GWa/sanction')
+plot_hist(df = 'var_cost_df', variable = 'distance_eff', vartitle = 'distance', unit = '$M/GWa/1000km')
+plot_hist(df = 'var_cost_df', variable = 'sanction_imposition_eff', vartitle = 'sanction imposition', unit = '$M/GWa/sanction')
 
 # Put paths onto regression results #
 #####################################
@@ -128,11 +130,11 @@ paths$var_cost <- paths$distance * paths$distance_eff
 check <- subset(paths, is.na(var_cost))
 
 # Plot
-paths.plotdf <- subset(paths, var_cost != 0)
-hist <- ggplot(aes(x = var_cost), data = paths.plotdf) + 
+paths <- subset(paths, var_cost != 0)
+hist <- ggplot(aes(x = var_cost), data = paths) + 
         geom_histogram(colour = 'darkorange', fill = 'orange', alpha = 0.4) +
         labs(title = "Variable cost estimated by distance only",
-             subtitle = "Unit: $/GWa, Data ID: node_loc, technology, year",
+             subtitle = "Unit: $m/GWa, Data ID: node_loc, technology, year",
              x = "Variable cost",
              y = 'Count') + 
         theme(text = element_text(size = 24))

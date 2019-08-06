@@ -12,14 +12,14 @@ ols_regress <- function(variable, export.region = "all", import.region = "all", 
   if (energy.type != "all") {regdf <- subset(regdf, energy %in% energy.type)}
   
   regdf <- subset(regdf, !is.na(var_cost) & !is.infinite(var_cost) & !is.nan(var_cost)) # Keep only if non-missing Y variable
-  regdf <- subset(regdf, var_cost < 50)
+  regdf <- subset(regdf, var_cost < 1000)
   regdf$distance <- regdf$distance/(1000) # in thousand km
   
   # Assign formula
-  assign('form', "var_cost ~ distance + 
+  assign('form', paste0("var_cost ~ ", variable, " + 
          gdp.i + gdp.j + pop.i + pop.j + 
-         sanction_imposition +  
-         factor(iso.j) + factor(year)")
+         contiguity + common_language +
+         factor(iso.j) + factor(year) + "))
   
   # Add energy FE if all energy types included 
   if (energy.type == "all") {
@@ -37,7 +37,13 @@ ols_regress <- function(variable, export.region = "all", import.region = "all", 
   }
   
   assign('m', lm(as.formula(form), data = regdf))
-  assign('coef', summary(m)$coefficients[variable,])
+  
+  if(!(variable %in% rownames(summary(m)$coefficients))) {
+    assign('coef', rep(NA, 4))
+    names(coef) <- c('Estimate', 'Std. Error', 't value', 'Pr(>|t|)')
+  } else {
+    assign('coef', summary(m)$coefficients[variable,])
+  }
   
   # Add mean(Y)
   assign('meany', median(regdf$var_cost))

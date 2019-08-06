@@ -52,6 +52,7 @@ regions <- c('afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'nam', 'pao', 'pas', 'rus
 ####################
 # Import regionally aggregated trade data
 trade.df <- read.csv(file.path(input, 'trade/regional_trade.csv'), stringsAsFactors = F)
+trade.df$year[trade.df$year == 2014] <- 2015 # Use 2014 data as proxy for 2015 activity
 
 # Import cost spreadsheet
 costs <- read.csv(file.path(repo, "analysis/3_msg_parameters/costs/costs_input.csv"), stringsAsFactors = F)
