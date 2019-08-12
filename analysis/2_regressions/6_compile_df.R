@@ -86,10 +86,7 @@ make_regdf <- function(varlist, subset_p = NULL) {
 }
 
 # Run program
-var_cost_df <- 
-make_regdf(varlist = c('distance',
-                       'sanction_imposition', 'sanction_threat', 
-                       'lag1.minorconflict', 'lag1.war'))
+var_cost_df <- make_regdf(varlist = c('distance', 'agree_fta', 'agree_pta', 'sanction_imposition', 'sanction_threat'))
 
 # Visualize results
 plot_hist <- function(df, variable, vartitle, unit) {
@@ -105,7 +102,9 @@ plot_hist <- function(df, variable, vartitle, unit) {
 }
 
 plot_hist(df = 'var_cost_df', variable = 'distance_eff', vartitle = 'distance', unit = '$M/GWa/1000km')
-plot_hist(df = 'var_cost_df', variable = 'sanction_imposition_eff', vartitle = 'sanction imposition', unit = '$M/GWa/sanction')
+plot_hist(df = 'var_cost_df', variable = 'agree_fta_eff', vartitle = 'Free Trade Agreements', unit = '$M/GWa')
+plot_hist(df = 'var_cost_df', variable = 'agree_pta_eff', vartitle = 'Free Trade Agreements', unit = '$M/GWa')
+plot_hist(df = 'var_cost_df', variable = 'sanction_imposition_eff', vartitle = 'sanction', unit = '$M/GWa')
 
 # Put paths onto regression results #
 #####################################
@@ -120,7 +119,14 @@ paths$distance[is.na(paths$distance)] <- paths$mean_path[is.na(paths$distance)]
 paths <- paths[c('year', 'energy', 'node_loc', 'distance', 'technology', 'technology.link')]
 assert('!is.na(paths$distance)')
 
-# Combine paths wtih regression results
+# Save regression results for scenario creation #
+#################################################
+scenario_input <- var_cost_df
+scenario_input$distance_eff <- scenario_input$distance_se <- NULL
+saveRDS(scenario_input, file.path(output, 'scenario_effect.rds'))
+
+# Combine paths wtih regression results #
+#########################################
 var_cost_df <- subset(var_cost_df, node_loc == 'R14_all')
 paths <- left_join(paths, var_cost_df[c('technology', 'distance_eff')], 
                    by = c('technology.link' = 'technology'))
@@ -141,7 +147,6 @@ hist <- ggplot(aes(x = var_cost), data = paths) +
 
 # Save for MESSAGE parameterization
 saveRDS(paths, file.path(output, 'var_cost_from_reg.rds'))
-
 
 
 

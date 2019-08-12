@@ -23,38 +23,38 @@ mycolors <- colorRampPalette(brewer.pal(8, 'Paired'))(ncolors)
 
 # Plot GLOBAL baseline #
 ########################
-activity <- read_MESSAGE(msg_version = 71, msg_variable = 'ACT') # Baseline (global schema)
+activity <- read_MESSAGE(msg_scenario = 'baseline_global_schema', msg_version = 1, msg_variable = 'ACT') # Baseline (global schema)
 
 activity$vintage <- as.numeric(activity$vintage)
 activity$year_all <- as.numeric(activity$year_all)
 
 plot_global <- function(energy, trade) {
-  
+
   assign('df', activity)
-  
+
   df <- subset(df, grepl(paste0(energy, '_', trade), tec))
-  
+
   if (energy == 'oil') {
     df <- subset(df, substr(tec, 1, 3) == 'oil')
   }
-  
+
   df <- subset(df, as.numeric(year_all) > 2015)
-  
+
   df$node <- substr(df$node, 5, 7)
-  
+
   # Plot
   assign('regions', unique(df$node))
-  
+
   for (r in regions) {
-    plot <- ggplot(aes(x = year_all, y = value), 
-                   data = subset(df, node == r)) + 
-            geom_bar(stat = 'identity') + 
-            labs(x = 'Year', y = paste0(toupper(substr(energy, 1, 1)), substr(energy, 2, nchar(energy)), 
-                                        ' ', trade, 'orts (GWa)'), title = paste0('Region: ', r)) + 
+    plot <- ggplot(aes(x = year_all, y = value),
+                   data = subset(df, node == r)) +
+            geom_bar(stat = 'identity') +
+            labs(x = 'Year', y = paste0(toupper(substr(energy, 1, 1)), substr(energy, 2, nchar(energy)),
+                                        ' ', trade, 'orts (GWa)'), title = paste0('Region: ', r)) +
             theme(text = element_text(size = 16))
     assign(paste0('plot.', r), ggplotGrob(plot))
   }
-  
+
   assign('plotlist', mget(ls(pattern = 'plot.')))
 
   assign('allplots', gridExtra::arrangeGrob(grobs = plotlist))
@@ -62,10 +62,9 @@ plot_global <- function(energy, trade) {
 }
 
 # Run programs
-oil_imports <- plot_global(energy = 'oil', trade = 'imp')
-oil_exports <- plot_global(energy = 'oil', trade = 'exp')
-
-coal_imports <- plot_global(energy = 'coal', trade = 'imp')
-coal_exports <- plot_global(energy = 'coal', trade = 'exp')
+for (e in c('oil', 'foil', 'loil', 'coal', 'LNG')) {
+  assign(paste0(e, '_imports'), plot_global(energy = e, trade = 'imp'), envir = parent.frame())
+  assign(paste0(e, '_exports'), plot_global(energy = e, trade = 'exp'), envir = parent.frame())
+}
 
 

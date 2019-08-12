@@ -79,5 +79,5 @@ plot_heterog <- function(in.variable, y_axis_label) {
 
 # Run programs
 distance_plot <- plot_heterog('distance', 'Effect of 1000km increase on trade cost ($M/GWa)')
-sanction_plot <- plot_heterog('sanction_imposition', 'Effect of additional sanction on trade cost ($M/GWa')
-
+sanction_plot <- plot_heterog('sanction_threat', 'Effect of additional sanction threat on trade cost ($M/GWa')
+agree_fta_plot <- plot_heterog('agree_fta', 'Effect of FTA on trade cost ($M/GWa')

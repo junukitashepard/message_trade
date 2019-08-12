@@ -32,7 +32,7 @@ for (t in c(export_technologies, import_technologies)) {
                                          year_act = year_act, year_vtg = year_vtg,
                                          time = time, mode = mode, emission = emission, 
                                          value = value, unit = unit))
-        parout <- subset(parout, year_act - year_vtg <= 40 & year_act - year_vtg >=0)
+        parout$year_vtg <- parout$year_act
         parout <- subset(parout, year_act >= 1990)
         
         parin <- rbind(parin, parout)

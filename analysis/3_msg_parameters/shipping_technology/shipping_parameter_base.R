@@ -155,10 +155,17 @@ build_inv_cost <- function(technology.in, value.in, cost_scenario = 'BAU',
     
     # Competitive long-term (CLT): costs start very high but reach diesel costs by 2110 linearly
     if (cost_scenario == 'CLT') {
-      par.inv_cost$value <- NA
-      par.inv_cost$value[par.inv_cost$year_vtg < 2020] <- value.in
-      par.inv_cost$value[par.inv_cost$year_vtg == 2110] <- dc
-      par.inv_cost$value <- zoo::na.approx(par.inv_cost$value)
+      
+      ic <- as.data.frame(min(year_vtg):max(year_vtg))
+      names(ic) <- 'year_vtg'
+      ic$inv_cost[ic$year_vtg < 2020] <- value.in
+      ic$inv_cost[ic$year_vtg == 2110] <- dc
+      ic$inv_cost <- zoo::na.approx(ic$inv_cost)
+      
+      par.inv_cost <- left_join(par.inv_cost, ic, by = c('year_vtg'))
+      par.inv_cost$value <- par.inv_cost$inv_cost
+      par.inv_cost$inv_cost <- NULL
+      
     }
   }
   return(par.inv_cost)

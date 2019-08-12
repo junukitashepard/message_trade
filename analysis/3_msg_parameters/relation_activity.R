@@ -38,6 +38,34 @@ build_relation_activity <- function(energy) {
   repdf <- subset(repdf, tec_node != node_loc & tec_node != node_rel)
   repdf$tec_node <- NULL
   
+  # Add a relation to get 'resource'_trd = sum of all exports
+  ############################################################
+  assign('varlist',  c('relation', 'node_loc', 'technology', 'year_act', 'mode', 'value', 'unit')) # add year_rel, node_rel ex-post
+  
+  # All exports
+  assign('region_exports', 
+         build_parameter(parname = 'all_exports', varlist = varlist, technology = paste0(energy, '_exp'),
+                         node_loc = paste0('R14_', toupper(regions)),
+                         year_act = year_act, 
+                         mode = 'M1', relation = paste0('lim_', energy, '_trd'),
+                         value = -1, unit = '???'))
+  
+  region_exports$year_rel <- region_exports$year_act
+  region_exports$node_rel <- 'R14_GLB'
+  
+  # Global trade
+  assign('global_trade', 
+         build_parameter(parname = 'all_exports', varlist = varlist, technology = paste0(energy, '_trd'),
+                         node_loc = 'R14_GLB',
+                         year_act = year_act, 
+                         mode = 'M1', relation = paste0('lim_', energy, '_trd'),
+                         value = 1, unit = '???'))
+  
+  global_trade$year_rel <- global_trade$year_act
+  global_trade$node_rel <- 'R14_GLB'
+
+  glb_relation <- rbind(region_exports, global_trade)
+  
   # Add a relation to get total exports = sum of all bilateral exports
   ######################################################################
   assign('varlist',  c('relation', 'node_loc', 'technology', 'year_act', 'mode', 'value', 'unit')) # add year_rel, node_rel ex-post
@@ -56,7 +84,7 @@ build_relation_activity <- function(energy) {
   # Bilateral exports
   assign('bilateral_exports', data.frame())
   
-  for (r in regions) {
+  for (r in c(regions, 'glb')) {
       
     assign('tec.in', paste0(energy, '_exp_', r))
       
@@ -82,7 +110,7 @@ build_relation_activity <- function(energy) {
   export_relation <- subset(export_relation, tec_node != node_loc & tec_node != node_rel)
   export_relation$tec_node <- NULL
   
-  repdf <- rbind(repdf, export_relation)
+  repdf <- rbind(repdf, export_relation, glb_relation)
   
   saveRDS(repdf, file.path(output, paste0('relation_activity/', energy, '_exp.rds')))
   write.csv(repdf, file.path(output, paste0('relation_activity/', energy, '_exp.csv')))
@@ -120,15 +148,27 @@ build_relation_limits <- function(relation, value, node_rel, year_rel) {
 }
 
 for (e in energy_list) {
-  upper_limit <- build_relation_limits(relation = paste0('lim_', e, '_exp'), 
+  ul_export_relation <- build_relation_limits(relation = paste0('lim_', e, '_exp'), 
                                        value = 0, 
                                        node_rel = paste0('R14_', toupper(regions)),
                                        year_rel = year_act)
   
-  lower_limit <- build_relation_limits(relation = paste0('lim_', e, '_exp'), 
+  ll_export_relation <- build_relation_limits(relation = paste0('lim_', e, '_exp'), 
                                        value = 0, 
                                        node_rel = paste0('R14_', toupper(regions)),
                                        year_rel = year_act)
+  ul_glb_relation <- build_relation_limits(relation = paste0('lim_', e, '_trd'), 
+                                              value = 0, 
+                                              node_rel = paste0('R14_', toupper(regions)),
+                                              year_rel = year_act)
+  
+  ll_glb_relation <- build_relation_limits(relation = paste0('lim_', e, '_trd'), 
+                                              value = 0, 
+                                              node_rel = paste0('R14_', toupper(regions)),
+                                              year_rel = year_act)
+  
+  upper_limit <- rbind(ul_export_relation, ul_glb_relation)
+  lower_limit <- rbind(ll_export_relation, ll_glb_relation)
   
   write.csv(upper_limit, file.path(output, paste0('relation_upper/', e, '_exp.csv')))
   write.csv(lower_limit, file.path(output, paste0('relation_lower/', e, '_exp.csv')))

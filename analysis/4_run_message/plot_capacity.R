@@ -22,7 +22,7 @@ mycolors <- colorRampPalette(brewer.pal(8, 'Paired'))(ncolors)
 
 # Plot GLOBAL baseline #
 ########################
-capacity <- read_MESSAGE(msg_version = 97, msg_variable = 'CAP_NEW') # Baseline (global schema)
+capacity <- read_MESSAGE(msg_scenario = 'shipping_CLT', msg_version = 1, msg_variable = 'CAP_NEW') # Baseline (global schema)
 
 capacity$field <- as.numeric(capacity$field)
 
@@ -59,5 +59,5 @@ plot_capacity <- function(shipping_type, y_axis_text) {
 
 # Plot new capacity
 liquid_shipping <- plot_capacity('liquid', 'New liquid shipping capacity, diesel (bton-km)')
-solid_shipping <- plot_capacity('solid', 'New liquid shipping capacity, diesel (bton-km)')
-LNG_shipping <- plot_capacity('LNG', 'New liquid shipping capacity, diesel (bton-km)')
+solid_shipping <- plot_capacity('solid', 'New solid shipping capacity, diesel (bton-km)')
+LNG_shipping <- plot_capacity('LNG', 'New LNG shipping capacity, diesel (bton-km)')

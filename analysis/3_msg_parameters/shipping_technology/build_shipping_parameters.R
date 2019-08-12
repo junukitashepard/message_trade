@@ -44,7 +44,8 @@ tech_lifetime <- 25
 ########################################
 compile_shipping_parameters <- function(type_of_shipping, shipping_fuel, shipping_fuel.msg, 
                                         fix_cost.value, inv_cost.value, var_cost.value, 
-                                        input.value, technical_lifetime.value, emission_factor.value) {
+                                        input.value, technical_lifetime.value, emission_factor.value,
+                                        technology_trend = 'BAU') {
   
   par.capacity_factor <- build_capacity_factor(paste0(type_of_shipping, '_', shipping_fuel), 
                                                no.vintage = F)
@@ -53,7 +54,7 @@ compile_shipping_parameters <- function(type_of_shipping, shipping_fuel, shippin
                                  no.vintage = F)
   
   par.inv_cost <- build_inv_cost(paste0(type_of_shipping, '_', shipping_fuel), 
-                                 inv_cost.value, cost_scenario = 'CLT')
+                                 inv_cost.value, cost_scenario = technology_trend)
   
   par.input <- build_input(paste0(type_of_shipping, '_', shipping_fuel), 
                            shipping_fuel.msg, 
@@ -74,71 +75,95 @@ compile_shipping_parameters <- function(type_of_shipping, shipping_fuel, shippin
                                  var_cost.value, 
                                  no.vintage = F)
 
-  for (p in parameter_list) {
+  for (p in parameter_list[!(parameter_list %in% 'inv_cost')]) {
     assign('df', get(paste0('par.', p)))
     write.csv(df, file.path(output, paste0(p, "/", type_of_shipping, '_', shipping_fuel, '.csv')))
   }
+  
+  # Investment cost parameter will be stored in SCENARIOS if it is not baseline
+  if (technology_trend == 'BAU') {
+    write.csv(par.inv_cost, file.path(output, paste0("inv_cost/", type_of_shipping, '_', shipping_fuel, '.csv')))
+  } else if (technology_trend == 'CLT') {
+    write.csv(par.inv_cost, file.path(output, paste0("SCENARIOS/shipping_CLT/inv_cost/", type_of_shipping, '_', shipping_fuel, '.csv')))
+  }
 }
 
-# Liquid shipping technologies
-##############################
-# liquid_shipping (Diesel)
-compile_shipping_parameters(type_of_shipping = 'liquid_shipping',
-                            shipping_fuel = 'diesel', shipping_fuel.msg = 'fueloil',
-                            fix_cost.value = 0, inv_cost.value = 5.86e-8, var_cost.value = 0,
-                            input.value = 0.009, technical_lifetime.value = 25, emission_factor.value = 0.021)
+# Build parameters #
+####################
+runall_shipping_parameters <- function(tech_scenario) {
+  
+  # Liquid shipping technologies
+  ##############################
+  # liquid_shipping (Diesel)
+  compile_shipping_parameters(type_of_shipping = 'liquid_shipping',
+                              shipping_fuel = 'diesel', shipping_fuel.msg = 'fueloil',
+                              fix_cost.value = 0, inv_cost.value = 5.86e-8, var_cost.value = 0,
+                              input.value = 0.009, technical_lifetime.value = 25, emission_factor.value = 0.021,
+                              technology_trend = tech_scenario)
+  
+  # liquid_shipping (LNG)
+  compile_shipping_parameters(type_of_shipping = 'liquid_shipping',
+                              shipping_fuel = 'LNG', shipping_fuel.msg = 'LNG',
+                              fix_cost.value = 0, inv_cost.value = 7.40e-8, var_cost.value = 0,
+                              input.value = 0.004, technical_lifetime.value = 25, emission_factor.value = 0.009,
+                              technology_trend = tech_scenario)
+  
+  # liquid_shipping (Electricity)
+  compile_shipping_parameters(type_of_shipping = 'liquid_shipping',
+                              shipping_fuel = 'elec', shipping_fuel.msg = 'electr',
+                              fix_cost.value = 0, inv_cost.value = 1.48e-3, var_cost.value = 0,
+                              input.value = 0.003, technical_lifetime.value = 25, emission_factor.value = 0,
+                              technology_trend = tech_scenario)
+  
+  # Solid shipping technologies
+  #############################
+  # Solid shipping (diesel)
+  compile_shipping_parameters(type_of_shipping = 'solid_shipping',
+                              shipping_fuel = 'diesel', shipping_fuel.msg = 'fueloil',
+                              fix_cost.value = 0, inv_cost.value = 7.95e-8, var_cost.value = 0,
+                              input.value = 0.01, technical_lifetime.value = 25, emission_factor.value = 0.022,
+                              technology_trend = tech_scenario)
+  
+  # Solid shipping (LNG)
+  compile_shipping_parameters(type_of_shipping = 'solid_shipping',
+                              shipping_fuel = 'LNG', shipping_fuel.msg = 'LNG',
+                              fix_cost.value = 0, inv_cost.value = 1.1e-7, var_cost.value = 0,
+                              input.value = .004, technical_lifetime.value = 25, emission_factor.value = .008,
+                              technology_trend = tech_scenario)
+  
+  # Solid shipping (Electricity)
+  compile_shipping_parameters(type_of_shipping = 'solid_shipping',
+                              shipping_fuel = 'elec', shipping_fuel.msg = 'electr',
+                              fix_cost.value = 0, inv_cost.value = 2.2e-3, var_cost.value = 0,
+                              input.value = .003, technical_lifetime.value = 25, emission_factor.value = 0,
+                              technology_trend = tech_scenario)
+  
+  # LNG shipping technologies
+  ###########################
+  # LNG shipping (diesel)
+  compile_shipping_parameters(type_of_shipping = 'LNG_shipping',
+                              shipping_fuel = 'diesel', shipping_fuel.msg = 'fueloil',
+                              fix_cost.value = 0, inv_cost.value = 1.3e-7, var_cost.value = 0,
+                              input.value = 0.024, technical_lifetime.value = 25, emission_factor.value = 0.052,
+                              technology_trend = tech_scenario)
+  
+  # LNG shipping (LNG)
+  compile_shipping_parameters(type_of_shipping = 'LNG_shipping',
+                              shipping_fuel = 'LNG', shipping_fuel.msg = 'LNG',
+                              fix_cost.value = 0, inv_cost.value = 1.54e-7, var_cost.value = 0,
+                              input.value = 0.007, technical_lifetime.value = 25, emission_factor.value = 0.014,
+                              technology_trend = tech_scenario)
+  
+  # LNG shipping (Electricity)
+  compile_shipping_parameters(type_of_shipping = 'LNG_shipping',
+                              shipping_fuel = 'elec', shipping_fuel.msg = 'electr',
+                              fix_cost.value = 0, inv_cost.value = 3.08e-3, var_cost.value = 0,
+                              input.value = 0.003, technical_lifetime.value = 25, emission_factor.value = 0,
+                              technology_trend = tech_scenario)
+}
 
-# liquid_shipping (LNG)
-compile_shipping_parameters(type_of_shipping = 'liquid_shipping',
-                            shipping_fuel = 'LNG', shipping_fuel.msg = 'LNG',
-                            fix_cost.value = 0, inv_cost.value = 7.40e-8, var_cost.value = 0,
-                            input.value = 0.004, technical_lifetime.value = 25, emission_factor.value = 0.009)
-
-# liquid_shipping (Electricity)
-compile_shipping_parameters(type_of_shipping = 'liquid_shipping',
-                            shipping_fuel = 'elec', shipping_fuel.msg = 'electr',
-                            fix_cost.value = 0, inv_cost.value = 1.48, var_cost.value = 0,
-                            input.value = 0.003, technical_lifetime.value = 25, emission_factor.value = 0)
-
-# Solid shipping technologies
-#############################
-# Solid shipping (diesel)
-compile_shipping_parameters(type_of_shipping = 'solid_shipping',
-                            shipping_fuel = 'diesel', shipping_fuel.msg = 'fueloil',
-                            fix_cost.value = 0, inv_cost.value = 7.95e-8, var_cost.value = 0,
-                            input.value = 0.01, technical_lifetime.value = 25, emission_factor.value = 0.022)
-
-# Solid shipping (LNG)
-compile_shipping_parameters(type_of_shipping = 'solid_shipping',
-                            shipping_fuel = 'LNG', shipping_fuel.msg = 'LNG',
-                            fix_cost.value = 0, inv_cost.value = 1.1e-7, var_cost.value = 0,
-                            input.value = .004, technical_lifetime.value = 25, emission_factor.value = .008)
-
-# Solid shipping (Electricity)
-compile_shipping_parameters(type_of_shipping = 'solid_shipping',
-                            shipping_fuel = 'elec', shipping_fuel.msg = 'electr',
-                            fix_cost.value = 0, inv_cost.value = 2.2, var_cost.value = 0,
-                            input.value = .003, technical_lifetime.value = 25, emission_factor.value = 0)
-
-# LNG shipping technologies
-###########################
-# LNG shipping (diesel)
-compile_shipping_parameters(type_of_shipping = 'LNG_shipping',
-                            shipping_fuel = 'diesel', shipping_fuel.msg = 'fueloil',
-                            fix_cost.value = 0, inv_cost.value = 1.3e-7, var_cost.value = 0,
-                            input.value = 0.024, technical_lifetime.value = 25, emission_factor.value = 0.052)
-
-# LNG shipping (LNG)
-compile_shipping_parameters(type_of_shipping = 'LNG_shipping',
-                            shipping_fuel = 'LNG', shipping_fuel.msg = 'LNG',
-                            fix_cost.value = 0, inv_cost.value = 1.54e-7, var_cost.value = 0,
-                            input.value = 0.007, technical_lifetime.value = 25, emission_factor.value = 0.014)
-
-# LNG shipping (Electricity)
-compile_shipping_parameters(type_of_shipping = 'LNG_shipping',
-                            shipping_fuel = 'elec', shipping_fuel.msg = 'electr',
-                            fix_cost.value = 0, inv_cost.value = 3.08, var_cost.value = 0,
-                            input.value = 0.003, technical_lifetime.value = 25, emission_factor.value = 0)
+runall_shipping_parameters(tech_scenario = 'BAU')
+runall_shipping_parameters(tech_scenario = 'CLT')
 
 # Relation parameters
 ######################

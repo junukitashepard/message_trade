@@ -66,14 +66,11 @@ paths_msg$var_cost[paths_msg$var_cost < 0] <- 0
 
 # Put in MESSAGE format #
 #########################
-# parout <- expand.grid(year_act, year_vtg)
-# names(parout) <- c('year_act', 'year_vtg')
-# parout <- inner_join(parout, paths_msg, by = c('year_act'))
-
 parout <- paths_msg
 parout$year_vtg <- parout$year_act
 
 parout$value <- parout$var_cost
+
 parout$mode <- mode
 parout$unit <- unit
 parout$time <- time
@@ -81,7 +78,8 @@ parout$time <- time
 parout <- parout[c('node_loc', 'technology', 'year_vtg',
                          'year_act', 'mode', 'time', 'value', 'unit')]
 
-#parout <- subset(parout, year_act - year_vtg <= tech_lifetime & year_act - year_vtg >=0)
+# Save across technologies
+saveRDS(parout, file.path(output, 'var_cost/var_cost_base.rds'))
 
 # Save by technology
 for (t in export_technologies) {
@@ -92,4 +90,6 @@ for (t in export_technologies) {
   
   saveRDS(df, file.path(output, paste0('var_cost/', t, '.rds')))
   write.csv(df, file.path(output, paste0('var_cost/', t, '.csv')))
+  write.csv(df, file.path(output, paste0('SCENARIOS/baseline_no_tariff/var_cost/', t, '.csv')))
+  
 }

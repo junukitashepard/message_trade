@@ -3,7 +3,7 @@
 ############################
 # Simple regression function
 ols_regress <- function(variable, export.region = "all", import.region = "all", energy.type = "all",
-                        full.summary = FALSE) {
+                        full.summary = FALSE, depvar) {
   
   assign('regdf', trade)
 
@@ -16,7 +16,7 @@ ols_regress <- function(variable, export.region = "all", import.region = "all", 
   regdf$distance <- regdf$distance/(1000) # in thousand km
   
   # Assign formula
-  assign('form', paste0("var_cost ~ ", variable, " + 
+  assign('form', paste0(depvar, " ~ ", variable, " + 
          gdp.i + gdp.j + pop.i + pop.j + 
          contiguity + common_language +
          factor(iso.j) + factor(year) + "))
@@ -60,14 +60,14 @@ ols_regress <- function(variable, export.region = "all", import.region = "all", 
 }
 
 # Function: run for all regions and by region
-run_reg <- function(variable.rr, energy_list.rr = energy_list, exporters = "all", importers = "all") {
+run_reg <- function(variable.rr, energy_list.rr = energy_list, exporters = "all", importers = "all", depvar.rr = 'var_cost') {
   
   assign('tab.names', c('base'))
   
-  assign('model_base', ols_regress(variable.rr, export.region = exporters, import.region = importers))
+  assign('model_base', ols_regress(variable.rr, export.region = exporters, import.region = importers, depvar = depvar.rr))
   
   for (e in energy_list.rr) {
-    assign('d.coef', ols_regress(variable.rr, export.region = exporters, import.region = importers, energy.type = e))
+    assign('d.coef', ols_regress(variable.rr, export.region = exporters, import.region = importers, energy.type = e, depvar = depvar.rr))
     model_base <- rbind(model_base, d.coef)
     tab.names <- c(tab.names, e)
   }

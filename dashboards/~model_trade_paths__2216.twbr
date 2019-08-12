@@ -1,0 +1,2244 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20192.19.0515.1630                               -->
+<workbook source-build='2019.2.0 (20192.19.0515.1630)' source-platform='win' version='18.1' xml:base='https://public.tableau.com' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <AutoCreateAndUpdateDSDPhoneLayouts ignorable='true' predowngraded='true' />
+    <MapboxVectorStylesAndLayers />
+    <SheetIdentifierTracking ignorable='true' predowngraded='true' />
+    <WindowsPersistSimpleIdentifiers />
+    <ZoneBackgroundTransparency />
+  </document-format-change-manifest>
+  <repository-location id='model_trade_paths' path='/workbooks' revision='1.3' />
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource caption='message_trade' inline='true' name='federated.0q0wl531iuruod1g2b09b144u0wu' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='message_trade' name='textscan.1emibdm05hofkd1fv6ntn02vvn6q'>
+            <connection class='textscan' directory='H:/data/output/analysis/message' filename='message_trade.csv' password='' server='' workgroup-auth-mode='as-is' />
+          </named-connection>
+        </named-connections>
+        <relation connection='textscan.1emibdm05hofkd1fv6ntn02vvn6q' name='message_trade.csv' table='[message_trade#csv]' type='table'>
+          <columns character-set='UTF-8' header='yes' locale='en_US' separator=','>
+            <column datatype='integer' name='F1' ordinal='0' />
+            <column datatype='string' name='scenario' ordinal='1' />
+            <column datatype='string' name='region' ordinal='2' />
+            <column datatype='string' name='energy' ordinal='3' />
+            <column datatype='integer' name='year' ordinal='4' />
+            <column datatype='integer' name='id' ordinal='5' />
+            <column datatype='real' name='net_exports' ordinal='6' />
+            <column datatype='real' name='lat' ordinal='7' />
+            <column datatype='real' name='long' ordinal='8' />
+            <column datatype='integer' name='step' ordinal='9' />
+          </columns>
+        </relation>
+        <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[message_trade.csv]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='character-set'>&quot;UTF-8&quot;</attribute>
+              <attribute datatype='string' name='collation'>&quot;en_US&quot;</attribute>
+              <attribute datatype='string' name='field-delimiter'>&quot;,&quot;</attribute>
+              <attribute datatype='string' name='header-row'>&quot;true&quot;</attribute>
+              <attribute datatype='string' name='locale'>&quot;en_US&quot;</attribute>
+              <attribute datatype='string' name='single-char'>&quot;&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>F1</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[F1]</local-name>
+            <parent-name>[message_trade.csv]</parent-name>
+            <remote-alias>F1</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>scenario</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[scenario]</local-name>
+            <parent-name>[message_trade.csv]</parent-name>
+            <remote-alias>scenario</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>region</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[region]</local-name>
+            <parent-name>[message_trade.csv]</parent-name>
+            <remote-alias>region</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>energy</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[energy]</local-name>
+            <parent-name>[message_trade.csv]</parent-name>
+            <remote-alias>energy</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>year</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[year]</local-name>
+            <parent-name>[message_trade.csv]</parent-name>
+            <remote-alias>year</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[id]</local-name>
+            <parent-name>[message_trade.csv]</parent-name>
+            <remote-alias>id</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>net_exports</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[net_exports]</local-name>
+            <parent-name>[message_trade.csv]</parent-name>
+            <remote-alias>net_exports</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>lat</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[lat]</local-name>
+            <parent-name>[message_trade.csv]</parent-name>
+            <remote-alias>lat</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>long</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[long]</local-name>
+            <parent-name>[message_trade.csv]</parent-name>
+            <remote-alias>long</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>step</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[step]</local-name>
+            <parent-name>[message_trade.csv]</parent-name>
+            <remote-alias>step</remote-alias>
+            <ordinal>9</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='Alias.Energy' datatype='string' name='[Calculation_734086759657762816]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='IF [energy] == &apos;loil&apos; THEN &apos;Energy: Light Oil&apos;&#13;&#10;ELSEIF  [energy] == &apos;foil&apos; THEN &apos;Energy: Fuel Oil&apos;&#13;&#10;ELSEIF  [energy] == &apos;oil&apos; THEN &apos;Energy: Crude Oil&apos;&#13;&#10;ELSEIF  [energy] == &apos;coal&apos; THEN &apos;Energy: Coal&apos;&#13;&#10;ELSEIF  [energy] == &apos;LNG&apos; THEN &apos;Energy: LNG&apos;&#13;&#10;END' />
+      </column>
+      <column caption='Label.Energy.Out' datatype='string' name='[Calculation_734086759658250241]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='&quot;Energy: &quot; + [Calculation_734086759657762816]' />
+      </column>
+      <column caption='Alias.Scenario' datatype='string' name='[Calculation_734086759658434562]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='IF  [scenario] == &apos;baseline&apos; THEN &quot;Baseline&quot;&#13;&#10;END' />
+      </column>
+      <column caption='Label.Scenario.Out' datatype='string' name='[Calculation_734086759658541059]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='&quot;Scenario: &quot; + [Calculation_734086759658434562]' />
+      </column>
+      <column caption='Label.Year.Out' datatype='string' name='[Calculation_734086759658639364]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='&quot;Year: &quot; + STR([year])' />
+      </column>
+      <column caption='Energy and step' datatype='string' name='[Calculation_734086759994200069]' role='dimension' type='nominal'>
+        <calculation class='tableau' formula='[energy] + str([step])' />
+      </column>
+      <column datatype='integer' name='[Number of Records]' role='measure' type='quantitative' user:auto-column='numrec'>
+        <calculation class='tableau' formula='1' />
+      </column>
+      <column caption='Energy' datatype='string' name='[energy]' role='dimension' type='nominal'>
+        <aliases>
+          <alias key='&quot;coal&quot;' value='Coal' />
+          <alias key='&quot;dummy&quot;' value='z' />
+          <alias key='&quot;foil&quot;' value='Fuel Oil' />
+          <alias key='&quot;loil&quot;' value='Light Oil' />
+          <alias key='&quot;oil&quot;' value='Crude Oil' />
+        </aliases>
+      </column>
+      <column caption='Id' datatype='integer' name='[id]' role='dimension' type='ordinal' />
+      <column aggregation='Avg' caption='Lat' datatype='real' name='[lat]' role='dimension' semantic-role='[Geographical].[Latitude]' type='quantitative' />
+      <column aggregation='Avg' caption='Long' datatype='real' name='[long]' role='dimension' semantic-role='[Geographical].[Longitude]' type='quantitative' />
+      <column caption='Net Exports' datatype='real' default-format='n#,##0.00;-#,##0.00' name='[net_exports]' role='measure' type='quantitative' />
+      <column caption='Region' datatype='string' name='[region]' role='dimension' type='nominal' />
+      <column caption='Scenario' datatype='string' name='[scenario]' role='dimension' type='nominal'>
+        <aliases>
+          <alias key='&quot;baseline&quot;' value='Baseline' />
+          <alias key='&quot;tariff_high&quot;' value='High Tariff' />
+          <alias key='&quot;tariff_low&quot;' value='Low Tariff' />
+        </aliases>
+      </column>
+      <column aggregation='Sum' caption='Step' datatype='integer' name='[step]' role='dimension' type='ordinal' />
+      <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+      <column-instance column='[Calculation_734086759657762816]' derivation='None' name='[none:Calculation_734086759657762816:nk]' pivot='key' type='nominal' />
+      <column-instance column='[Calculation_734086759658639364]' derivation='None' name='[none:Calculation_734086759658639364:nk]' pivot='key' type='nominal' />
+      <column-instance column='[energy]' derivation='None' name='[none:energy:nk]' pivot='key' type='nominal' />
+      <column-instance column='[step]' derivation='None' name='[none:step:ok]' pivot='key' type='ordinal' />
+      <group hidden='true' name='[Exclusions (Alias.Energy,Label.Year.Out)]' name-style='unqualified' user:auto-column='exclude'>
+        <groupfilter function='crossjoin'>
+          <groupfilter function='level-members' level='[none:Calculation_734086759657762816:nk]' />
+          <groupfilter function='level-members' level='[none:Calculation_734086759658639364:nk]' />
+        </groupfilter>
+      </group>
+      <extract count='-1' enabled='false' units='records'>
+        <connection access_mode='readonly' authentication='auth-none' author-locale='en_US' class='hyper' dbname='C:/Users/shepard/Documents/My Tableau Repository/Datasources/message_trade.hyper' default-settings='yes' schema='Extract' sslmode='' tablename='Extract' update-time='08/09/2019 09:45:06 AM' username='tableau_internal_user'>
+          <relation name='Extract' table='[Extract].[Extract]' type='table' />
+          <refresh>
+            <refresh-event add-from-file-path='message_trade' increment-value='%null%' refresh-type='create' rows-inserted='1060' timestamp-start='2019-08-09 09:45:06.642' />
+          </refresh>
+          <metadata-records>
+            <metadata-record class='column'>
+              <remote-name>F1</remote-name>
+              <remote-type>20</remote-type>
+              <local-name>[F1]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>F1</remote-alias>
+              <ordinal>0</ordinal>
+              <family>message_trade.csv</family>
+              <local-type>integer</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>1060</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>scenario</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[scenario]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>scenario</remote-alias>
+              <ordinal>1</ordinal>
+              <family>message_trade.csv</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>1</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='0' name='LEN_RUS' />
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>region</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[region]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>region</remote-alias>
+              <ordinal>2</ordinal>
+              <family>message_trade.csv</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>14</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='0' name='LEN_RUS' />
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>energy</remote-name>
+              <remote-type>129</remote-type>
+              <local-name>[energy]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>energy</remote-alias>
+              <ordinal>3</ordinal>
+              <family>message_trade.csv</family>
+              <local-type>string</local-type>
+              <aggregation>Count</aggregation>
+              <approx-count>5</approx-count>
+              <contains-null>true</contains-null>
+              <collation flag='0' name='LEN_RUS' />
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>year</remote-name>
+              <remote-type>20</remote-type>
+              <local-name>[year]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>year</remote-alias>
+              <ordinal>4</ordinal>
+              <family>message_trade.csv</family>
+              <local-type>integer</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>14</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>id</remote-name>
+              <remote-type>20</remote-type>
+              <local-name>[id]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>id</remote-alias>
+              <ordinal>5</ordinal>
+              <family>message_trade.csv</family>
+              <local-type>integer</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>55</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>net_exports</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[net_exports]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>net_exports</remote-alias>
+              <ordinal>6</ordinal>
+              <family>message_trade.csv</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>727</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>lat</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[lat]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>lat</remote-alias>
+              <ordinal>7</ordinal>
+              <family>message_trade.csv</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>14</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>long</remote-name>
+              <remote-type>5</remote-type>
+              <local-name>[long]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>long</remote-alias>
+              <ordinal>8</ordinal>
+              <family>message_trade.csv</family>
+              <local-type>real</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>14</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+            <metadata-record class='column'>
+              <remote-name>step</remote-name>
+              <remote-type>20</remote-type>
+              <local-name>[step]</local-name>
+              <parent-name>[Extract]</parent-name>
+              <remote-alias>step</remote-alias>
+              <ordinal>9</ordinal>
+              <family>message_trade.csv</family>
+              <local-type>integer</local-type>
+              <aggregation>Sum</aggregation>
+              <approx-count>2</approx-count>
+              <contains-null>true</contains-null>
+            </metadata-record>
+          </metadata-records>
+        </connection>
+      </extract>
+      <layout dim-ordering='alphabetic' dim-percentage='0.646096' measure-ordering='alphabetic' measure-percentage='0.353904' show-aliased-fields='true' show-structure='true' />
+      <style>
+        <style-rule element='mark'>
+          <encoding attr='color' field='[none:step:ok]' type='palette'>
+            <map to='#4e79a7'>
+              <bucket>1</bucket>
+            </map>
+            <map to='#f28e2b'>
+              <bucket>2</bucket>
+            </map>
+          </encoding>
+          <encoding attr='color' field='[none:energy:nk]' type='palette'>
+            <map to='#4e79a7'>
+              <bucket>&quot;coal&quot;</bucket>
+            </map>
+            <map to='#59a14f'>
+              <bucket>&quot;LNG&quot;</bucket>
+            </map>
+            <map to='#76b7b2'>
+              <bucket>&quot;loil&quot;</bucket>
+            </map>
+            <map to='#e15759'>
+              <bucket>&quot;foil&quot;</bucket>
+            </map>
+            <map to='#f28e2b'>
+              <bucket>&quot;oil&quot;</bucket>
+            </map>
+            <map to='#ffffff'>
+              <bucket>&quot;dummy&quot;</bucket>
+            </map>
+          </encoding>
+        </style-rule>
+      </style>
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+    </datasource>
+  </datasources>
+  <mapsources>
+    <mapsource name='Tableau' />
+  </mapsources>
+  <shared-views>
+    <shared-view name='federated.0q0wl531iuruod1g2b09b144u0wu'>
+      <datasources>
+        <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+      </datasources>
+      <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+        <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+        <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+      </datasource-dependencies>
+      <filter class='categorical' column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]'>
+        <groupfilter function='member' level='[none:year:ok]' member='2110' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+      </filter>
+    </shared-view>
+  </shared-views>
+  <worksheets>
+    <worksheet name='Label, scen. compare'>
+      <layout-options>
+        <title>
+          <formatted-text />
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+            <column caption='Label.Year.Out' datatype='string' name='[Calculation_734086759658639364]' role='dimension' type='nominal'>
+              <calculation class='tableau' formula='&quot;Year: &quot; + STR([year])' />
+            </column>
+            <column-instance column='[Calculation_734086759658639364]' derivation='None' name='[none:Calculation_734086759658639364:nk]' pivot='key' type='nominal' />
+            <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+            <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+          </datasource-dependencies>
+          <slices>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='cell'>
+            <format attr='width' value='136' />
+          </style-rule>
+          <style-rule element='worksheet'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-weight' value='normal' />
+            <format attr='font-size' value='20' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <text column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:Calculation_734086759658639364:nk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-show' value='true' />
+              </style-rule>
+              <style-rule element='pane'>
+                <format attr='minwidth' value='-1' />
+                <format attr='maxwidth' value='-1' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+      <simple-id uuid='{89AC8436-B8A8-4A89-AAC0-BEE8C5E1C3EC}' />
+    </worksheet>
+    <worksheet name='Trade Paths'>
+      <layout-options>
+        <title>
+          <formatted-text />
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+            <column-instance column='[net_exports]' derivation='Avg' name='[avg:net_exports:qk]' pivot='key' type='quantitative' />
+            <column caption='Energy' datatype='string' name='[energy]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;coal&quot;' value='Coal' />
+                <alias key='&quot;dummy&quot;' value='z' />
+                <alias key='&quot;foil&quot;' value='Fuel Oil' />
+                <alias key='&quot;loil&quot;' value='Light Oil' />
+                <alias key='&quot;oil&quot;' value='Crude Oil' />
+              </aliases>
+            </column>
+            <column caption='Id' datatype='integer' name='[id]' role='dimension' type='ordinal' />
+            <column aggregation='Avg' caption='Lat' datatype='real' name='[lat]' role='dimension' semantic-role='[Geographical].[Latitude]' type='quantitative' />
+            <column aggregation='Avg' caption='Long' datatype='real' name='[long]' role='dimension' semantic-role='[Geographical].[Longitude]' type='quantitative' />
+            <column caption='Net Exports' datatype='real' default-format='n#,##0.00;-#,##0.00' name='[net_exports]' role='measure' type='quantitative' />
+            <column-instance column='[energy]' derivation='None' name='[none:energy:nk]' pivot='key' type='nominal' />
+            <column-instance column='[id]' derivation='None' name='[none:id:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[lat]' derivation='None' name='[none:lat:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[long]' derivation='None' name='[none:long:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[scenario]' derivation='None' name='[none:scenario:nk]' pivot='key' type='nominal' />
+            <column-instance column='[step]' derivation='None' name='[none:step:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+            <column caption='Scenario' datatype='string' name='[scenario]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;baseline&quot;' value='Baseline' />
+                <alias key='&quot;tariff_high&quot;' value='High Tariff' />
+                <alias key='&quot;tariff_low&quot;' value='Low Tariff' />
+              </aliases>
+            </column>
+            <column aggregation='Sum' caption='Step' datatype='integer' name='[step]' role='dimension' type='ordinal' />
+            <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]'>
+            <groupfilter function='member' level='[none:energy:nk]' member='&quot;oil&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]'>
+            <groupfilter function='member' level='[none:scenario:nk]' member='&quot;CPA_PAO_sanction&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]</column>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]</column>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='legend'>
+            <format attr='col-width' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='155' />
+          </style-rule>
+          <style-rule element='legend-title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title-text'>
+            <format attr='size' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='Trade flow (GWa)' />
+          </style-rule>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+          <style-rule element='quick-filter'>
+            <format attr='title' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' value='Model Year' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='2' selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Line' />
+            <mark-sizing mark-sizing-setting='marks-scaling-off' />
+            <encodings>
+              <color column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:step:ok]' />
+              <size column='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' />
+              <lod column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:id:ok]' />
+              <path column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:step:ok]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='size' value='6.7580051422119141' />
+                <format attr='mark-transparency' value='193' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:lat:qk]</rows>
+        <cols>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:long:qk]</cols>
+      </table>
+      <simple-id uuid='{DFC5F023-E411-42D5-BB51-22297F87B6DD}' />
+    </worksheet>
+    <worksheet name='Trade Paths, CO2 bound'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Scenario: CO2 Bound</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+            <column-instance column='[net_exports]' derivation='Avg' name='[avg:net_exports:qk]' pivot='key' type='quantitative' />
+            <column caption='Energy' datatype='string' name='[energy]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;coal&quot;' value='Coal' />
+                <alias key='&quot;dummy&quot;' value='z' />
+                <alias key='&quot;foil&quot;' value='Fuel Oil' />
+                <alias key='&quot;loil&quot;' value='Light Oil' />
+                <alias key='&quot;oil&quot;' value='Crude Oil' />
+              </aliases>
+            </column>
+            <column caption='Id' datatype='integer' name='[id]' role='dimension' type='ordinal' />
+            <column aggregation='Avg' caption='Lat' datatype='real' name='[lat]' role='dimension' semantic-role='[Geographical].[Latitude]' type='quantitative' />
+            <column aggregation='Avg' caption='Long' datatype='real' name='[long]' role='dimension' semantic-role='[Geographical].[Longitude]' type='quantitative' />
+            <column caption='Net Exports' datatype='real' default-format='n#,##0.00;-#,##0.00' name='[net_exports]' role='measure' type='quantitative' />
+            <column-instance column='[energy]' derivation='None' name='[none:energy:nk]' pivot='key' type='nominal' />
+            <column-instance column='[id]' derivation='None' name='[none:id:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[lat]' derivation='None' name='[none:lat:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[long]' derivation='None' name='[none:long:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[scenario]' derivation='None' name='[none:scenario:nk]' pivot='key' type='nominal' />
+            <column-instance column='[step]' derivation='None' name='[none:step:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+            <column caption='Scenario' datatype='string' name='[scenario]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;baseline&quot;' value='Baseline' />
+                <alias key='&quot;tariff_high&quot;' value='High Tariff' />
+                <alias key='&quot;tariff_low&quot;' value='Low Tariff' />
+              </aliases>
+            </column>
+            <column aggregation='Sum' caption='Step' datatype='integer' name='[step]' role='dimension' type='ordinal' />
+            <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]'>
+            <groupfilter function='member' level='[none:scenario:nk]' member='&quot;CO2_bound&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]</column>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='worksheet'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='18' />
+          </style-rule>
+          <style-rule element='legend'>
+            <format attr='col-width' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='155' />
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title-text'>
+            <format attr='size' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='Trade flow (GWa)' />
+            <format attr='color' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' value='' />
+          </style-rule>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+          <style-rule element='quick-filter'>
+            <format attr='title' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' value='Model Year' />
+          </style-rule>
+          <style-rule element='tooltip'>
+            <format attr='font-family' value='Calibri Light' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='2' selection-relaxation-option='selection-relaxation-disallow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Line' />
+            <mark-sizing mark-sizing-setting='marks-scaling-off' />
+            <encodings>
+              <color column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' />
+              <size column='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' />
+              <lod column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:id:ok]' />
+              <path column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:step:ok]' />
+            </encodings>
+            <customized-tooltip show-buttons='false'>
+              <formatted-text>
+                <run fontcolor='#787878'>Energy:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]&gt;</run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Avg. Net Exports:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]&gt; GWa</run>
+              </formatted-text>
+            </customized-tooltip>
+            <style>
+              <style-rule element='mark'>
+                <format attr='size' value='6.110161304473877' />
+                <format attr='mark-transparency' value='193' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:lat:qk]</rows>
+        <cols>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:long:qk]</cols>
+      </table>
+      <simple-id uuid='{3AE5160F-3D7C-4AE9-B607-53149BFA08D7}' />
+    </worksheet>
+    <worksheet name='Trade Paths, CPA-PAO'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Scenario: CPA-PAO Sanctions</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+            <column-instance column='[net_exports]' derivation='Avg' name='[avg:net_exports:qk]' pivot='key' type='quantitative' />
+            <column caption='Energy' datatype='string' name='[energy]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;coal&quot;' value='Coal' />
+                <alias key='&quot;dummy&quot;' value='z' />
+                <alias key='&quot;foil&quot;' value='Fuel Oil' />
+                <alias key='&quot;loil&quot;' value='Light Oil' />
+                <alias key='&quot;oil&quot;' value='Crude Oil' />
+              </aliases>
+            </column>
+            <column caption='Id' datatype='integer' name='[id]' role='dimension' type='ordinal' />
+            <column aggregation='Avg' caption='Lat' datatype='real' name='[lat]' role='dimension' semantic-role='[Geographical].[Latitude]' type='quantitative' />
+            <column aggregation='Avg' caption='Long' datatype='real' name='[long]' role='dimension' semantic-role='[Geographical].[Longitude]' type='quantitative' />
+            <column caption='Net Exports' datatype='real' default-format='n#,##0.00;-#,##0.00' name='[net_exports]' role='measure' type='quantitative' />
+            <column-instance column='[energy]' derivation='None' name='[none:energy:nk]' pivot='key' type='nominal' />
+            <column-instance column='[id]' derivation='None' name='[none:id:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[lat]' derivation='None' name='[none:lat:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[long]' derivation='None' name='[none:long:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[scenario]' derivation='None' name='[none:scenario:nk]' pivot='key' type='nominal' />
+            <column-instance column='[step]' derivation='None' name='[none:step:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+            <column caption='Scenario' datatype='string' name='[scenario]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;baseline&quot;' value='Baseline' />
+                <alias key='&quot;tariff_high&quot;' value='High Tariff' />
+                <alias key='&quot;tariff_low&quot;' value='Low Tariff' />
+              </aliases>
+            </column>
+            <column aggregation='Sum' caption='Step' datatype='integer' name='[step]' role='dimension' type='ordinal' />
+            <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]'>
+            <groupfilter function='member' level='[none:scenario:nk]' member='&quot;CPA_PAO_sanction&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]</column>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='worksheet'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='18' />
+          </style-rule>
+          <style-rule element='legend'>
+            <format attr='col-width' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='280' />
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title-text'>
+            <format attr='size' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='GWa'>
+              <formatted-text>
+                <run>GWa</run>
+              </formatted-text>
+            </format>
+            <format attr='color' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' value='' />
+          </style-rule>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+          <style-rule element='quick-filter'>
+            <format attr='title' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' value='Year'>
+              <formatted-text>
+                <run>Year</run>
+              </formatted-text>
+            </format>
+          </style-rule>
+          <style-rule element='tooltip'>
+            <format attr='font-family' value='Calibri Light' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='3' selection-relaxation-option='selection-relaxation-disallow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Line' />
+            <mark-sizing mark-sizing-setting='marks-scaling-off' />
+            <encodings>
+              <color column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' />
+              <size column='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' />
+              <lod column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:id:ok]' />
+              <path column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:step:ok]' />
+            </encodings>
+            <customized-tooltip show-buttons='false'>
+              <formatted-text>
+                <run fontcolor='#787878'>Energy:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]&gt;</run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Avg. Net Exports:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]&gt; GWa</run>
+              </formatted-text>
+            </customized-tooltip>
+            <style>
+              <style-rule element='mark'>
+                <format attr='size' value='6.110161304473877' />
+                <format attr='mark-transparency' value='193' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:lat:qk]</rows>
+        <cols>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:long:qk]</cols>
+      </table>
+      <simple-id uuid='{5A829656-5997-4791-B83F-FAFEC053FD2E}' />
+    </worksheet>
+    <worksheet name='Trade Paths, NAM-CPA'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Scenario: NAM-CPA Sanctions</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+            <column-instance column='[net_exports]' derivation='Avg' name='[avg:net_exports:qk]' pivot='key' type='quantitative' />
+            <column caption='Energy' datatype='string' name='[energy]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;coal&quot;' value='Coal' />
+                <alias key='&quot;dummy&quot;' value='z' />
+                <alias key='&quot;foil&quot;' value='Fuel Oil' />
+                <alias key='&quot;loil&quot;' value='Light Oil' />
+                <alias key='&quot;oil&quot;' value='Crude Oil' />
+              </aliases>
+            </column>
+            <column caption='Id' datatype='integer' name='[id]' role='dimension' type='ordinal' />
+            <column aggregation='Avg' caption='Lat' datatype='real' name='[lat]' role='dimension' semantic-role='[Geographical].[Latitude]' type='quantitative' />
+            <column aggregation='Avg' caption='Long' datatype='real' name='[long]' role='dimension' semantic-role='[Geographical].[Longitude]' type='quantitative' />
+            <column caption='Net Exports' datatype='real' default-format='n#,##0.00;-#,##0.00' name='[net_exports]' role='measure' type='quantitative' />
+            <column-instance column='[energy]' derivation='None' name='[none:energy:nk]' pivot='key' type='nominal' />
+            <column-instance column='[id]' derivation='None' name='[none:id:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[lat]' derivation='None' name='[none:lat:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[long]' derivation='None' name='[none:long:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[scenario]' derivation='None' name='[none:scenario:nk]' pivot='key' type='nominal' />
+            <column-instance column='[step]' derivation='None' name='[none:step:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+            <column caption='Scenario' datatype='string' name='[scenario]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;baseline&quot;' value='Baseline' />
+                <alias key='&quot;tariff_high&quot;' value='High Tariff' />
+                <alias key='&quot;tariff_low&quot;' value='Low Tariff' />
+              </aliases>
+            </column>
+            <column aggregation='Sum' caption='Step' datatype='integer' name='[step]' role='dimension' type='ordinal' />
+            <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]'>
+            <groupfilter function='member' level='[none:scenario:nk]' member='&quot;NAM_CPA_sanction&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]</column>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='worksheet'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='18' />
+          </style-rule>
+          <style-rule element='legend'>
+            <format attr='col-width' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='280' />
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title-text'>
+            <format attr='size' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='GWa'>
+              <formatted-text>
+                <run>GWa</run>
+              </formatted-text>
+            </format>
+            <format attr='color' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' value='' />
+          </style-rule>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+          <style-rule element='quick-filter'>
+            <format attr='title' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' value='Year'>
+              <formatted-text>
+                <run>Year</run>
+              </formatted-text>
+            </format>
+          </style-rule>
+          <style-rule element='tooltip'>
+            <format attr='font-family' value='Calibri Light' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='3' selection-relaxation-option='selection-relaxation-disallow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Line' />
+            <mark-sizing mark-sizing-setting='marks-scaling-off' />
+            <encodings>
+              <color column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' />
+              <size column='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' />
+              <lod column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:id:ok]' />
+              <path column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:step:ok]' />
+            </encodings>
+            <customized-tooltip show-buttons='false'>
+              <formatted-text>
+                <run fontcolor='#787878'>Energy:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]&gt;</run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Avg. Net Exports:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]&gt; GWa</run>
+              </formatted-text>
+            </customized-tooltip>
+            <style>
+              <style-rule element='mark'>
+                <format attr='size' value='6.110161304473877' />
+                <format attr='mark-transparency' value='193' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:lat:qk]</rows>
+        <cols>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:long:qk]</cols>
+      </table>
+      <simple-id uuid='{B2B40660-53FE-423C-82F4-90C6A54F9900}' />
+    </worksheet>
+    <worksheet name='Trade Paths, NAM-MEA'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Scenario: NAM-MEA Sanctions</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+            <column-instance column='[net_exports]' derivation='Avg' name='[avg:net_exports:qk]' pivot='key' type='quantitative' />
+            <column caption='Energy' datatype='string' name='[energy]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;coal&quot;' value='Coal' />
+                <alias key='&quot;dummy&quot;' value='z' />
+                <alias key='&quot;foil&quot;' value='Fuel Oil' />
+                <alias key='&quot;loil&quot;' value='Light Oil' />
+                <alias key='&quot;oil&quot;' value='Crude Oil' />
+              </aliases>
+            </column>
+            <column caption='Id' datatype='integer' name='[id]' role='dimension' type='ordinal' />
+            <column aggregation='Avg' caption='Lat' datatype='real' name='[lat]' role='dimension' semantic-role='[Geographical].[Latitude]' type='quantitative' />
+            <column aggregation='Avg' caption='Long' datatype='real' name='[long]' role='dimension' semantic-role='[Geographical].[Longitude]' type='quantitative' />
+            <column caption='Net Exports' datatype='real' default-format='n#,##0.00;-#,##0.00' name='[net_exports]' role='measure' type='quantitative' />
+            <column-instance column='[energy]' derivation='None' name='[none:energy:nk]' pivot='key' type='nominal' />
+            <column-instance column='[id]' derivation='None' name='[none:id:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[lat]' derivation='None' name='[none:lat:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[long]' derivation='None' name='[none:long:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[scenario]' derivation='None' name='[none:scenario:nk]' pivot='key' type='nominal' />
+            <column-instance column='[step]' derivation='None' name='[none:step:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+            <column caption='Scenario' datatype='string' name='[scenario]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;baseline&quot;' value='Baseline' />
+                <alias key='&quot;tariff_high&quot;' value='High Tariff' />
+                <alias key='&quot;tariff_low&quot;' value='Low Tariff' />
+              </aliases>
+            </column>
+            <column aggregation='Sum' caption='Step' datatype='integer' name='[step]' role='dimension' type='ordinal' />
+            <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]'>
+            <groupfilter function='member' level='[none:scenario:nk]' member='&quot;NAM_MEA_sanction&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]</column>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='worksheet'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='18' />
+          </style-rule>
+          <style-rule element='legend'>
+            <format attr='col-width' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='280' />
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title-text'>
+            <format attr='size' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='GWa'>
+              <formatted-text>
+                <run>GWa</run>
+              </formatted-text>
+            </format>
+            <format attr='color' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' value='' />
+          </style-rule>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+          <style-rule element='quick-filter'>
+            <format attr='title' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' value='Year'>
+              <formatted-text>
+                <run>Year</run>
+              </formatted-text>
+            </format>
+          </style-rule>
+          <style-rule element='tooltip'>
+            <format attr='font-family' value='Calibri Light' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='3' selection-relaxation-option='selection-relaxation-disallow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Line' />
+            <mark-sizing mark-sizing-setting='marks-scaling-off' />
+            <encodings>
+              <color column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' />
+              <size column='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' />
+              <lod column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:id:ok]' />
+              <path column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:step:ok]' />
+            </encodings>
+            <customized-tooltip show-buttons='false'>
+              <formatted-text>
+                <run fontcolor='#787878'>Energy:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]&gt;</run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Avg. Net Exports:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]&gt; GWa</run>
+              </formatted-text>
+            </customized-tooltip>
+            <style>
+              <style-rule element='mark'>
+                <format attr='size' value='6.110161304473877' />
+                <format attr='mark-transparency' value='193' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:lat:qk]</rows>
+        <cols>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:long:qk]</cols>
+      </table>
+      <simple-id uuid='{6D50DDC0-D4B5-42ED-8F02-7D014994068C}' />
+    </worksheet>
+    <worksheet name='Trade Paths, baseline'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Scenario: Baseline</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+            <column-instance column='[net_exports]' derivation='Avg' name='[avg:net_exports:qk]' pivot='key' type='quantitative' />
+            <column caption='Energy' datatype='string' name='[energy]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;coal&quot;' value='Coal' />
+                <alias key='&quot;dummy&quot;' value='z' />
+                <alias key='&quot;foil&quot;' value='Fuel Oil' />
+                <alias key='&quot;loil&quot;' value='Light Oil' />
+                <alias key='&quot;oil&quot;' value='Crude Oil' />
+              </aliases>
+            </column>
+            <column caption='Id' datatype='integer' name='[id]' role='dimension' type='ordinal' />
+            <column aggregation='Avg' caption='Lat' datatype='real' name='[lat]' role='dimension' semantic-role='[Geographical].[Latitude]' type='quantitative' />
+            <column aggregation='Avg' caption='Long' datatype='real' name='[long]' role='dimension' semantic-role='[Geographical].[Longitude]' type='quantitative' />
+            <column caption='Net Exports' datatype='real' default-format='n#,##0.00;-#,##0.00' name='[net_exports]' role='measure' type='quantitative' />
+            <column-instance column='[energy]' derivation='None' name='[none:energy:nk]' pivot='key' type='nominal' />
+            <column-instance column='[id]' derivation='None' name='[none:id:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[lat]' derivation='None' name='[none:lat:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[long]' derivation='None' name='[none:long:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[scenario]' derivation='None' name='[none:scenario:nk]' pivot='key' type='nominal' />
+            <column-instance column='[step]' derivation='None' name='[none:step:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+            <column caption='Scenario' datatype='string' name='[scenario]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;baseline&quot;' value='Baseline' />
+                <alias key='&quot;tariff_high&quot;' value='High Tariff' />
+                <alias key='&quot;tariff_low&quot;' value='Low Tariff' />
+              </aliases>
+            </column>
+            <column aggregation='Sum' caption='Step' datatype='integer' name='[step]' role='dimension' type='ordinal' />
+            <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]'>
+            <groupfilter function='member' level='[none:scenario:nk]' member='&quot;baseline&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]</column>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='worksheet'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='18' />
+          </style-rule>
+          <style-rule element='legend'>
+            <format attr='col-width' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='280' />
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+            <format attr='col-width' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' value='125' />
+          </style-rule>
+          <style-rule element='legend-title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title-text'>
+            <format attr='size' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='GWa'>
+              <formatted-text>
+                <run>GWa</run>
+              </formatted-text>
+            </format>
+            <format attr='color' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' value='' />
+          </style-rule>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+          <style-rule element='quick-filter'>
+            <format attr='title' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' value='Year'>
+              <formatted-text>
+                <run>Year</run>
+              </formatted-text>
+            </format>
+          </style-rule>
+          <style-rule element='tooltip'>
+            <format attr='font-family' value='Calibri Light' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='3' selection-relaxation-option='selection-relaxation-disallow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Line' />
+            <mark-sizing mark-sizing-setting='marks-scaling-off' />
+            <encodings>
+              <color column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' />
+              <size column='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' />
+              <lod column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:id:ok]' />
+              <path column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:step:ok]' />
+            </encodings>
+            <customized-tooltip show-buttons='false'>
+              <formatted-text>
+                <run fontcolor='#787878'>Energy:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]&gt;</run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Avg. Net Exports:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]&gt; GWa</run>
+              </formatted-text>
+            </customized-tooltip>
+            <style>
+              <style-rule element='mark'>
+                <format attr='size' value='6.110161304473877' />
+                <format attr='mark-transparency' value='193' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:lat:qk]</rows>
+        <cols>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:long:qk]</cols>
+      </table>
+      <simple-id uuid='{A9CFBC26-17B1-475F-86F5-B7A1E2C6ECD5}' />
+    </worksheet>
+    <worksheet name='Trade Paths, high tariff'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Scenario: High Tariffs</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+            <column-instance column='[net_exports]' derivation='Avg' name='[avg:net_exports:qk]' pivot='key' type='quantitative' />
+            <column caption='Energy' datatype='string' name='[energy]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;coal&quot;' value='Coal' />
+                <alias key='&quot;dummy&quot;' value='z' />
+                <alias key='&quot;foil&quot;' value='Fuel Oil' />
+                <alias key='&quot;loil&quot;' value='Light Oil' />
+                <alias key='&quot;oil&quot;' value='Crude Oil' />
+              </aliases>
+            </column>
+            <column caption='Id' datatype='integer' name='[id]' role='dimension' type='ordinal' />
+            <column aggregation='Avg' caption='Lat' datatype='real' name='[lat]' role='dimension' semantic-role='[Geographical].[Latitude]' type='quantitative' />
+            <column aggregation='Avg' caption='Long' datatype='real' name='[long]' role='dimension' semantic-role='[Geographical].[Longitude]' type='quantitative' />
+            <column caption='Net Exports' datatype='real' default-format='n#,##0.00;-#,##0.00' name='[net_exports]' role='measure' type='quantitative' />
+            <column-instance column='[energy]' derivation='None' name='[none:energy:nk]' pivot='key' type='nominal' />
+            <column-instance column='[id]' derivation='None' name='[none:id:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[lat]' derivation='None' name='[none:lat:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[long]' derivation='None' name='[none:long:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[scenario]' derivation='None' name='[none:scenario:nk]' pivot='key' type='nominal' />
+            <column-instance column='[step]' derivation='None' name='[none:step:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+            <column caption='Scenario' datatype='string' name='[scenario]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;baseline&quot;' value='Baseline' />
+                <alias key='&quot;tariff_high&quot;' value='High Tariff' />
+                <alias key='&quot;tariff_low&quot;' value='Low Tariff' />
+              </aliases>
+            </column>
+            <column aggregation='Sum' caption='Step' datatype='integer' name='[step]' role='dimension' type='ordinal' />
+            <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]'>
+            <groupfilter function='union' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+              <groupfilter function='member' level='[none:scenario:nk]' member='&quot;tariff_high&quot;' />
+              <groupfilter function='member' level='[none:scenario:nk]' member='&quot;tariff_low&quot;' />
+            </groupfilter>
+          </filter>
+          <slices>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]</column>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='worksheet'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='18' />
+          </style-rule>
+          <style-rule element='legend'>
+            <format attr='col-width' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='155' />
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title-text'>
+            <format attr='size' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='Trade flow (GWa)' />
+            <format attr='color' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' value='' />
+          </style-rule>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+          <style-rule element='quick-filter'>
+            <format attr='title' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' value='Year'>
+              <formatted-text>
+                <run>Year</run>
+              </formatted-text>
+            </format>
+          </style-rule>
+          <style-rule element='tooltip'>
+            <format attr='font-family' value='Calibri Light' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='3' selection-relaxation-option='selection-relaxation-disallow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Line' />
+            <mark-sizing mark-sizing-setting='marks-scaling-off' />
+            <encodings>
+              <color column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' />
+              <size column='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' />
+              <lod column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:id:ok]' />
+              <path column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:step:ok]' />
+            </encodings>
+            <customized-tooltip show-buttons='false'>
+              <formatted-text>
+                <run fontcolor='#787878'>Energy:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]&gt;</run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Avg. Net Exports:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]&gt; GWa</run>
+              </formatted-text>
+            </customized-tooltip>
+            <style>
+              <style-rule element='mark'>
+                <format attr='size' value='6.110161304473877' />
+                <format attr='mark-transparency' value='193' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:lat:qk]</rows>
+        <cols>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:long:qk]</cols>
+      </table>
+      <simple-id uuid='{1E92778C-FFF3-4356-83DB-1AC2914432DF}' />
+    </worksheet>
+    <worksheet name='Trade Paths, low tariff'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Scenario: Low Tariffs</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+            <column-instance column='[net_exports]' derivation='Avg' name='[avg:net_exports:qk]' pivot='key' type='quantitative' />
+            <column caption='Energy' datatype='string' name='[energy]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;coal&quot;' value='Coal' />
+                <alias key='&quot;dummy&quot;' value='z' />
+                <alias key='&quot;foil&quot;' value='Fuel Oil' />
+                <alias key='&quot;loil&quot;' value='Light Oil' />
+                <alias key='&quot;oil&quot;' value='Crude Oil' />
+              </aliases>
+            </column>
+            <column caption='Id' datatype='integer' name='[id]' role='dimension' type='ordinal' />
+            <column aggregation='Avg' caption='Lat' datatype='real' name='[lat]' role='dimension' semantic-role='[Geographical].[Latitude]' type='quantitative' />
+            <column aggregation='Avg' caption='Long' datatype='real' name='[long]' role='dimension' semantic-role='[Geographical].[Longitude]' type='quantitative' />
+            <column caption='Net Exports' datatype='real' default-format='n#,##0.00;-#,##0.00' name='[net_exports]' role='measure' type='quantitative' />
+            <column-instance column='[energy]' derivation='None' name='[none:energy:nk]' pivot='key' type='nominal' />
+            <column-instance column='[id]' derivation='None' name='[none:id:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[lat]' derivation='None' name='[none:lat:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[long]' derivation='None' name='[none:long:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[scenario]' derivation='None' name='[none:scenario:nk]' pivot='key' type='nominal' />
+            <column-instance column='[step]' derivation='None' name='[none:step:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+            <column caption='Scenario' datatype='string' name='[scenario]' role='dimension' type='nominal'>
+              <aliases>
+                <alias key='&quot;baseline&quot;' value='Baseline' />
+                <alias key='&quot;tariff_high&quot;' value='High Tariff' />
+                <alias key='&quot;tariff_low&quot;' value='Low Tariff' />
+              </aliases>
+            </column>
+            <column aggregation='Sum' caption='Step' datatype='integer' name='[step]' role='dimension' type='ordinal' />
+            <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]'>
+            <groupfilter function='member' level='[none:scenario:nk]' member='&quot;tariff_low&quot;' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <slices>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]</column>
+            <column>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='worksheet'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='18' />
+          </style-rule>
+          <style-rule element='legend'>
+            <format attr='col-width' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='155' />
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title'>
+            <format attr='font-family' value='Calibri Light' />
+            <format attr='font-size' value='12' />
+          </style-rule>
+          <style-rule element='legend-title-text'>
+            <format attr='size' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' value='Trade flow (GWa)' />
+            <format attr='color' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' value='' />
+          </style-rule>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+          <style-rule element='quick-filter'>
+            <format attr='title' field='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' value='Year'>
+              <formatted-text>
+                <run>Year</run>
+              </formatted-text>
+            </format>
+          </style-rule>
+          <style-rule element='tooltip'>
+            <format attr='font-family' value='Calibri Light' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='3' selection-relaxation-option='selection-relaxation-disallow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Line' />
+            <mark-sizing mark-sizing-setting='marks-scaling-off' />
+            <encodings>
+              <color column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' />
+              <size column='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' />
+              <lod column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:id:ok]' />
+              <path column='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:step:ok]' />
+            </encodings>
+            <customized-tooltip show-buttons='false'>
+              <formatted-text>
+                <run fontcolor='#787878'>Energy:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]&gt;</run>
+                <run>Æ&#10;</run>
+                <run fontcolor='#787878'>Avg. Net Exports:&#9;</run>
+                <run bold='true'>&lt;[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]&gt; GWa</run>
+              </formatted-text>
+            </customized-tooltip>
+            <style>
+              <style-rule element='mark'>
+                <format attr='size' value='6.110161304473877' />
+                <format attr='mark-transparency' value='193' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:lat:qk]</rows>
+        <cols>[federated.0q0wl531iuruod1g2b09b144u0wu].[none:long:qk]</cols>
+      </table>
+      <simple-id uuid='{637ECF56-A986-4354-84C8-80933FC9F69A}' />
+    </worksheet>
+  </worksheets>
+  <dashboards>
+    <dashboard name='Compare CO2'>
+      <style />
+      <size maxheight='1000' maxwidth='1800' minheight='1000' minwidth='1800' sizing-mode='fixed' />
+      <datasources>
+        <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+      </datasources>
+      <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+        <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+        <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+      </datasource-dependencies>
+      <zones>
+        <zone h='100000' id='4' type='layout-basic' w='100000' x='0' y='0'>
+          <zone h='91400' id='7' param='horz' type='layout-flow' w='99112' x='444' y='4000'>
+            <zone h='91400' id='5' type='layout-basic' w='99112' x='444' y='4000'>
+              <zone h='91400' id='3' name='Trade Paths, baseline' w='49556' x='444' y='4000'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+              <zone h='91400' id='11' name='Trade Paths, CO2 bound' w='49556' x='50000' y='4000'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+            </zone>
+          </zone>
+          <zone h='3800' id='12' type='layout-flow' w='99112' x='444' y='95400'>
+            <zone h='3800' id='10' name='Trade Paths, baseline' pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' type='color' w='99112' x='444' y='95400'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+          </zone>
+          <zone h='3200' id='13' type='layout-flow' w='99112' x='444' y='800'>
+            <zone h='3200' id='8' mode='slider' name='Trade Paths, baseline' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' w='99112' x='444' y='800'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+          </zone>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='8' />
+          </zone-style>
+        </zone>
+        <zone h='14600' id='9' name='Trade Paths, baseline' pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' w='7778' x='1444' y='73800' />
+      </zones>
+      <devicelayouts>
+        <devicelayout auto-generated='true' name='Phone'>
+          <size maxheight='800' minheight='800' sizing-mode='vscroll' />
+          <zones>
+            <zone h='100000' id='20' type='layout-basic' w='100000' x='0' y='0'>
+              <zone h='98400' id='21' param='vert' type='layout-flow' w='99112' x='444' y='800'>
+                <zone h='3200' id='8' mode='slider' name='Trade Paths, baseline' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' w='99112' x='444' y='800'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='91400' id='3' is-fixed='true' name='Trade Paths, baseline' w='49556' x='444' y='4000'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='3800' id='10' name='Trade Paths, baseline' pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' type='color' w='99112' x='444' y='95400'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='14600' id='9' name='Trade Paths, baseline' pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' w='7778' x='1444' y='73800'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='91400' id='11' is-fixed='true' name='Trade Paths, CO2 bound' w='49556' x='50000' y='4000'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+              </zone>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='8' />
+              </zone-style>
+            </zone>
+          </zones>
+        </devicelayout>
+      </devicelayouts>
+      <simple-id uuid='{058F5A15-F6D8-4889-ABDE-76452CCC3C3F}' />
+    </dashboard>
+    <dashboard name='Compare Sanctions'>
+      <style>
+        <style-rule element='dash-subtitle'>
+          <format attr='background-color' value='#ffffff' />
+        </style-rule>
+      </style>
+      <size maxheight='1000' maxwidth='1800' minheight='1000' minwidth='1800' sizing-mode='fixed' />
+      <datasources>
+        <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+      </datasources>
+      <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+        <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+        <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+      </datasource-dependencies>
+      <zones>
+        <zone h='100000' id='22' type='layout-basic' w='100000' x='0' y='0'>
+          <zone h='92200' id='25' param='horz' type='layout-flow' w='100000' x='0' y='4000'>
+            <zone h='92200' id='23' type='layout-basic' w='100000' x='0' y='4000'>
+              <zone h='46100' id='35' name='Trade Paths, NAM-MEA' w='50000' x='50000' y='50100'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+              <zone h='46100' id='36' name='Trade Paths, NAM-CPA' w='50000' x='0' y='50100'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+              <zone h='46100' id='37' name='Trade Paths, baseline' w='50000' x='0' y='4000'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+              <zone h='46100' id='40' name='Trade Paths, CPA-PAO' w='50000' x='50000' y='4000'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+            </zone>
+          </zone>
+          <zone h='4000' id='31' param='horz' type='layout-flow' w='100000' x='0' y='0'>
+            <zone h='4000' id='26' mode='slider' name='Trade Paths, CPA-PAO' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' w='100000' x='0' y='0'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+          </zone>
+          <zone h='3800' id='41' type='layout-flow' w='100000' x='0' y='96200'>
+            <zone h='3800' id='39' name='Trade Paths, baseline' pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' type='color' w='100000' x='0' y='96200'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+          </zone>
+        </zone>
+        <zone h='12100' id='38' name='Trade Paths, baseline' pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' w='7778' x='722' y='81600' />
+        <zone h='5700' id='42' name='Label, scen. compare' w='9333' x='90389' y='8700' />
+      </zones>
+      <devicelayouts>
+        <devicelayout auto-generated='true' name='Phone'>
+          <size maxheight='1450' minheight='1450' sizing-mode='vscroll' />
+          <zones>
+            <zone h='100000' id='51' type='layout-basic' w='100000' x='0' y='0'>
+              <zone h='98400' id='52' param='vert' type='layout-flow' w='99112' x='444' y='800'>
+                <zone fixed-size='280' h='46100' id='37' is-fixed='true' name='Trade Paths, baseline' w='50000' x='0' y='4000'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='3800' id='39' name='Trade Paths, baseline' pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' type='color' w='100000' x='0' y='96200'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='12100' id='38' name='Trade Paths, baseline' pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' w='7778' x='722' y='81600'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='4000' id='26' mode='slider' name='Trade Paths, CPA-PAO' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' w='100000' x='0' y='0'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='46100' id='40' is-fixed='true' name='Trade Paths, CPA-PAO' w='50000' x='50000' y='4000'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='57' h='5700' id='42' is-fixed='true' name='Label, scen. compare' w='9333' x='90389' y='8700'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='46100' id='36' is-fixed='true' name='Trade Paths, NAM-CPA' w='50000' x='0' y='50100'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='46100' id='35' is-fixed='true' name='Trade Paths, NAM-MEA' w='50000' x='50000' y='50100'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+              </zone>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='8' />
+              </zone-style>
+            </zone>
+          </zones>
+        </devicelayout>
+      </devicelayouts>
+      <simple-id uuid='{3DC0D9A5-F332-480A-89D6-3EAF99C5A615}' />
+    </dashboard>
+    <dashboard name='Compare tariff'>
+      <style />
+      <size maxheight='1000' maxwidth='1800' minheight='1000' minwidth='1800' sizing-mode='fixed' />
+      <datasources>
+        <datasource caption='message_trade' name='federated.0q0wl531iuruod1g2b09b144u0wu' />
+      </datasources>
+      <datasource-dependencies datasource='federated.0q0wl531iuruod1g2b09b144u0wu'>
+        <column-instance column='[year]' derivation='None' name='[none:year:ok]' pivot='key' type='ordinal' />
+        <column caption='Year' datatype='integer' name='[year]' role='dimension' type='ordinal' />
+      </datasource-dependencies>
+      <zones>
+        <zone h='100000' id='4' type='layout-basic' w='100000' x='0' y='0'>
+          <zone h='92000' id='7' param='horz' type='layout-flow' w='99112' x='444' y='7200'>
+            <zone h='92000' id='5' type='layout-basic' w='99112' x='444' y='7200'>
+              <zone h='92000' id='3' name='Trade Paths, baseline' w='32889' x='444' y='7200'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+              <zone h='92000' id='11' name='Trade Paths, high tariff' w='33334' x='33333' y='7200'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+              <zone h='92000' id='13' name='Trade Paths, low tariff' w='32889' x='66667' y='7200'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+            </zone>
+          </zone>
+          <zone h='6400' id='14' type='layout-flow' w='99112' x='444' y='800'>
+            <zone h='6400' id='8' mode='slider' name='Trade Paths, baseline' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' w='99112' x='444' y='800'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+          </zone>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='8' />
+          </zone-style>
+        </zone>
+        <zone h='12100' id='9' name='Trade Paths, baseline' pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' w='7778' x='1389' y='76000' />
+        <zone h='5900' id='15' name='Label, scen. compare' w='8167' x='91111' y='12000' />
+      </zones>
+      <devicelayouts>
+        <devicelayout auto-generated='true' name='Phone'>
+          <size maxheight='1150' minheight='1150' sizing-mode='vscroll' />
+          <zones>
+            <zone h='100000' id='18' type='layout-basic' w='100000' x='0' y='0'>
+              <zone h='98400' id='19' param='vert' type='layout-flow' w='99112' x='444' y='800'>
+                <zone h='3200' id='8' mode='slider' name='Trade Paths, baseline' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' w='99112' x='444' y='800'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='92000' id='3' is-fixed='true' name='Trade Paths, baseline' w='32889' x='444' y='7200'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='12100' id='9' name='Trade Paths, baseline' pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' w='7778' x='1389' y='76000'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='92000' id='11' is-fixed='true' name='Trade Paths, high tariff' w='33334' x='33333' y='7200'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='280' h='92000' id='13' is-fixed='true' name='Trade Paths, low tariff' w='32889' x='66667' y='7200'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='59' h='5900' id='15' is-fixed='true' name='Label, scen. compare' w='8167' x='91111' y='12000'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+              </zone>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='8' />
+              </zone-style>
+            </zone>
+          </zones>
+        </devicelayout>
+      </devicelayouts>
+      <simple-id uuid='{EFF1941A-0456-424E-B741-B97ABDBB91E1}' />
+    </dashboard>
+  </dashboards>
+  <windows source-height='30'>
+    <window class='worksheet' name='Trade Paths'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card mode='radiolist' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:scenario:nk]' type='filter' />
+            <card mode='slider' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' />
+            <card mode='radiolist' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' show-all='false' type='filter' />
+            <card pane-specification-id='2' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{D0E82A78-A5DE-4817-9175-D05F68726359}' />
+    </window>
+    <window class='worksheet' name='Label, scen. compare'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{4EC620AD-A3DA-4309-826B-D769E3131FDE}' />
+    </window>
+    <window class='worksheet' name='Trade Paths, baseline'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card mode='slider' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' />
+            <card pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' />
+            <card pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{DEFA2BD7-DC55-4505-8C8A-65CBD36FAF32}' />
+    </window>
+    <window class='worksheet' name='Trade Paths, NAM-CPA'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card mode='slider' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' />
+            <card pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' />
+            <card pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{9837CDFA-7A7F-41DD-A9B4-74CF667CBD97}' />
+    </window>
+    <window class='worksheet' name='Trade Paths, CPA-PAO'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card mode='slider' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' />
+            <card pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' />
+            <card pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{DCADF2B1-D491-4534-AB66-F153C9A014D8}' />
+    </window>
+    <window class='worksheet' name='Trade Paths, NAM-MEA'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card mode='slider' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' />
+            <card pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' />
+            <card pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{33072BAC-8415-4DE6-A7EC-73D456FDD664}' />
+    </window>
+    <window class='worksheet' name='Trade Paths, high tariff'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card mode='slider' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' />
+            <card pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' />
+            <card pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{9D85170F-23B2-4705-A090-5A25417251B3}' />
+    </window>
+    <window class='worksheet' name='Trade Paths, low tariff'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card mode='slider' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' />
+            <card pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' />
+            <card pane-specification-id='3' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{E6AE3BFC-80C5-4CD3-BAD2-11D11AD43502}' />
+    </window>
+    <window class='worksheet' name='Trade Paths, CO2 bound'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card mode='slider' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:year:ok]' show-all='false' type='filter' />
+            <card pane-specification-id='2' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[avg:net_exports:qk]' type='size' />
+            <card pane-specification-id='2' param='[federated.0q0wl531iuruod1g2b09b144u0wu].[none:energy:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{35EB118F-85DC-4ED3-8EB7-8144E4B446BE}' />
+    </window>
+    <window class='dashboard' maximized='true' name='Compare Sanctions'>
+      <viewpoints>
+        <viewpoint name='Label, scen. compare' />
+        <viewpoint name='Trade Paths, CPA-PAO'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Trade Paths, NAM-CPA'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Trade Paths, NAM-MEA'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Trade Paths, baseline'>
+          <zoom type='entire-view' />
+        </viewpoint>
+      </viewpoints>
+      <active id='35' />
+      <simple-id uuid='{4A46D302-F9A0-47F7-8D2B-A2BF14ECA105}' />
+    </window>
+    <window class='dashboard' name='Compare CO2'>
+      <viewpoints>
+        <viewpoint name='Trade Paths, CO2 bound'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Trade Paths, baseline'>
+          <zoom type='entire-view' />
+        </viewpoint>
+      </viewpoints>
+      <active id='3' />
+      <simple-id uuid='{3C3C9EDB-B083-4FB1-B831-6D3DFD0BDEA3}' />
+    </window>
+    <window class='dashboard' name='Compare tariff'>
+      <viewpoints>
+        <viewpoint name='Label, scen. compare' />
+        <viewpoint name='Trade Paths, baseline'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Trade Paths, high tariff'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Trade Paths, low tariff'>
+          <zoom type='entire-view' />
+        </viewpoint>
+      </viewpoints>
+      <active id='-1' />
+      <simple-id uuid='{5608EC71-B750-4E2A-832D-CE6F9D7E8C81}' />
+    </window>
+  </windows>
+</workbook>

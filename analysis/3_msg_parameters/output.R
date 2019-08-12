@@ -12,7 +12,7 @@ for (t in c(export_technologies, import_technologies)) {
   
   assign('parsave', as.data.frame(matrix(ncol = length(varlist), nrow = 0)))
   
-  for (r_to in regions) {
+  for (r_to in c(regions, 'glb')) {
     
     print(paste0('DEST. = ', r_to))
     
@@ -23,8 +23,10 @@ for (t in c(export_technologies, import_technologies)) {
       for (r_from in regions[regions != r_to]) {
         
         print(paste0('FROM = ', r_from))
-        #assign('commodity.in', paste0(commodity, '_', r_to))
-        assign('commodity.in', paste0(commodity))
+        assign('commodity.in', paste0(commodity, '_', r_to))
+          if(r_to == 'glb') {commodity.in <- commodity}
+        
+        #assign('commodity.in', paste0(commodity))
         assign('technology.in', paste0(t, '_', r_to))
         
         assign('node_loc.in', paste0('R14_', toupper(r_from)))
@@ -36,10 +38,10 @@ for (t in c(export_technologies, import_technologies)) {
                                          mode = mode, time = time, time_dest = time_dest,
                                          commodity = commodity.in, level = level,
                                          value = value, unit = unit))
-        # parout <- subset(parout, year_act - year_vtg < tech_lifetime & year_act - year_vtg >=0)
+         parout <- subset(parout, year_act - year_vtg < tech_lifetime & year_act - year_vtg >=0)
         # parout <- subset(parout, year_act >= 1990)
         # 
-        parout$year_vtg <- parout$year_act
+        #parout$year_vtg <- parout$year_act
         parout <- unique(parout)
         parout <- subset(parout, year_act >= 1990)
         
@@ -49,6 +51,8 @@ for (t in c(export_technologies, import_technologies)) {
     
     # IMPORTS
     if (grepl('imp', t)) {
+      
+      if (r_to == 'glb') {next()}
       
       assign('commodity.in', commodity)
       assign('technology.in', t)

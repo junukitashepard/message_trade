@@ -22,7 +22,7 @@ mycolors <- colorRampPalette(brewer.pal(8, 'Paired'))(ncolors)
 
 # Plot GLOBAL baseline #
 ########################
-activity <- read_MESSAGE(msg_version = 97, msg_variable = 'ACT') # Baseline (global schema)
+activity <- read_MESSAGE(msg_scenario = 'tariff_high', msg_version = 3, msg_variable = 'ACT') # Baseline (global schema)
 
 activity$vintage <- as.numeric(activity$vintage)
 activity$year_all <- as.numeric(activity$year_all)
