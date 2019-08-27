@@ -92,8 +92,8 @@ varlist <-  c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')
 year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
 unit <- '%'
 time <- 'year'
-value_lo = -0.1
-value_up = 0.5
+value_lo <- -0.2 # for oil_exp only
+value_up <- 0.2 # for oil_exp only
 source(paste0(repo, 'analysis/3_msg_parameters/growth_activity.R'))
 
 # historical_activity
@@ -106,10 +106,10 @@ source(paste0(repo, 'analysis/3_msg_parameters/historical_new_capacity.R'))
 # initial_activity_lo, initial_activity_up
 varlist <-  c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')
 year_act <- c(seq(1995, 2055, by = 5), seq(2060, 2110, by = 10))
-unit <- 'GWa'
-time <- 'year'
 value_lo = 0
 value_up = 2
+time <- 'year'
+unit <- 'GWa'
 source(paste0(repo, 'analysis/3_msg_parameters/initial_activity.R'))
 
 # input

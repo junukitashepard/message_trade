@@ -42,6 +42,26 @@ for t in ['oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp',
 for t in ['oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp',
           'oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp']:
     export_parameter(parname = 'bound_activity_up', tecname = t)
+   
+# initial_activity_lo
+for t in ['oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp',
+          'oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp']:   
+    export_parameter(parname = 'initial_activity_lo', tecname = t)
+    
+# initial_activity_up
+for t in ['oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp',
+          'oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp']:   
+    export_parameter(parname = 'initial_activity_up', tecname = t)
+    
+# growth_activity_up
+for t in ['oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp',
+          'oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp']:   
+    export_parameter(parname = 'growth_activity_up', tecname = t)
+    
+# growth_activity_lo
+for t in ['oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp',
+          'oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp']:   
+    export_parameter(parname = 'growth_activity_lo', tecname = t)
     
 # historical_activity
 for t in ['oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp',

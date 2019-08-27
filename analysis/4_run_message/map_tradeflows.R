@@ -40,18 +40,22 @@ import_gdx_activity <- function(scenario, version) {
   return(activity)
 }
 
-baseline_ACT <- import_gdx_activity(scenario = 'baseline', version = 10)
+baseline_ACT <- import_gdx_activity(scenario = 'baseline', version = 14)
+tariff_high_ACT <- import_gdx_activity(scenario = 'tariff_high', version = 14) 
+tariff_low_ACT <- import_gdx_activity(scenario = 'tariff_low', version = 8)
 
-tariff_high_ACT <- import_gdx_activity(scenario = 'tariff_high', version = 8)
-tariff_low_ACT <- import_gdx_activity(scenario = 'tariff_low', version = 4)
+CO2_tax_baseline_ACT <- import_gdx_activity(scenario = 'CO2_tax_baseline', version = 24)
+CO2_tax_tariff_high_ACT <- import_gdx_activity(scenario = 'CO2_tax_tariff_high', version = 9) 
+CO2_tax_tariff_low_ACT <- import_gdx_activity(scenario = 'CO2_tax_tariff_low', version = 5)  
 
-CO2_bound_ACT <- import_gdx_activity(scenario = 'CO2_bound', version = 6)
+sanction_NAM_CPA_ACT <- import_gdx_activity(scenario = 'NAM_CPA_sanction', version = 9)   
+sanction_CPA_PAO_ACT <- import_gdx_activity(scenario = 'CPA_PAO_sanction', version = 7)  
+sanction_NAM_MEA_ACT <- import_gdx_activity(scenario = 'NAM_MEA_sanction', version = 7)
 
-sanction_NAM_CPA_ACT <- import_gdx_activity(scenario = 'NAM_CPA_sanction', version = 5)
-sanction_CPA_PAO_ACT <- import_gdx_activity(scenario = 'CPA_PAO_sanction', version = 3)
-sanction_NAM_MEA_ACT <- import_gdx_activity(scenario = 'NAM_MEA_sanction', version = 3)
-
-activity <- rbind(baseline_ACT, tariff_high_ACT, tariff_low_ACT, CO2_bound_ACT, sanction_NAM_CPA_ACT, sanction_CPA_PAO_ACT, sanction_NAM_MEA_ACT)
+activity <- rbind(baseline_ACT, 
+                  tariff_high_ACT, tariff_low_ACT, 
+                  CO2_tax_baseline_ACT, CO2_tax_tariff_high_ACT, CO2_tax_tariff_low_ACT,
+                  sanction_NAM_CPA_ACT, sanction_CPA_PAO_ACT, sanction_NAM_MEA_ACT)
 
 # Get net exports
 regions <- read.csv(file.path(wd, 'raw/ConversionTables/region_coordinates.csv'), stringsAsFactors = F)
@@ -92,17 +96,17 @@ paths$net_exports[paths$step == 2] <- 0
 
 # Make dummy values for parameter sizing
 dummy_size <- paths
-dummy_size <- dummy_size[c('scenario', 'year', 'net_exports')]
+dummy_size <- unique(dummy_size[c('year', 'net_exports')])
 dummy_size <- group_by(dummy_size, year) %>% summarize(net_exports = max(net_exports, na.rm = T))
 dummy_size$energy <- 'dummy'
-dummy_size$lat <- -16
-dummy_size$long <- 77
+dummy_size$lat <- -53
+dummy_size$long <- -31
 
 paths2 <- paths
 paths2$net_exports <- NULL
 dummy_size <- left_join(dummy_size, paths2, by = c('year'))
 
-for (v in c('net_exports', 'energy', 'lat', 'long')) {
+for (v in c('energy', 'lat', 'long')) {
   names(dummy_size)[names(dummy_size) == paste0(v, '.x')] <- 'var.x'
   names(dummy_size)[names(dummy_size) == paste0(v, '.y')] <- 'var.y'
   
@@ -113,6 +117,43 @@ for (v in c('net_exports', 'energy', 'lat', 'long')) {
   names(dummy_size)[names(dummy_size) == 'var'] <- v
 }
 
-paths <- rbind(paths, dummy_size)
+dummy_size <- dummy_size[c(names(paths))]
+
+paths <- rbind(as.data.frame(paths), as.data.frame(dummy_size))
+
+# Assign label for amount of trade
+paths <- group_by(paths, id, energy, year, scenario) %>% mutate(max_trade = max(net_exports))
 
 write.csv(paths, file.path(output, paste0('message_trade.csv')))
+saveRDS(paths, file.path(output, 'message_trade.rds'))
+
+# Map differences between sanction scenarios
+baseline <- subset(paths, scenario == 'baseline' & energy == 'oil')[c('year', 'id', 'step', 'lat', 'long', 'net_exports', 'max_trade')]
+names(baseline) <- c('year', 'id', 'step', 'lat', 'long', 'baseline_exports', 'baseline_max')
+nam_mea <- subset(paths, scenario == 'NAM_MEA_sanction' & energy == 'oil')[c('year', 'id', 'step', 'lat', 'long', 'net_exports', 'max_trade')]
+names(nam_mea) <- c('year', 'id', 'step', 'lat', 'long', 'nam_mea_exports', 'nam_mea_max')
+
+outdf <- left_join(baseline, nam_mea, by = c('year', 'id', 'step', 'lat', 'long'))
+outdf$nam_mea_exports[is.na(outdf$nam_mea_exports)] <- outdf$baseline_exports[is.na(outdf$baseline_exports)] <- 0
+
+outdf$difference <- outdf$nam_mea_max-outdf$baseline_max
+
+outdf$difference_color[outdf$difference > 0] <- 'more'
+outdf$difference_color[outdf$difference < 0] <- 'less'
+outdf$difference_color[is.na(outdf$difference_color)] <- 'grey'
+
+outdf$nam_mea_exports[is.na(outdf$nam_mea_exports)] <- outdf$baseline_exports[is.na(outdf$nam_mea_exports)]
+
+outdf2 <- outdf
+names(outdf2) <- c('year', 'id', 'step', 'lat', 'long', 'nam_mea_exports', 'nam_mea_max', 
+                   'baseline_exports', 'baseline_max', 'difference', 'difference_color')
+outdf2$baseline_exports <- outdf2$baseline_max <- outdf2$difference <- NA
+outdf2$difference_color <- 'baseline'
+outdf2 <- outdf2[names(outdf)]
+
+outdf <- rbind(outdf, outdf2)
+
+write.csv(outdf, file.path(output, 'nam_mea.csv'))
+
+
+

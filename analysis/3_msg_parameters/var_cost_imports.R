@@ -33,6 +33,7 @@ for (t in c(import_technologies)) {
   
   saveRDS(parsave, file.path(output, paste0('var_cost/', t, '.rds')))
   write.csv(parsave, file.path(output, paste0('var_cost/', t, '.csv')))
+  write.csv(parsave, file.path(output, paste0('SCENARIOS/baseline_no_tariff/var_cost/', t, '.csv')))
 }
 
 # Clean up

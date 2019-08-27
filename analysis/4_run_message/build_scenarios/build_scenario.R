@@ -15,6 +15,7 @@ library('ggplot2')
 reg.input <- paste0(wd.data, "output/analysis/regress/")
 input <-   paste0(wd.data, "output/analysis/msg_parameters/")
 output <-  paste0(wd.data, "output/analysis/msg_parameters/SCENARIOS/")
+msg_dir <- "C:/ProgramData/Anaconda3/Lib/site-packages/message_ix/model/output"
 
 # Import baseline parameters (import variable costs)
 #####################################################
@@ -29,28 +30,43 @@ for (t in import_technologies) {
 var_cost.base$energy <- stringr::str_replace(var_cost.base$technology, '_imp', "")
 var_cost.base$value <- NA
 
-# Import historical import costs from regression analysis # 
-###########################################################
-regdf <- readRDS(file.path(reg.input, 'regdf.rds'))
+# Import model commodity prices for importers # 
+###############################################
+for (t in c('shipped', 'secondary', 'primary')) {
+  price_df <- read_MESSAGE(msg_scenario = 'baseline_no_tariff', msg_version = 3, msg_variable = 'PRICE_COMMODITY')
+  price_df <- subset(price_df, grepl(t, level))
+  
+  price_df$importer <- paste0('R14_', toupper(substr(price_df$commodity, nchar(price_df$commodity)-2, nchar(price_df$commodity))))
+  price_df$energy <- sub('\\_.*', '', price_df$commodity)
+  price_df$energy[price_df$energy == 'fueloil'] <- 'foil'
+  price_df$energy[price_df$energy == 'lightoil'] <- 'loil'
+  price_df$energy[price_df$energy == 'crudeoil'] <- 'oil'
+  price_df$baseline_price <- price_df$value
+  price_df$year_all <- as.numeric(price_df$year_all)
+  
+  price_df <- price_df[c('importer', 'energy', 'year_all', 'baseline_price')]
+  names(price_df) <- c('importer', 'energy', 'year_all', paste0('price_', t))
+  
+  assign(paste0('prices_', t), price_df, envir = parent.frame())
+}
 
-regdf <- group_by(regdf, year, energy, msg.region.j) %>% 
-         summarize(mean.vc = mean(var_cost, na.rm = T),
-                   med.vc = median(var_cost, na.rm = T))
-regdf <- subset(regdf, !is.na(msg.region.j) & msg.region.j != "")
+# Minus price of secondary/primary product
+prices_secondary <- group_by(prices_secondary, energy, year_all) %>% summarize(price_secondary = min(price_secondary, na.rm = T))
+prices_primary <- group_by(prices_primary, energy, year_all) %>% summarize(price_primary = min(price_primary, na.rm = T))
 
-regdf$msg.region.j <- paste0('R14_', regdf$msg.region.j)
+prices <- left_join(prices_shipped, prices_secondary, by = c('energy', 'year_all'))
+prices <- left_join(prices, prices_primary, by = c('energy', 'year_all'))
 
-hist.med <- group_by(regdf, energy, msg.region.j) %>% summarize(hist.med.vc  = median(med.vc, na.rm = T))
+prices$value <- 0
+prices$value[!is.na(prices$price_shipped)] <- prices$price_shipped[!is.na(prices$price_shipped)]
+
+prices <- prices[c('importer', 'energy', 'year_all', 'value')]
+names(prices) <- c('importer', 'energy', 'year_all', 'baseline_price')
 
 # Combine historic prices with import variable costs #
 ######################################################
-df <- left_join(var_cost.base, regdf, by = c('node_loc' = 'msg.region.j', 'year_vtg' = 'year', 'energy'))
-df <- left_join(df, hist.med, by = c('node_loc' = 'msg.region.j', 'energy'))
-
-df$value <- df$med.vc # Use median variable cost
-df$value[is.na(df$value)] <- df$hist.med.vc[is.na(df$value)] # Use historic median for where missing or in future
-
-df$value[df$value > 5000] <- NA # Removes outlier for SCS
+df <- inner_join(var_cost.base, prices, by = c('node_loc' = 'importer', 'year_vtg' = 'year_all', 'energy'))
+df$value <- df$baseline_price
 
 var_cost.base <- df[c('technology', 'time', 'value', 'unit', 'year_act', 'year_vtg', 'node_loc', 'mode')]
 
@@ -88,7 +104,7 @@ adj_var_cost <- function(scenario, adjust_variable) {
   names(df)[names(df) == adjust_variable] <- 'adj_var'
   df$adj_var[is.nan(df$adj_var) | is.na(df$adj_var) | is.infinite(df$adj_var)] <- 0
   
-  df$value <- (df$value + (df$value*(df$adj_var/100)))/100
+  df$value <- df$value*(df$adj_var/100)
   df$value[df$value < 0 ] <- 0
   df$adj_var <- NULL
   
@@ -96,13 +112,13 @@ adj_var_cost <- function(scenario, adjust_variable) {
 }
 
 # Adjust for tariffs
-baseline <- adj_var_cost('baseline', 'mean_tariff')
-tariff_high <- adj_var_cost('tariff_high', 'mean_tariff')
-tariff_low <- adj_var_cost('tariff_low', 'mean_tariff')
+baseline <- adj_var_cost('baseline', 'tariff')
+tariff_high <- adj_var_cost('tariff_high', 'tariff')
+tariff_low <- adj_var_cost('tariff_low', 'tariff')
 
 # Plot
-ggplot(aes(x = year_act, y = value, colour = node_loc, shape = technology), data = baseline) +
-  geom_point()
+ggplot(aes(x = year_act, y = value, colour = node_loc, shape = technology), data = tariff_high) +
+  geom_line() +geom_point()
 
 # Write scenario output
 for (scen in c('baseline', 'tariff_high', 'tariff_low')) {
@@ -117,5 +133,6 @@ for (scen in c('baseline', 'tariff_high', 'tariff_low')) {
     
     saveRDS(df, file.path(output, paste0(scen, '/var_cost/', t, '.rds')))
     write.csv(df, file.path(output, paste0(scen, '/var_cost/', t, '.csv')))
+    write.csv(df, file.path(output, paste0('CO2_tax_', scen, '/var_cost/', t, '.csv')))
   }
 }

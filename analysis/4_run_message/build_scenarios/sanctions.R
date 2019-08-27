@@ -19,10 +19,9 @@ library('gdxrrw') # install from github (lolow/gdxtools)
 input <- paste0(wd, "output/analysis/msg_parameters/")
 output <- paste0(wd, "output/analysis/msg_parameters/")
 
-# Get global baseline activity and var_cost #
-#############################################
-activity <- read_MESSAGE(msg_scenario = 'baseline', msg_version = 8, msg_variable = 'ACT') # Baseline (global schema)
-activity <- subset(activity, grepl('_exp_', tec))
+# Get global baseline var_cost and historical alliances #
+#########################################################
+ubset(activity, grepl('_exp_', tec))
 
 # Import base var_cost
 export_technologies <- c('oil_exp', 'loil_exp', 'foil_exp', 'LNG_exp', 'coal_exp')
@@ -33,101 +32,102 @@ for (t in export_technologies) {
   var_cost.base <- rbind(var_cost.base, df)
 }
 
-# Get embodied activity with two regions
-########################################
-embodied_activity <- function(region1, region2) {
-  
-  activity$exporter <- stringr::str_replace(activity$node, 'R14_', '')
-  activity$importer <- toupper(substr(activity$tec, nchar(activity$tec)-2, nchar(activity$tec)))
-  
-  trades_with_region1 <- subset(activity, exporter != region1 & importer == region1)
-    trades_with_region1 <- group_by(trades_with_region1, exporter, importer, vintage, year_all) %>% mutate(trade_region1 = mean(value, na.rm = T))
-    trades_with_region1 <- unique(trades_with_region1[c('node', 'vintage', 'year_all', 'trade_region1')])
-  
-  trades_with_region2 <- subset(activity, exporter != region2 & importer == region2)
-    trades_with_region2 <- group_by(trades_with_region2, exporter, importer, vintage, year_all) %>% mutate(trade_region2 = mean(value, na.rm = T))
-    trades_with_region2 <- unique(trades_with_region2[c('node', 'vintage', 'year_all', 'trade_region2')])
+# Alliances
+alliances <- readRDS(file.path(input, paste0('SCENARIOS/historical_alliances.rds')))
 
-  emb_trade <- full_join(trades_with_region1, trades_with_region2, by = c('node', 'vintage', 'year_all'))
-  emb_trade$trade_region1[is.na(emb_trade$trade_region1)] <- emb_trade$trade_region2[is.na(emb_trade$trade_region2)] <- 0
-
-  # Assing proclivity for trade with CPA vs. NAM
-  emb_trade$pref_region1 <- emb_trade$pref_region2 <- 0
-  emb_trade$pref_region1[emb_trade$trade_region1 > emb_trade$trade_region2] <- 1
-  emb_trade$pref_region2[emb_trade$trade_region2 > emb_trade$trade_region1] <- 1
+# Assign costs based on historical alliances
+assign_premium <- function(region1, region2) {
   
-  emb_trade <- emb_trade[c('node', 'vintage', 'year_all', 'pref_region1', 'pref_region2')]
-  names(emb_trade) <- c('node', 'vintage', 'year_all', paste0('pref_', region1), paste0('pref_', region2))
+  for (r in 1:2) {
+    assign('sanctionregion', get(paste0('region', r)))
+    df <- subset(alliances, msgregion1 == sanctionregion | msgregion2 == sanctionregion)
+      df$partner <- NA
+      df$partner[df$msgregion1 != sanctionregion] <- df$msgregion1[df$msgregion1 != sanctionregion]
+      df$partner[is.na(df$partner)] <- df$msgregion2[df$msgregion2 != sanctionregion]
+      
+    df <- df[c('partner', 'alliance')]
+    df <- group_by(df, partner) %>% summarise(alliance = sum(alliance))
+    names(df) <- c('partner', paste0('alliance_', r))
+    
+    assign(paste0('df', r), df, envir = parent.frame())
+  }
   
-  emb_trade$vintage <- as.numeric(emb_trade$vintage)
-  emb_trade$year_all <- as.numeric(emb_trade$year_all)
+  alliance <- full_join(df1, df2, by = c('partner'))
+  alliance$alliance_1[is.na(alliance$alliance_1)] <- 0
+  alliance$alliance_2[is.na(alliance$alliance_2)] <- 0
   
-  return(emb_trade)
+  alliance$preference <- NA
+  alliance$preference[alliance$alliance_1 > alliance$alliance_2] <- region1
+  alliance$preference[alliance$alliance_2 > alliance$alliance_1] <- region2
+  
+  alliance <- alliance[c('partner', 'preference')]
+  return(alliance)
 }
-
-emb_trade <- embodied_activity('CPA', 'PAO')
 
 # Link embodied trade back to variable cost #
 #############################################
-add_var_cost <- function(indf, region1, region2) {
+add_var_cost <- function(region1, region2, indirect_effects = TRUE) {
   
-  var_cost <- left_join(var_cost.base, indf, by = c('node_loc' = 'node', 'year_vtg' = 'vintage', 'year_act' = 'year_all'))
+  var_cost <- var_cost.base
+  assign('allies', get(paste0('alliance_', region1, '_', region2)))
   
-  var_cost$importer <- paste0('R14_', toupper(substr(var_cost$technology, nchar(var_cost$technology)-2, nchar(var_cost$technology))))
-  var_cost <- left_join(var_cost, emb_trade, by = c('importer' = 'node', 'year_vtg' = 'vintage', 'year_act' = 'year_all'))
+  var_cost$importer <- toupper(substr(var_cost$technology, nchar(var_cost$technology)-2, nchar(var_cost$technology)))
+  var_cost$exporter <- toupper(stringr::str_replace(var_cost$node_loc, 'R14_', ''))
   
-  for (i in c('x', 'y')) {
-    names(var_cost)[names(var_cost) == paste0('pref_', region1, '.', i)] <- paste0('pref_region1.', i)
-    names(var_cost)[names(var_cost) == paste0('pref_', region2, '.', i)] <- paste0('pref_region2.', i)
-  }
+  # Region preferences based on historical alliance
+  var_cost <- left_join(var_cost, allies, by = c('importer' = 'partner'))
+  var_cost <- left_join(var_cost, allies, by = c('exporter' = 'partner'))
+  names(var_cost) <- stringr::str_replace_all(names(var_cost), '\\.x', '.importer')
+  names(var_cost) <- stringr::str_replace_all(names(var_cost), '\\.y', '.exporter')
   
-  var_cost$pref_region1.x[is.na(var_cost$pref_region1.x)] <- var_cost$pref_region2.x[is.na(var_cost$pref_region2.x)] <- 0 # export proclivity
-  var_cost$pref_region1.y[is.na(var_cost$pref_region1.y)] <- var_cost$pref_region2.y[is.na(var_cost$pref_region2.y)] <- 0 # import proclivity
+  # For regions that tradw with region1 or region2
+  var_cost$add_cost <- 0
+  
+  # A little more friction when trading with non-allied sanction region
+  if (indirect_effects == TRUE) {
+    var_cost$add_cost[var_cost$preference.exporter == region1 &
+                      var_cost$importer == region2 & 
+                      var_cost$year_act > 2015 & var_cost$year_act < 2030] <- 0.2
+    var_cost$add_cost[var_cost$preference.importer == region1 &
+                      var_cost$exporter == region2 & 
+                      var_cost$year_act > 2015 & var_cost$year_act < 2030] <- 0.2
+    
+    var_cost$add_cost[var_cost$preference.exporter == region2 &
+                        var_cost$importer == region1 &
+                        var_cost$year_act > 2015 & var_cost$year_act < 2030] <- 0.2
+    var_cost$add_cost[var_cost$preference.importer == region2 &
+                        var_cost$exporter == region1 &
+                        var_cost$year_act > 2015 & var_cost$year_act < 2030] <- 0.2
+    
+    var_cost$add_cost[is.na(var_cost$preference.importer) & is.na(var_cost$preference.exporter) & 
+                        var_cost$year_act > 2015 & var_cost$year_act < 2030] <- 0.2
+  } 
+  
+  # Make prohibitively expensive for sanctioning regions for 5 years
+  var_cost$add_cost[var_cost$importer == region1 & var_cost$exporter == region2 & 
+                    var_cost$year_act > 2015 & var_cost$year_act < 2030] <- 100000
+  var_cost$add_cost[var_cost$importer == region2 & var_cost$exporter == region1 &
+                    var_cost$year_act > 2015 & var_cost$year_act < 2030] <- 100000
+  
+  # Make it still a little expensive over time
+  var_cost$add_cost[var_cost$importer == region1 & var_cost$exporter == region2 & 
+                      var_cost$year_act > 2025] <- 0.1
+  var_cost$add_cost[var_cost$importer == region2 & var_cost$exporter == region1 &
+                      var_cost$year_act > 2025] <- 0.1
 
-
-  # Apply 30% increase to variable cost for model year if embodied
-  # Export proclivity
-  var_cost$value_add[var_cost$year_act > 2015 &
-                     var_cost$pref_region1.x == 1 &
-                     var_cost$importer == paste0('R14_', region2)] <- 1.0*var_cost$value[var_cost$year_act > 2015 &
-                                                                           var_cost$pref_region1.x == 1 &
-                                                                           var_cost$importer == paste0('R14_', region2)]
-  var_cost$value_add[var_cost$year_act > 2015 &
-                     var_cost$pref_region2.x == 1 &
-                     var_cost$importer == paste0('R14_', region1)] <- 1.0*var_cost$value[var_cost$year_act > 2015 &
-                                                                           var_cost$pref_region2.x == 1 &
-                                                                           var_cost$importer == paste0('R14_', region1)]
-  # Import proclivity
-  var_cost$value_add[var_cost$year_act > 2015 &
-                     var_cost$pref_region1.y == 1 &
-                     var_cost$node_loc == paste0('R14_', region2)] <- 1.0*var_cost$value[var_cost$year_act > 2015 &
-                                                                           var_cost$pref_region1.y == 1 &
-                                                                           var_cost$node_loc == paste0('R14_', region2)]
-  var_cost$value_add[var_cost$year_act > 2015 &
-                     var_cost$pref_region2.y == 1 &
-                     var_cost$node_loc == paste0('R14_', region1)] <- 1.0*var_cost$value[var_cost$year_act > 2015 &
-                                                                           var_cost$pref_region2.y == 1 &
-                                                                           var_cost$node_loc == paste0('R14_', region1)]
-
-  var_cost$value_add[is.na(var_cost$value_add)] <- 0
-  var_cost$value <- var_cost$value + var_cost$value_add
-
-  # Make region1-region2 energy trade prohibitively expensive
-  var_cost$value[var_cost$node_loc == paste0('R14_', region1) & grepl(tolower(region2), var_cost$technology)] <- 10*max(var_cost$value, na.rm = T)
-  var_cost$value[var_cost$node_loc == paste0('R14_', region2) & grepl(tolower(region1), var_cost$technology)] <- 10*max(var_cost$value, na.rm = T)
+  var_cost$add_cost[is.na(var_cost$add_cost)] <- 0
   
+  var_cost$value <- var_cost$value + (var_cost$add_cost*var_cost$value)
   var_cost <- var_cost[names(var_cost.base)]
   
   return(var_cost)
 }
 
-var_cost <- add_var_cost(emb_trade, 'CPA', 'PAO')
-
 # Run programs #
 ################
 # CPA-NAM sanctions
-emb_trade <- embodied_activity('CPA', 'NAM')
-cpa_nam_var_cost <-add_var_cost(emb_trade, 'CPA', 'NAM')
+alliance_CPA_NAM <- assign_premium('CPA', 'NAM')
+cpa_nam_var_cost <-add_var_cost('CPA', 'NAM')
 
 for (t in export_technologies) {
   df <- subset(cpa_nam_var_cost, grepl(t, technology))
@@ -135,8 +135,8 @@ for (t in export_technologies) {
 }
 
 # CPA-PAO sanctions
-emb_trade <- embodied_activity('CPA', 'PAO')
-cpa_pao_var_cost <-add_var_cost(emb_trade, 'CPA', 'PAO')
+alliance_CPA_PAO <- assign_premium('CPA', 'PAO')
+cpa_pao_var_cost <-add_var_cost('CPA', 'PAO')
 
 for (t in export_technologies) {
   df <- subset(cpa_pao_var_cost, grepl(t, technology))
@@ -144,10 +144,19 @@ for (t in export_technologies) {
 }
 
 # NAM-MEA sanctions
-emb_trade <- embodied_activity('NAM', 'MEA')
-nam_mea_var_cost <-add_var_cost(emb_trade, 'NAM', 'MEA')
+alliance_NAM_MEA <- assign_premium('NAM', 'MEA')
+nam_mea_var_cost <-add_var_cost('NAM', 'MEA')
 
 for (t in export_technologies) {
   df <- subset(nam_mea_var_cost, grepl(t, technology))
   write.csv(df, file.path(output, paste0('SCENARIOS/NAM_MEA_sanction/var_cost/', t, '.csv')))
+}
+
+# NAM-MEA sanctions, no indirect effects
+alliance_NAM_MEA2 <- assign_premium('NAM', 'MEA')
+nam_mea_var_cost2 <-add_var_cost('NAM', 'MEA', indirect_effects = FALSE)
+
+for (t in export_technologies) {
+  df <- subset(nam_mea_var_cost2, grepl(t, technology))
+  write.csv(df, file.path(output, paste0('SCENARIOS/NAM_MEA_sanction_onlydirect/var_cost/', t, '.csv')))
 }

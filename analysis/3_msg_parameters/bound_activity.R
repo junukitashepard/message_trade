@@ -19,6 +19,25 @@ build_bound_activity <- function(lo_or_up, energy) {
                                         msg.technology = msg.technology, 
                                         tra.energy = tra.energy, 
                                         varlist = varlist))
+  
+  # Set future bounds on activity
+  exp_tec <- paste0(msg.technology, '_', regions)
+  
+  df <- expand.grid(exp_tec, paste0('R14_', toupper(regions)))
+  names(df) <- c('technology', 'node_loc')
+  future_activity <- data.frame()
+  for (y in year_act_base) {
+    indf <- df
+    indf$year_act <- y
+    indf$mode <- 'M1'
+    indf$time <- 'year'
+    indf$unit <- 'GWa'
+    future_activity <- rbind(future_activity, indf)
+  }
+  
+  future_activity <- subset(future_activity, year_act > 2015)
+  future_activity$value <- 2000
+  
   # IMPORTS
   assign('msg.technology', paste0(energy, '_imp'))
   assign('imports', expand_imp_parameter(parname = parname,
@@ -26,10 +45,19 @@ build_bound_activity <- function(lo_or_up, energy) {
                                          tra.energy = tra.energy,
                                          varlist = varlist))
   
+  
   # CHECK LATER: Arbitrary number to add to upper bound
   if (lo_or_up == 'up') {
-    exports$value <- exports$value  + 10000
-    imports$value <- imports$value + 10000
+    exports <- full_join(exports, future_activity, by = c('node_loc', 'year_act', 'technology', 'mode', 'time', 'unit'))
+      exports$value <- exports$value.x
+      exports$value[is.na(exports$value)] <- exports$value.y[is.na(exports$value)]
+    imports <- full_join(imports, future_activity, by = c('node_loc', 'year_act', 'technology', 'mode', 'time', 'unit'))
+      imports$value <- imports$value.x
+      imports$value[is.na(imports$value)] <- imports$value.y[is.na(imports$value)]
+    
+    exports <- exports[c('technology', 'mode', 'time', 'unit', 'year_act', 'node_loc', 'value')]
+    imports <- imports[c('technology', 'mode', 'time', 'unit', 'year_act', 'node_loc', 'value')]
+    
   } else {
     exports$value <- 0
     imports$value <- 0

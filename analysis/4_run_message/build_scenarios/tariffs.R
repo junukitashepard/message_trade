@@ -27,7 +27,7 @@ names(msg_regions) <- c('iso', 'msgregion')
 # Build base dataframe #
 ########################
 region_list <- c('AFR', 'CAS', 'CPA', 'EEU', 'LAM', 'MEA', 'NAM', 'PAO', 'PAS', 'RUS', 'SAS', 'WEU', 'UBM', 'SCS')
-energy_list <- c('oil', 'coal', 'foil', 'LNG')
+energy_list <- c('oil', 'coal', 'foil', 'loil', 'LNG')
 MESSAGE_years <- c(seq(1995, 2055, by = 5), seq(2060, 2110, by = 10))
 
 basedf <- expand.grid(tolower(region_list), energy_list)
@@ -79,8 +79,8 @@ ggplot(aes(x = year, y = mean_tariff, colour = msgregion), data = tariff) +
 
 # Link to basedf
 hist_mean_tariff <- group_by(tariff, msgregion) %>% summarise(hist_tariff = median(mean_tariff, na.rm = T))
-hist_mean_tariff$high_tariff <- hist_mean_tariff$hist_tariff * 10
-hist_mean_tariff$low_tariff <- (hist_mean_tariff$hist_tariff * 10)*-1
+hist_mean_tariff$high_tariff <- hist_mean_tariff$hist_tariff * 2
+hist_mean_tariff$low_tariff <- 0
 
 scen.tariff <- left_join(basedf, tariff, by = c('importer' = 'msgregion', 'year_act' = 'year'))
   scen.tariff <- left_join(scen.tariff, hist_mean_tariff, by = c('importer' = 'msgregion'))

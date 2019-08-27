@@ -39,7 +39,7 @@ base_import_parameters = ['capacity_factor', 'emission_factor',
                          'fix_cost', 'var_cost',
                          'historical_activity']
 
-parameter_list_export = base_export_parameters
+parameter_list_export = base_export_parameters + growth_activity + initial_activity
 
 parameter_list_import = base_import_parameters
 
@@ -60,11 +60,14 @@ regions_list = ['afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'nam', 'pao',
 ######################
 # Scenario Selection #
 ######################
-trade_scenario = 'baseline'
+trade_scenario = 'CO2_tax_tariff_high'
 
 # Scenarios that impact variable cost
-scen_var_cost_imp = ['baseline', 'tariff_high', 'tariff_low']
-scen_var_cost_exp = ['NAM_CPA_sanction', 'CPA_PAO_sanction', 'NAM_MEA_sanction']
+scen_var_cost_imp = ['baseline_no_tariff', 
+                     'baseline', 'tariff_high', 'tariff_low',
+                     'CO2_tax_baseline', 'CO2_tax_tariff_high', 'CO2_tax_tariff_low']
+scen_var_cost_exp = ['NAM_CPA_sanction', 'CPA_PAO_sanction', 'NAM_MEA_sanction',
+                     'NAM_MEA_sanction_onlydirect']
 
 # Scenarios that impact investment cost
 scen_inv_cost = ['shipping_CLT']
@@ -81,8 +84,8 @@ ene_mp = ixmp.Platform() # Connect to central ENE database
 
 scenario = message_ix.Scenario(ene_mp,
                                model = 'MESSAGEix_TRADE',
-                               scenario = 'baseline',
-                               version = 10)
+                               scenario = 'tariff_high',
+                               version = 15)
 
 scenario = scenario.clone('MESSAGEix_TRADE', trade_scenario)
 
@@ -203,13 +206,13 @@ for tec in export_technologies:
     scenario.add_set('relation', rel)
 
     print('Adding parameters for ' + tec)
-    for par in parameter_list_export:
+    for par in ['var_cost']:
         replace_parameter(par, tec, remove_existing_par = True) 
 
 print("IMPORT TECHNOLOGIES")
 for tec in import_technologies:
     print('Adding parameters for ' + tec)
-    for par in parameter_list_import:
+    for par in ['var_cost']:
         replace_parameter(par, tec, remove_existing_par = True) 
     
 print("SHIPPING TECHNOLOGIES")
@@ -272,11 +275,17 @@ if trade_scenario is 'CO2_bound':
     
     bound_emission = pd.DataFrame(bound_emission_base, index = [0])
     scenario.add_par('bound_emission', bound_emission)
-          
+ 
+# For carbon pricing, add tax_emission parameter
+if 'CO2_tax' in trade_scenario:
+    print('Add CO2 tax')
+    indf = pd.read_csv((inpath + 'SCENARIOS/' + trade_scenario + '/tax_emission/tax_emission.csv'))
+    scenario.add_par('tax_emission', indf)
+    
 # Solve model #
 ###############
  #MUST INSERT SCENARIO COMMIT COMMENT   
-scenario.commit('Update so all _imp tec have tariffs')
+scenario.commit('Update tariffs based on CEPII, update initial act.')
     
 print("Scenario version = " + str(scenario.version))
 modelPath = 'C:\ProgramData\Anaconda3\Lib\site-packages\message_ix\model'
@@ -297,13 +306,15 @@ scenario.to_gdx(modelPath + '\data','MsgData_' + caseName)
 #
 #
 ### Remove technology
+# EXPORTS
 df_base = scenario.par('var_cost')
 for tec in export_technologies:
     for reg in regions_list:
         tecname = tec + '_' + reg
         df_rm = df_base[df_base.technology.isin([tecname])]
         scenario.remove_par('var_cost', key = df_rm) # Exclude the trade technology
-#
+        
+# IMPORTS
 df_base = scenario.par('var_cost')
 for tec in import_technologies:
     df_rm = df_base[df_base.technology.isin([tec])]

@@ -15,6 +15,9 @@ scale_exp_parameter <- function(parname, msg.technology, tra.energy, varlist) {
   
   assign('df', read.csv(file.path(input, paste0('parameters/', parname, '_', msg.technology, '.csv')), stringsAsFactors = F))
   
+  # Add mode if missing
+  if (!('mode' %in% colnames(df))) {df$mode <- 'M1'}
+  
   df <- subset(df, node_loc %in% paste0('R14_', toupper(regions)))
   
   assign('msgdf_base', df)

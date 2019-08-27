@@ -2,11 +2,14 @@
 # Function to build "activity" parameters in MESSAGE #
 ######################################################
 
-build_activity <- function(parname, lo_or_up, in.value, imports.too = TRUE) {
+build_activity <- function(parname, lo_or_up, in.value, imports.too = TRUE, imports.only = FALSE) {
   
   assign('value', in.value)
   
-  for (t in c(export_technologies, import_technologies)) {
+  if (imports.only == TRUE) {tec_list <- c(import_technologies)}
+  if (imports.only == FALSE) {tec_list <- c(export_technologies, import_technologies)}
+  
+  for (t in tec_list) {
     
     # Set up output file       
     print(paste0('TRADE TECH. = ', t))
