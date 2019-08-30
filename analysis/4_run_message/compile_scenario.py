@@ -60,7 +60,7 @@ regions_list = ['afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'nam', 'pao',
 ######################
 # Scenario Selection #
 ######################
-trade_scenario = 'CO2_tax_tariff_high'
+trade_scenario = 'NAM_MEA_sanction'
 
 # Scenarios that impact variable cost
 scen_var_cost_imp = ['baseline_no_tariff', 
@@ -84,11 +84,10 @@ ene_mp = ixmp.Platform() # Connect to central ENE database
 
 scenario = message_ix.Scenario(ene_mp,
                                model = 'MESSAGEix_TRADE',
-                               scenario = 'tariff_high',
-                               version = 15)
+                               scenario = 'baseline',
+                               version = 16)
 
 scenario = scenario.clone('MESSAGEix_TRADE', trade_scenario)
-
 
 # Check out scenario so we can make edits #
 ###########################################
@@ -285,7 +284,7 @@ if 'CO2_tax' in trade_scenario:
 # Solve model #
 ###############
  #MUST INSERT SCENARIO COMMIT COMMENT   
-scenario.commit('Update tariffs based on CEPII, update initial act.')
+scenario.commit('Remove initial activity constraints, variable growth constraints')
     
 print("Scenario version = " + str(scenario.version))
 modelPath = 'C:\ProgramData\Anaconda3\Lib\site-packages\message_ix\model'

@@ -92,8 +92,8 @@ varlist <-  c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')
 year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
 unit <- '%'
 time <- 'year'
-value_lo <- -0.2 # for oil_exp only
-value_up <- 0.2 # for oil_exp only
+value_lo <- -0.4
+value_up <- 0.4 
 source(paste0(repo, 'analysis/3_msg_parameters/growth_activity.R'))
 
 # historical_activity
@@ -189,6 +189,6 @@ time <- 'year'
 value <- 0
 source(paste0(repo, 'analysis/3_msg_parameters/var_cost_imports.R'))
 
-# relation_activity (only change exports)
+# relation_activity (only change exports, include imports too)
 source(paste0(repo, 'analysis/3_msg_parameters/relation_activity.R'))
 sink()
