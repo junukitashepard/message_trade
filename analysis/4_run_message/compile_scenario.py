@@ -77,9 +77,9 @@ scen_inv_cost = ['shipping_CLT']
 ene_mp = ixmp.Platform() # Connect to central ENE database
 
 # Clone model (MESSAGEix_SSP2) and scenario (test)
-#base_scenario = message_ix.Scenario(ene_mp, 
-#                                    model = 'MESSAGEix_SSP2',
-#                                    scenario = 'test') 
+base_scenario = message_ix.Scenario(ene_mp, 
+                                    model = 'MESSAGEix_SSP2',
+                                    scenario = 'test') 
 #scenario = base_scenario.clone('MESSAGEix_TRADE', trade_scenario)
 
 scenario = message_ix.Scenario(ene_mp,
