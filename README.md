@@ -29,7 +29,8 @@ In order to explicitly delineate bilateral trade flows among regions, we needed 
 
 ## Directory structure
 ### /derived
-* **/1_trade/** Imports bilateral trade data (BACI) and energy balances (IEA). Converts weight in BACI data to physical units (TJ). Validates BACI data across IEA. Dashboards can be found in /dashboards/iea_trade_validation.twb 
+* **/1_trade/** 
+Imports bilateral trade data (BACI) and energy balances (IEA). Converts weight in BACI data to physical units (TJ). Validates BACI data across IEA. Dashboards can be found in /dashboards/iea_trade_validation.twb 
 
 ### /analysis
 
