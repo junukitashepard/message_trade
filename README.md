@@ -23,9 +23,15 @@ Here, commodities represent the energy resource (e.g. LNG) while the technology 
 
 Note that while the global pool schema allows us to examine the total exports from/imports to regions, it does not explicitly model the trade flows among them. This explicit bilateral representation is necessary to model trade as a network and to measure security indices like trade portfolio diversity and import dependence.
 
-The bilateral trade representation is illustrated in Figure 2(a) and 2(b). 
+The bilateral trade representation is illustrated in Figure 1(b) and 2(b). 
 
 In order to explicitly delineate bilateral trade flows among regions, we needed to completely reparametrize trade in MESSAGEIX. Note that in the global pool schema, the origin of fuel imports and the destination of fuel exports are not explicit in the commodity or technology. In the bilateral framework we explicitly define the destination of commodity imports (e.g. LNG_weu means LNG imports to Western Europe) and export technologies (e.g. LNG_exp_weu means LNG exports from the given region that are destined for Western Europe). This is illustrated in Figure 2(b). 
+
+## Directory structure
+###/derived
+* */1_trade/* Imports bilateral trade data (BACI) and energy balances (IEA). Converts weight in BACI data to physical units (TJ). Validates BACI data across IEA. Dashboards can be found in /dashboards/iea_trade_validation.twb 
+
+###/analysis
 
 
 
