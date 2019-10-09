@@ -14,7 +14,7 @@ Text is sourced from Shepard, Jun. "Representing Shipping and Transport Networks
 |*Figure 2(a) Flow of Global Pool Schema*|
 |:--:|
 |![](images/global_pool_flow2.png)|
-|:--:|
+
 |*Figure 2(b) Flow of Bilateral Trade Schema*|
 |:--:|
 |![](images/bilateral_flow2.png)|
