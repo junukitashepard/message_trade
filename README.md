@@ -29,9 +29,12 @@ In order to explicitly delineate bilateral trade flows among regions, we needed 
 
 ## Directory structure
 ### /derived
-* **/1_trade:** Imports net calorific data (IEA) (0). Imports bilateral trade data (BACI) and energy balances (IEA) (1-2). Converts weight in BACI data to physical units (TJ) (1). Validates BACI data across IEA. Dashboards can be found in /dashboards/iea_trade_validation.twb (3).
-* **/2_nodes:** Sets major sea and inland water ports (1-3). creates uniform nodes based on user-defined degrees of separation (2). Runs Floyd-Warshall Algorithm (4-5). Collapses to one shortest route by country pair (7). Aggregates to MESSAGE regions (8).
-* **/3_build_matrices:** (Note: not used for analysis) Build matrices of direct and embedded armed conflicts (1) and trade sanctions (2).
+#### **/1_trade:** 
+Imports net calorific data (IEA) (0). Imports bilateral trade data (BACI) and energy balances (IEA) (1-2). Converts weight in BACI data to physical units (TJ) (1). Validates BACI data across IEA. Dashboards can be found in /dashboards/iea_trade_validation.twb (3).
+#### **/2_nodes:** 
+Sets major sea and inland water ports (1-3). creates uniform nodes based on user-defined degrees of separation (2). Runs Floyd-Warshall Algorithm (4-5). Collapses to one shortest route by country pair (7). Aggregates to MESSAGE regions (8).
+#### **/3_build_matrices:** 
+(Note: not used for analysis) Build matrices of direct and embedded armed conflicts (1) and trade sanctions (2).
 
 ### /analysis
 * **/1_toy_scenario:** For testing only, not used for analysis.
