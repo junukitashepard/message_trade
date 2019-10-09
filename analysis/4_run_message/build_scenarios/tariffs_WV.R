@@ -16,6 +16,7 @@ library('cluster')
 library('NbClust')
 library('factoextra')
 library('RMySQL')
+library('ggsci')
 
 raw <-      paste0(wd.data, "raw")
 derived <-  paste0(wd.data, 'output/derived')
@@ -254,13 +255,13 @@ scen.tariff_hi <- scen.tariff_lo <- scen.tariff
 
 # High tariffs
 scen.tariff_hi$tariff[scen.tariff_hi$year_act >= 2030] <- scen.tariff_hi$high_tariff[scen.tariff_hi$year_act >= 2030]
-scen.tariff_hi$tariff[scen.tariff_hi$year_act > 2015 & scen.tariff_hi$year_act < 2030] <- NA
+scen.tariff_hi$tariff[scen.tariff_hi$year_act >= 2015 & scen.tariff_hi$year_act < 2030] <- NA
 scen.tariff_hi <- arrange(scen.tariff_hi, technology, node_loc, importer, year_act)
 scen.tariff_hi$tariff <- zoo::na.approx(scen.tariff_hi$tariff)
 
 hi_tariff_plot <-
 ggplot(aes(x = year_act, y = tariff, colour = importer), data = unique(scen.tariff_hi[c('year_act', 'importer', 'tariff')])) +
-  geom_point() + 
+  geom_point(size = 2) + 
   geom_line(size = 1) +
   labs(x = "Year", y = "AVE on primary products (%)", colour = 'Importer', title = 'High tariff scenario') +
   theme(legend.position = 'bottom', text = element_text(size = 15))
@@ -269,7 +270,7 @@ scen.tariff_hi <- scen.tariff_hi[c('technology', 'node_loc', 'year_act', 'tariff
 
 # Low tariffs
 scen.tariff_lo$tariff[scen.tariff_lo$year_act >= 2030] <- scen.tariff_lo$low_tariff[scen.tariff_lo$year_act >= 2030]
-scen.tariff_lo$tariff[scen.tariff_lo$year_act > 2015 & scen.tariff_lo$year_act < 2030] <- NA
+scen.tariff_lo$tariff[scen.tariff_lo$year_act >= 2015 & scen.tariff_lo$year_act < 2030] <- NA
 scen.tariff_lo <- arrange(scen.tariff_lo, technology, node_loc, importer, year_act)
 scen.tariff_lo$tariff <- zoo::na.approx(scen.tariff_lo$tariff)
 
@@ -284,7 +285,7 @@ scen.tariff_lo <- scen.tariff_lo[c('technology', 'node_loc', 'year_act', 'tariff
 
 # Baseline tariffs
 scen.tariff_baseline <- scen.tariff
-scen.tariff_baseline$tariff[scen.tariff_baseline$year_act > 2015] <- scen.tariff_baseline$hist_tariff[scen.tariff_baseline$year_act > 2015]
+scen.tariff_baseline$tariff[scen.tariff_baseline$year_act >= 2015] <- scen.tariff_baseline$hist_tariff[scen.tariff_baseline$year_act > 2015]
 scen.tariff_baseline <- scen.tariff_baseline[c('technology', 'node_loc', 'year_act', 'tariff')]
 
 baseline_tariff_plot <-

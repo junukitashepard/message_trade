@@ -50,13 +50,11 @@ CO2_baseline_ACT <- import_gdx_activity(scenario = 'CO2_tax_baseline', scenario_
 CO2_tariff_high_ACT <- import_gdx_activity(scenario = 'CO2_tax_tariff_high', scenario_name = 'CO2 Tax: High Tariff', version = 11) 
 CO2_tariff_low_ACT <- import_gdx_activity(scenario = 'CO2_tax_tariff_low', scenario_name = 'CO2 Tax: Low Tariff', version = 7) 
 
-sanction_NAM_MEA_ACT <- import_gdx_activity(scenario = 'NAM_MEA_sanction', scenario_name = 'Sanction: NAM-MEA', version = 9)
-
-
 activity <- rbind(baseline_ACT, 
                   tariff_high_ACT, tariff_low_ACT, 
-                  sanction_NAM_MEA_ACT,
                   CO2_baseline_ACT, CO2_tariff_high_ACT, CO2_tariff_low_ACT)
+
+activity <- subset(activity, year <= 2050)
 
 # Collapse by importer/exporter
 collapse_trade <- function(trader) {
@@ -80,10 +78,13 @@ collapse_trade <- function(trader) {
 imports <- collapse_trade('importer')
 exports <- collapse_trade('exporter')
 
-graph_HHI <- function(trade, scenario.list, regions = 'all', energy.list, title.name = '', manually.colour = NULL, legend = 'bottom') {
+graph_HHI <- function(trade, scenario.list, regions = 'all', 
+                      energy.list, title.name = '', manually.colour = NULL, 
+                      legend = 'bottom') {
 
   if (regions == 'all') {
-    baseline_plot <- group_by(trade, scenario, scenario_name, energy, year) %>% summarise(hhi = weighted.mean(hhi, total))
+    baseline_plot <- group_by(trade, scenario, scenario_name, energy, year) %>% 
+                     summarise(hhi = weighted.mean(hhi, total))
     baseline_plot <- subset(baseline_plot, scenario %in% scenario.list & energy %in% energy.list)
   } else {
     baseline_plot <- trade
@@ -91,14 +92,19 @@ graph_HHI <- function(trade, scenario.list, regions = 'all', energy.list, title.
     baseline_plot <- subset(baseline_plot, scenario %in% scenario.list & trader %in% regions & energy %in% energy.list)
   }
   
+  if (length(energy.list) > 1) {
+    baseline_plot <- group_by(baseline_plot, scenario, scenario_name, year) %>%
+                     summarize(hhi = weighted.mean(hhi, total, na.rm = T))
+  }
+  
   plot <- 
   ggplot(aes(x = year, y = hhi, colour = scenario_name), data = baseline_plot) + 
     geom_point(size = 2) + 
     geom_line(size = 2) + 
     labs(x = 'Year', y = 'Mean HHI', colour = 'Scenario', title = title.name) + 
-    theme(text = element_text(size = 20),
+    theme(text = element_text(size = 15),
           legend.position = legend)  
-    # + facet_grid(.~energy)
+
   
   if (is.null(manually.colour)) {
     plot <- plot + scale_color_brewer(palette = 'Dark2')
@@ -109,49 +115,56 @@ graph_HHI <- function(trade, scenario.list, regions = 'all', energy.list, title.
   return(plot)
 }
 
-# All regions
-baseline_imports_plot <- graph_HHI(imports, 'baseline', energy.list = 'Crude Oil')
-baseline_exports_plot <- graph_HHI(exports, 'baseline', energy.list = 'Crude Oil')
+# Top regions
+energylist <-  c('Coal', 'Crude Oil', 'Fuel Oil', 'Light Oil', 'LNG')
+scenariolist <-  c('baseline',
+                   'tariff_high', 'tariff_low',
+                   'CO2_tax_baseline', 'CO2_tax_tariff_high', 'CO2_tax_tariff_low')
+
+top_exp <- group_by(baseline_ACT, exporter, year) %>% summarize(value = sum(value))
+top_imp <- group_by(baseline_ACT, importer, year) %>% summarise(value = sum(value))
+
+top_exp <- arrange(subset(top_exp, year == 2050), desc(value))
+top_imp <- arrange(subset(top_imp, year == 2050), desc(value))
 
 
-scenario_imports_plot <- graph_HHI(imports, energy.list = 'Crude Oil',
-                                   c('baseline', 
-                                     'tariff_high', 'tariff_low', 
-                                     'NAM_MEA_sanction',
-                                     'CO2_tax_baseline', 'CO2_tax_tariff_high', 'CO2_tax_tariff_low'),
-                                   title.name = 'Imports', legend = 'right')
-scenario_exports_plot <- graph_HHI(exports, energy.list = 'Crude Oil',
-                                   c('baseline', 
-                                     'tariff_high', 'tariff_low', 
-                                     'NAM_MEA_sanction', 'NAM_MEA_sanction_onlydirect'),
-                                   title.name = 'Exports', legend = 'right')
+MEA_exports_plot <- graph_HHI(trade = exports, 
+                              energy.list = energylist,
+                              scenario.list  = scenariolist,
+                              title.name = 'Energy exports from Middle East', 
+                              legend = 'none', regions = 'MEA')
 
-MEA_exports_plot <- graph_HHI(exports, energy.list = 'Crude Oil',
-                                   c('baseline',
-                                     'tariff_high', 'tariff_low',
-                                     'NAM_MEA_sanction', 
-                                     'CO2_tax_baseline', 'CO2_tax_tariff_high', 'CO2_tax_tariff_low'),
-                                   title.name = 'Crude oil exports from MEA', legend = 'right', regions = 'MEA')
+LAM_exports_plot <- graph_HHI(trade = exports, 
+                              energy.list = energylist,
+                              scenario.list  = scenariolist,
+                              title.name = 'Energy exports from Latin America', 
+                              legend = 'none', regions = 'LAM')
 
-PAS_imports_plot <- graph_HHI(imports, energy.list = 'Crude Oil',
-                              c('baseline',
-                                'tariff_high', 'tariff_low',
-                                'NAM_MEA_sanction',
-                                'CO2_tax_baseline', 'CO2_tax_tariff_high', 'CO2_tax_tariff_low'),
-                              title.name = 'Crude oil imports to PAS', legend = 'right', regions = 'PAS')
-# 
-# 
-# # CO2 policies
-# CO2_scenario_imports_plot <- graph_HHI(imports, 
-#                                        c('baseline',
-#                                          'CO2_tax_baseline', 'CO2_tax_tariff_high', 'CO2_tax_tariff_low'),
-#                                        title.name = 'Imports',
-#                                        manually.colour = c('#000000', '#CCFFFF', '#99CCCC', '#3399FF'))
-# CO2_scenario_exports_plot <- graph_HHI(exports, 
-#                                        c('baseline',
-#                                          'CO2_tax_baseline', 'CO2_tax_tariff_high', 'CO2_tax_tariff_low'),
-#                                        title.name = 'Exports',
-#                                        manually.colour = c('#000000', '#CCFFFF', '#99CCCC', '#3399FF'))
+RUS_exports_plot <- graph_HHI(trade = exports, 
+                              energy.list = energylist,
+                              scenario.list  = scenariolist,
+                              title.name = 'Energy exports from Russia', 
+                              legend = 'none', regions = 'RUS')
+
+PAS_exports_plot <- graph_HHI(trade = imports, 
+                              energy.list = energylist,
+                              scenario.list  = scenariolist,
+                              title.name = 'Energy imports to Pacific Asia', 
+                              legend = 'none', regions = 'PAS')
+
+SAS_exports_plot <- graph_HHI(trade = imports, 
+                              energy.list = energylist,
+                              scenario.list  = scenariolist,
+                              title.name = 'Energy imports to South Asia', 
+                              legend = 'none', regions = 'SAS')
+
+WEU_exports_plot <- graph_HHI(trade = imports, 
+                              energy.list = energylist,
+                              scenario.list  = scenariolist,
+                              title.name = 'Energy imports to Western Europe', 
+                              legend = 'none', regions = 'WEU')
+
+
 
 # Plot importer share/exporter share over time
 calculate_share <- function(trade) {

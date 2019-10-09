@@ -47,11 +47,10 @@ CO2_tax_baseline_EMISS <- import_gdx_emissions(scenario = 'CO2_tax_baseline', ve
 CO2_tax_tariff_high_EMISS <- import_gdx_emissions(scenario = 'CO2_tax_tariff_high', version = 11, scenario.name = 'CO2 tax, high tariff')
 CO2_tax_tariff_low_EMISS <- import_gdx_emissions(scenario = 'CO2_tax_tariff_low', version = 7, scenario.name = 'CO2 tax, low tariff')
 
-sanction_NAM_MEA_EMISS <- import_gdx_emissions(scenario = 'NAM_MEA_sanction', version = 9, scenario.name = 'Sanction: NAM-MEA')
+#sanction_NAM_MEA_EMISS <- import_gdx_emissions(scenario = 'NAM_MEA_sanction', version = 9, scenario.name = 'Sanction: NAM-MEA')
 
 alldf <- rbind(tariff_high_EMISS, tariff_low_EMISS, 
-               CO2_tax_baseline_EMISS, CO2_tax_tariff_high_EMISS, CO2_tax_tariff_low_EMISS,
-               sanction_NAM_MEA_EMISS)
+               CO2_tax_baseline_EMISS, CO2_tax_tariff_high_EMISS, CO2_tax_tariff_low_EMISS)
 
 alldf <- left_join(alldf, baseline_EMISS, by = c('year', 'node'))
 

@@ -22,10 +22,12 @@ mycolors <- colorRampPalette(brewer.pal(8, 'Paired'))(ncolors)
 
 # Plot GLOBAL baseline #
 ########################
-activity <- read_MESSAGE(msg_scenario = 'tariff_high', msg_version = 3, msg_variable = 'ACT') # Baseline (global schema)
+activity <- read_MESSAGE(msg_scenario = 'baseline', msg_version = 16, msg_variable = 'ACT') # Baseline (global schema)
 
 activity$vintage <- as.numeric(activity$vintage)
 activity$year_all <- as.numeric(activity$year_all)
+
+activity <- subset(activity, year_all <= 2050)
 
 plot_activity <- function(energy, trade) {
   
@@ -70,6 +72,10 @@ plot_activity <- function(energy, trade) {
   assign('allplots', gridExtra::arrangeGrob(grobs = plotlist))
   return(allplots)
 }
+
+
+exports_baseline <-  plot_activity(energy = 'coal', trade = 'exp')
+exports_hightariff <- plot_activity(energy = 'coal', trade = 'exp')
 
 # Oil trade
 oil_exports <- plot_activity(energy = 'oil', trade = 'exp')
