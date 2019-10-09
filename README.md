@@ -9,7 +9,7 @@ Text is sourced from Shepard, Jun. "Representing Shipping and Transport Networks
 
 |*Figure 1(a) Map of Global Pool Schema*|
 |:--:| 
-|![](images/global_pool_map.png)|
+|![](images/global_pool_map.png) ![](images/global_pool_map.png)|
 
 |*Figure 1(b) Flow of Global Pool Schema*|
 |:--:|
