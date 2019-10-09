@@ -7,9 +7,11 @@ Text is sourced from Shepard, Jun. "Representing Shipping and Transport Networks
 
 [MESSAGEix](https://github.com/iiasa/message_ix) currently represents the world through [14 regions](http://www.iiasa.ac.at/web/home/research/researchPrograms/Energy/MESSAGE-model-regions.en.html). Trade is represented through a global pool framework. In this framework, regions with excess energy resources can export to a global pool from which regions that demand that resource can import. Figure 1(a) below illustrates the global pool schema as a map, while Figure 1(b) represents the schema as a flow of energy. 
 
+<p align="center">
 |*Figure 1(a) Map of Global Pool Schema*|
 |:--:| 
 |![](images/global_pool_map.png)|
+</p>
 
 |*Figure 1(b) Flow of Global Pool Schema*|
 |:--:|
