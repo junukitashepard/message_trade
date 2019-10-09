@@ -9,11 +9,11 @@ Text is sourced from Shepard, Jun. "Representing Shipping and Transport Networks
 
 |*Figure 1(a) Map of Global Pool Schema*|
 |:--:| 
-|![](images/global_pool_map.png)|
+|![](images/global_pool_map2.png)|
 
 |*Figure 1(b) Map of Bilateral Trade Schema*|
 |:--:|
-|![](images/bilateral_map.png)|
+|![](images/bilateral_map2.png)|
 
 Here, commodities represent the energy resource (e.g. LNG) while the technology represents the movement of the commodity (e.g. LNG exports, LNG imports). The technology is differentiated by commodity but not by location. This is what defines the global pool schema.
 
