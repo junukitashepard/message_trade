@@ -44,7 +44,7 @@ Prepare data (1) and add gravity function variables (2). Run summary statistics 
 #### [**/3_msg_parameters:**](https://github.com/junukitashepard/message_trade/tree/master/analysis/3_msg_parameters) 
 All parameters for bilateral schema are compiled in scripts in this directory. User can run **run_all.R** to compile all parameters. Individual parameterizations can be found in corresponding files. 
 #### [**/4_run_message:**](https://github.com/junukitashepard/message_trade/tree/master/analysis/4_run_message) 
-Contains scenario definitions (scenarios.xlsx), and compilation of GDX files written in Python (compile_scenario.py). User can run **compile_scenario.py** to compile all scenario GDX files. Initial post-processing (optional) can be done in **map_tradeflows.R** and **region_coordinates.R**
+Contains scenario definitions (scenarios.xlsx), and compilation of GDX files written in Python (compile_scenario.py). User can run [**compile_scenario.py**](https://github.com/junukitashepard/message_trade/tree/master/analysis/4_run_message/compile_scenario.py) to compile all scenario GDX files. Initial post-processing (optional) can be done in [**map_tradeflows.R**](https://github.com/junukitashepard/message_trade/tree/master/analysis/4_run_message/map_tradeflows.R) and [**region_coordinates.R**](https://github.com/junukitashepard/message_trade/tree/master/analysis/4_run_message/region_coordinates.R)
 #### [**/5_post_process:**](https://github.com/junukitashepard/message_trade/tree/master/analysis/5_post_process) 
 Contains all plotting scripts.
 
