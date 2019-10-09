@@ -29,33 +29,19 @@ In order to explicitly delineate bilateral trade flows among regions, we needed 
 
 ## Directory structure
 ### /derived
-* **/1_trade:** Imports bilateral trade data (BACI) and energy balances (IEA). Converts weight in BACI data to physical units (TJ). Validates BACI data across IEA. Dashboards can be found in /dashboards/iea_trade_validation.twb 
+* **/1_trade:** Imports net calorific data (IEA) (0). Imports bilateral trade data (BACI) and energy balances (IEA) (1-2). Converts weight in BACI data to physical units (TJ) (1). Validates BACI data across IEA. Dashboards can be found in /dashboards/iea_trade_validation.twb (3).
 * **/2_nodes:** Sets major sea and inland water ports (1-3). creates uniform nodes based on user-defined degrees of separation (2). Runs Floyd-Warshall Algorithm (4-5). Collapses to one shortest route by country pair (7). Aggregates to MESSAGE regions (8).
-
-
+* **/3_build_matrices:** (Note: not used for analysis) Build matrices of direct and embedded armed conflicts (1) and trade sanctions (2).
 
 ### /analysis
-
-
-
-```bash
-pip install foobar
-```
-
-## Usage
-
-```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
-```
+* **/1_toy_scenario:** For testing only, not used for analysis.
+* **/2_regressions:** Prepare data (1) and add gravity function variables (2). Run summary statistics (3). Function for gravity-based OLS, used for proceeding scripts (4). LASSO test (4_variable_selection). Compile regression results in Excel workbooks (5). Compile regression results in dataframe, to be used for parameter compilation (6). Add tariff parameters (lo and hi) (7).
+* **/3_msg_parameters:** All parameters for bilateral schema are compiled in scripts in this directory. User can run **run_all.R** to compile all parameters. Individual parameterizations can be found in corresponding files. 
+* **/4_run_message:** Contains scenario definitions (scenarios.xlsx), and compilation of GDX files written in Python (compile_scenario.py). User can run **compile_scenario.py** to compile all scenario GDX files. Initial post-processing (optional) can be done in **map_tradeflows.R** and **region_coordinates.R**
+* **/5_post_process:** Contains all plotting scripts.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
-
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+TBD
