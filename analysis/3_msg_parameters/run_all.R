@@ -15,7 +15,6 @@ library('ggplot2')
 input <-   paste0(wd, "output/derived/")
 output <-   paste0(wd, "output/analysis/msg_parameters/")
 
-#sink(paste0(repo, 'analysis/3_msg_parameters/make_parameters.txt'))
 
 # Import functions 
 ###################
@@ -51,7 +50,7 @@ regions <- c('afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'nam', 'pao', 'pas', 'rus
 # Import data files 
 ####################
 # Import regionally aggregated trade data
-trade.df <- read.csv(file.path(input, 'trade/regional_trade.csv'), stringsAsFactors = F)
+trade.df <- read.csv(file.path(input, 'derived/trade/regional_trade.csv'), stringsAsFactors = F)
 trade.df$year[trade.df$year == 2014] <- 2015 # Use 2014 data as proxy for 2015 activity
 
 # Import cost spreadsheet
@@ -65,15 +64,14 @@ names(emit_lt) <- c('node_loc', 'technology', 'emission_factor', 'lifetime')
 # Build parameters!
 ####################
 # bound_activity_lo, bound_activity_up
-year_act_base <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
 source(paste0(repo, 'analysis/3_msg_parameters/bound_activity.R'))
 
 # capacity_factor
 parname <- 'capacity_factor'
 varlist <-  c('node_loc', 'technology', 'year_vtg', 'year_act', 'time', 'value', 'unit')
-year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
-year_vtg <- year_act
-value <- 1
+year_act <- MESSAGE.years
+year_vtg <- MESSAGE.years
+value <- MESSAGE.capacity.factor
 unit <- '%'
 time <- 'year'
 source(paste0(repo, 'analysis/3_msg_parameters/capacity_factor.R'))
@@ -82,14 +80,14 @@ source(paste0(repo, 'analysis/3_msg_parameters/capacity_factor.R'))
 parname <- 'fix_cost'
 varlist <- c('node_loc', 'technology', 'year_vtg', 'year_act', 'value', 'unit')
 unit <- 'USD/GWa'
-year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
-year_vtg <- year_act
+year_act <- MESSAGE.years
+year_vtg <- MESSAGE.years
 source(paste0(repo, 'analysis/3_msg_parameters/fix_cost.R'))
 
 # growth_activity_lo, growth_activity_up
 parname <- 'growth_activity'
 varlist <-  c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')
-year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+year_act <- MESSAGE.years
 unit <- '%'
 time <- 'year'
 value_lo <- -0.4
@@ -97,7 +95,7 @@ value_up <- 0.4
 source(paste0(repo, 'analysis/3_msg_parameters/growth_activity.R'))
 
 # historical_activity
-year_act_base <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+year_act_base <- MESSAGE.years
 source(paste0(repo, 'analysis/3_msg_parameters/historical_activity.R'))
 
 # historical_new_capacity
@@ -105,7 +103,7 @@ source(paste0(repo, 'analysis/3_msg_parameters/historical_new_capacity.R'))
 
 # initial_activity_lo, initial_activity_up
 varlist <-  c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')
-year_act <- c(seq(1995, 2055, by = 5), seq(2060, 2110, by = 10))
+year_act <- MESSAGE.years
 value_lo = 0
 value_up = 2
 time <- 'year'
@@ -119,12 +117,12 @@ source(paste0(repo, 'analysis/3_msg_parameters/input.R'))
 parname <- 'inv_cost'
 varlist <- c('node_loc', 'technology', 'year_vtg', 'value', 'unit')
 unit <- 'USD/GWa'
-year_vtg <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+year_vtg <- MESSAGE.years
 source(paste0(repo, 'analysis/3_msg_parameters/inv_cost.R'))
 
 # level_cost_activity_soft_lo, level_cost_activity_soft_up
 varlist <-  c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')
-year_act <- c(seq(2020, 2055, by = 5), seq(2060, 2110, by = 10)) # future only
+year_act <- MESSAGE.years[MESSAGE.years >= MESSAGE.model.horizon.start] # future only
 unit <- '???'
 time <- 'year'
 value_up <- 0.5
@@ -142,7 +140,7 @@ source(paste0(repo, 'analysis/3_msg_parameters/ref_activity.R'))
 
 # soft_activity
 varlist <-  c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')
-year_act <- c(seq(2020, 2055, by = 5), seq(2060, 2110, by = 10)) # future only
+year_act <- MESSAGE.years[MESSAGE.years >= MESSAGE.model.horizon.start] # future only
 unit <- '???'
 time <- 'year'
 value_lo <- -0.1
@@ -152,9 +150,9 @@ source(paste0(repo, 'analysis/3_msg_parameters/soft_activity.R'))
 # technical_lifetime
 parname <- 'technical_lifetime'
 varlist <- c('node_loc', 'technology', 'year_vtg', 'value', 'unit')
-value <- tech_lifetime
+value <- MESSAGE.technical.lifetime
 unit <- 'y'
-year_vtg <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+year_vtg <- MESSAGE.years
 source(paste0(repo, 'analysis/3_msg_parameters/technical_lifetime.R'))
 
 # emission_factor
@@ -162,7 +160,7 @@ parname <- 'emission_factor'
 varlist <- c('node_loc', 'technology', 'year_vtg', 'year_act', 'mode', 'emission', 'value', 'unit')
 mode <- 'M1'
 unit <- 'kg/kWa'
-year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+year_act <- MESSAGE.years
 year_vtg <- year_act
 time <- 'year'
 emission <- 'CO2'
@@ -173,7 +171,7 @@ parname <- 'var_cost'
 varlist <- c('node_loc', 'technology', 'year_vtg', 'year_act', 'mode', 'time', 'value', 'unit')
 mode <- 'M1'
 unit <- 'USD/GWa'
-year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+year_act <- MESSAGE.years
 year_vtg <- year_act
 time <- 'year'
 source(paste0(repo, 'analysis/3_msg_parameters/var_cost.R'))
@@ -183,12 +181,13 @@ parname <- 'var_cost'
 varlist <- c('node_loc', 'technology', 'year_vtg', 'year_act', 'mode', 'time', 'value', 'unit')
 mode <- 'M1'
 unit <- 'USD/GWa'
-year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+year_act <- MESSAGE.years
 year_vtg <- year_act
 time <- 'year'
 value <- 0
 source(paste0(repo, 'analysis/3_msg_parameters/var_cost_imports.R'))
 
 # relation_activity (only change exports, include imports too)
+year_act <- MESSAGE.years
 source(paste0(repo, 'analysis/3_msg_parameters/relation_activity.R'))
 sink()

@@ -16,7 +16,7 @@ build_activity <- function(parname, lo_or_up, in.value, imports.too = TRUE, impo
     
     assign('parsave', as.data.frame(matrix(ncol = length(varlist), nrow = 0)))
     
-    for (r_to in regions) {
+    for (r_to in region.list) {
       
       print(paste0('DEST. = ', r_to))
       
@@ -24,13 +24,13 @@ build_activity <- function(parname, lo_or_up, in.value, imports.too = TRUE, impo
       
       # EXPORTS
       if (grepl('exp', t)) {
-        for (r_from in regions[regions != r_to]) {
+        for (r_from in region.list[region.list != r_to]) {
           
           print(paste0('FROM = ', r_from))
           
           assign('technology.in', paste0(t, '_', r_to))
           
-          assign('node_loc.in', paste0('R14_', toupper(r_from)))
+          assign('node_loc.in', paste0(region.number, '_', toupper(r_from)))
           
           assign('parout', build_parameter(parname = parname, varlist = varlist, technology = technology.in,
                                            node_loc = node_loc.in,
@@ -47,7 +47,7 @@ build_activity <- function(parname, lo_or_up, in.value, imports.too = TRUE, impo
           
           assign('technology.in', t)
           
-          assign('node_loc.in', paste0('R14_', toupper(r_to)))
+          assign('node_loc.in', paste0(region.number, '_', toupper(r_to)))
           
           assign('parout', build_parameter(parname = parname, varlist = varlist, technology = technology.in,
                                            node_loc = node_loc.in,
@@ -64,8 +64,8 @@ build_activity <- function(parname, lo_or_up, in.value, imports.too = TRUE, impo
       
     parsave <- unique(parsave)
     
-    saveRDS(parsave, file.path(output, paste0(parname, '/', t, '.rds')))
-    write.csv(parsave, file.path(output, paste0(parname, '/', t, '.csv')))
+    saveRDS(parsave, file.path(output, paste0('analysis/msg_parameters/', parname, '/', t, '.rds')))
+    write.csv(parsave, file.path(output, paste0('analysis/msg_parameters/', parname, '/', t, '.csv')))
     
   }
 }

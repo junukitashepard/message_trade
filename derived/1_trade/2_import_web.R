@@ -1,20 +1,6 @@
 #########################################################
 # Import WEB datasets and keep only imports and exports #
 #########################################################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-library('RMySQL')
-
-output <-   paste0(wd, "output/")
-temp <-     paste0(wd, "temp/")
-raw <-      paste0(wd, "raw/")
-
 # Import from SQL database
 for (c in c('1990_2008', '2009_2016')) {
   sql_statement <- paste0("SELECT * FROM WEB.WEB_", c, " ",

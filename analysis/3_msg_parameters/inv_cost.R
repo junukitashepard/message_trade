@@ -10,17 +10,17 @@ for (t in export_technologies) {
   
   assign('parsave', as.data.frame(matrix(ncol = length(varlist), nrow = 0)))
   
-  for (r_to in regions) {
+  for (r_to in region.list) {
     
     assign('parin', as.data.frame(matrix(ncol = length(varlist), nrow = 0)))
     
     # EXPORTS
     if (grepl('exp', t)) {
-      for (r_from in regions[regions != r_to]) {
+      for (r_from in region.list[region.list != r_to]) {
         
         assign('technology.in', paste0(t, '_', r_to))
         
-        assign('node_loc.in', paste0('R14_', toupper(r_from)))
+        assign('node_loc.in', paste0(region.number, '_', toupper(r_from)))
         
         assign('value', costs$inv_cost[costs$node_loc == node_loc.in & costs$technology == t])
         
@@ -37,8 +37,8 @@ for (t in export_technologies) {
   
   parsave <- unique(parsave)
   
-  saveRDS(parsave, file.path(output, paste0('inv_cost/', t, '.rds')))
-  write.csv(parsave, file.path(output, paste0('inv_cost/', t, '.csv')))
+  saveRDS(parsave, file.path(output, paste0('analysis/msg_parameters/inv_cost/', t, '.rds')))
+  write.csv(parsave, file.path(output, paste0('analysis/msg_parameters/inv_cost/', t, '.csv')))
   
 }
 

@@ -26,13 +26,13 @@ build_ref_new_capacity <- function(energy) {
   # Subset to keep only non-missing value
   exports <- subset(exports, !is.na(value))
   
-  saveRDS(exports, file.path(output, paste0('ref_new_capacity/', energy, '_exp.rds')))
-  write.csv(exports, file.path(output, paste0('ref_new_capacity/', energy, '_exp.csv')))
+  saveRDS(exports, file.path(output, paste0('analysis/msg_parameters/ref_new_capacity/', energy, '_exp.rds')))
+  write.csv(exports, file.path(output, paste0('analysis/msg_parameters/ref_new_capacity/', energy, '_exp.csv')))
   
 }
 
 # Run program
-for (e in energy_list) {
+for (e in energy.types) {
   build_ref_new_capacity(e)
 }
 

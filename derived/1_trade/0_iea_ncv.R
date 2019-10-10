@@ -1,26 +1,6 @@
 ###################################################
 # Import and standardize IEA net calorific values #
 ###################################################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-library('RMySQL')
-
-output <-   paste0(wd, "output/")
-temp <-     paste0(wd, "temp/")
-raw <-      paste0(wd, "raw/")
-
-library('magrittr')
-library('dplyr')
-library('ggplot2')
-library('stringr')
-library('jsfunctions')
-
 # Import file
 cfile <- read.csv(file.path(raw, "IEA/WCONV_13062019131229715.csv"), stringsAsFactors = F)
 cfile <- cfile[c('COUNTRY', 'Product', 'TIME', 'Value')]

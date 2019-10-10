@@ -1,8 +1,6 @@
 ###################################################
 # Expand parameters: relation_activity
 ###################################################
-year_act <- c(seq(2015, 2055, by = 5), seq(2060, 2110, by = 10))
-
 # Function: build historical_new_capacity parameter
 build_relation_activity <- function(energy) {
   
@@ -14,15 +12,15 @@ build_relation_activity <- function(energy) {
   assign('msg.technology', paste0(energy, '_exp'))
   assign('parname', 'relation_activity')
   
-  assign('df', read.csv(file.path(input, paste0('parameters/', parname, '_', msg.technology, '.csv')), stringsAsFactors = F))
-  df <- subset(df, node_loc %in% paste0('R14_', toupper(regions)))
+  assign('df', read.csv(file.path(input, paste0('derived/parameters/', parname, '_', msg.technology, '.csv')), stringsAsFactors = F))
+  df <- subset(df, node_loc %in% paste0(region.number, '_', toupper(region.list)))
   
   # Expand existing technologies
-  assign('basedf', expand.grid(paste0(msg.technology, '_', regions)))
+  assign('basedf', expand.grid(paste0(msg.technology, '_', region.list)))
   basedf <- as.data.frame(basedf[rep(seq_len(nrow(basedf)), nrow(df)),])
   basedf[, 1] <- as.character(basedf[,1])
   
-  repdf <- df[rep(seq_len(nrow(df)), each = length(regions)),]
+  repdf <- df[rep(seq_len(nrow(df)), each = length(region.list)),]
   
   assert('nrow(basedf) == nrow(repdf)')
   
@@ -32,7 +30,7 @@ build_relation_activity <- function(energy) {
   repdf <- cbind(repdf, basedf)
   
   # Remove destination-specific exports = node_loc
-  repdf$tec_node <- paste0('R14_', 
+  repdf$tec_node <- paste0(region.number, '_', 
                            toupper(substr(repdf$technology, nchar(repdf$technology)-2, nchar(repdf$technology))))
   
   repdf <- subset(repdf, tec_node != node_loc & tec_node != node_rel)
@@ -45,24 +43,24 @@ build_relation_activity <- function(energy) {
   # All exports
   assign('region_exports', 
          build_parameter(parname = 'all_exports', varlist = varlist, technology = paste0(energy, '_exp'),
-                         node_loc = paste0('R14_', toupper(regions)),
+                         node_loc = paste0(region.number, '_', toupper(region.list)),
                          year_act = year_act, 
                          mode = 'M1', relation = paste0('lim_', energy, '_trd'),
                          value = -1, unit = '???'))
   
   region_exports$year_rel <- region_exports$year_act
-  region_exports$node_rel <- 'R14_GLB'
+  region_exports$node_rel <- paste0(region.number, '_GLB')
   
   # Global trade
   assign('global_trade', 
          build_parameter(parname = 'all_exports', varlist = varlist, technology = paste0(energy, '_trd'),
-                         node_loc = 'R14_GLB',
+                         node_loc = paste0(region.number, '_GLB'),
                          year_act = year_act, 
                          mode = 'M1', relation = paste0('lim_', energy, '_trd'),
                          value = 1, unit = '???'))
   
   global_trade$year_rel <- global_trade$year_act
-  global_trade$node_rel <- 'R14_GLB'
+  global_trade$node_rel <- paste0(region.number, '_GLB')
 
   glb_relation <- rbind(region_exports, global_trade)
   
@@ -73,7 +71,7 @@ build_relation_activity <- function(energy) {
   # All exports
   assign('all_exports', 
     build_parameter(parname = 'all_exports', varlist = varlist, technology = paste0(energy, '_exp'),
-                    node_loc = paste0('R14_', toupper(regions)),
+                    node_loc = paste0(region.number, '_', toupper(region.list)),
                     year_act = year_act, 
                     mode = 'M1', relation = paste0('lim_', energy, '_exp'),
                     value = -1, unit = '???'))
@@ -84,13 +82,13 @@ build_relation_activity <- function(energy) {
   # Bilateral exports
   assign('bilateral_exports', data.frame())
   
-  for (r in c(regions, 'glb')) {
+  for (r in c(region.list, 'glb')) {
       
     assign('tec.in', paste0(energy, '_exp_', r))
       
     assign('ta.in',  
             build_parameter(parname = 'bilateral_exports', varlist = varlist, technology = paste0(energy, '_exp_', r),
-                            node_loc = paste0('R14_', toupper(regions)),
+                            node_loc = paste0(region.number, '_', toupper(region.list)),
                             year_act = year_act, 
                             mode = 'M1', relation = paste0('lim_', energy, '_exp'),
                             value = 1, unit = '???'))
@@ -104,32 +102,34 @@ build_relation_activity <- function(energy) {
   assign('export_relation', rbind(all_exports, bilateral_exports))
          
   # Remove destination-specific exports = node_loc
-  export_relation$tec_node <- paste0('R14_', 
-                           toupper(substr(export_relation$technology, nchar(export_relation$technology)-2, nchar(export_relation$technology))))
+  export_relation$tec_node <- paste0(region.number, '_', 
+                           toupper(substr(export_relation$technology, 
+                                          nchar(export_relation$technology)-2, 
+                                          nchar(export_relation$technology))))
   
   export_relation <- subset(export_relation, tec_node != node_loc & tec_node != node_rel)
   export_relation$tec_node <- NULL
   
   repdf <- rbind(repdf, export_relation, glb_relation)
   
-  saveRDS(repdf, file.path(output, paste0('relation_activity/', energy, '_exp.rds')))
-  write.csv(repdf, file.path(output, paste0('relation_activity/', energy, '_exp.csv')))
+  saveRDS(repdf, file.path(output, paste0('analysis/msg_parameters/relation_activity/', energy, '_exp.rds')))
+  write.csv(repdf, file.path(output, paste0('analysis/msg_parameters/relation_activity/', energy, '_exp.csv')))
   
   # IMPORTS (KEEP SAME)
   print(paste0('Technology = ', energy, '_imp'))
   assign('msg.technology', paste0(energy, '_imp'))
   assign('parname', 'relation_activity')
   
-  assign('outdf', read.csv(file.path(input, paste0('parameters/', parname, '_', msg.technology, '.csv')), stringsAsFactors = F))
-  outdf <- subset(outdf, node_loc %in% paste0('R14_', toupper(regions)))
+  assign('outdf', read.csv(file.path(input, paste0('derived/parameters/', parname, '_', msg.technology, '.csv')), stringsAsFactors = F))
+  outdf <- subset(outdf, node_loc %in% paste0(region.number, '_', toupper(region.list)))
   
-  saveRDS(outdf, file.path(output, paste0('relation_activity/', energy, '_imp.rds')))
-  write.csv(outdf, file.path(output, paste0('relation_activity/', energy, '_imp.csv')))
+  saveRDS(outdf, file.path(output, paste0('analysis/msg_parameters/relation_activity/', energy, '_imp.rds')))
+  write.csv(outdf, file.path(output, paste0('analysis/msg_parameters/relation_activity/', energy, '_imp.csv')))
   
 }
 
 # Run program
-for (e in energy_list) {
+for (e in energy.types) {
   build_relation_activity(e)
 }
 
@@ -147,29 +147,29 @@ build_relation_limits <- function(relation, value, node_rel, year_rel) {
   return(df)
 }
 
-for (e in energy_list) {
+for (e in energy.types) {
   ul_export_relation <- build_relation_limits(relation = paste0('lim_', e, '_exp'), 
                                        value = 0, 
-                                       node_rel = paste0('R14_', toupper(regions)),
+                                       node_rel = paste0(region.number, '_', toupper(region.list)),
                                        year_rel = year_act)
   
   ll_export_relation <- build_relation_limits(relation = paste0('lim_', e, '_exp'), 
                                        value = 0, 
-                                       node_rel = paste0('R14_', toupper(regions)),
+                                       node_rel = paste0(region.number, '_', toupper(region.list)),
                                        year_rel = year_act)
   ul_glb_relation <- build_relation_limits(relation = paste0('lim_', e, '_trd'), 
                                               value = 0, 
-                                              node_rel = paste0('R14_', toupper(regions)),
+                                              node_rel = paste0(region.number, '_', toupper(region.list)),
                                               year_rel = year_act)
   
   ll_glb_relation <- build_relation_limits(relation = paste0('lim_', e, '_trd'), 
                                               value = 0, 
-                                              node_rel = paste0('R14_', toupper(regions)),
+                                              node_rel = paste0(region.number, '_', toupper(region.list)),
                                               year_rel = year_act)
   
   upper_limit <- rbind(ul_export_relation, ul_glb_relation)
   lower_limit <- rbind(ll_export_relation, ll_glb_relation)
   
-  write.csv(upper_limit, file.path(output, paste0('relation_upper/', e, '_exp.csv')))
-  write.csv(lower_limit, file.path(output, paste0('relation_lower/', e, '_exp.csv')))
+  write.csv(upper_limit, file.path(output, paste0('analysis/msg_parameters/relation_upper/', e, '_exp.csv')))
+  write.csv(lower_limit, file.path(output, paste0('analysis/msg_parameters/relation_lower/', e, '_exp.csv')))
 }

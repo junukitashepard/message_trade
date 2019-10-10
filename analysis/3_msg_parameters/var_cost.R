@@ -10,11 +10,11 @@ isid('paths', c('node_loc', 'technology', 'year'))
 
 # Set up in MESSAGEix format #
 ##############################
-all_technologies <- expand.grid(export_technologies, regions)
+all_technologies <- expand.grid(export_technologies, region.list)
 all_technologies$technology <- paste0(all_technologies$Var1, "_", all_technologies$Var2)
 all_technologies <- all_technologies$technology
 
-paths_msg <- expand.grid(year_act, unique(paste0('R14_', toupper(regions))), unique(all_technologies))
+paths_msg <- expand.grid(year_act, unique(paste0(region.number, '_', toupper(region.list))), unique(all_technologies))
   names(paths_msg) <- c('year_act', 'node_loc', 'technology')
   paths_msg[, 2:3] <- lapply(paths_msg[, 2:3], function(x) as.character(x))
   paths_msg <- subset(paths_msg, tolower(substr(node_loc, 5, 7)) != 
@@ -23,15 +23,35 @@ paths_msg <- expand.grid(year_act, unique(paste0('R14_', toupper(regions))), uni
 paths_msg <- left_join(paths_msg, paths[c('node_loc', 'technology', 'year', 'var_cost')], 
                        by = c('node_loc', 'technology', 'year_act' = 'year'))
 
-# Make loil = foil variable costs
-foil_costs <- subset(paths_msg, grepl('foil_exp', technology))
-foil_costs$technology <- stringr::str_replace(foil_costs$technology, 'foil_', 'loil_')
-foil_costs$foil_cost <- foil_costs$var_cost
-foil_costs$var_cost <- foil_costs$mean_var_cost <- NULL
+# Make energy types (e.g. loil) follow foil variable costs
+foil_costs <- data.frame()
+for (e in energy.types.trade.foil) {
+  fcdf <- subset(paths_msg, grepl('foil_exp', technology))
+  fcdf$technology <- stringr::str_replace(fcdf$technology, 'foil_', paste0(e, '_'))
+  fcdf$foil_cost <- fcdf$var_cost
+  fcdf$var_cost <- fcdf$mean_var_cost <- NULL
+  foil_costs <- rbind(as.data.frame(foil_costs), as.data.frame(fcdf))
+}
+if (nrow(foil_costs) > 0) {
+  paths_msg <- left_join(paths_msg, foil_costs, by = c('year_act', 'node_loc', 'technology'))
+  paths_msg$var_cost[is.na(paths_msg$var_cost) & !is.na(paths_msg$foil_cost)] <- paths_msg$foil_cost[is.na(paths_msg$var_cost) & !is.na(paths_msg$foil_cost)]
+  paths_msg$foil_cost <- NULL
+}
 
-paths_msg <- left_join(paths_msg, foil_costs, by = c('year_act', 'node_loc', 'technology'))
-paths_msg$var_cost[is.na(paths_msg$var_cost) & !is.na(paths_msg$foil_cost)] <- paths_msg$foil_cost[is.na(paths_msg$var_cost) & !is.na(paths_msg$foil_cost)]
-paths_msg$foil_cost <- NULL
+# Make energy types (e.g. hydrogen) follow LNG variable costs
+LNG_costs <- data.frame()
+for (e in energy.types.trade.LNG) {
+  lndf <- subset(paths_msg, grepl('LNG_exp', technology))
+  lndf$technology <- stringr::str_replace(lndf$technology, 'LNG_', paste0(e, '_'))
+  lndf$LNG_cost <- lndf$var_cost
+  lndf$var_cost <- lndf$mean_var_cost <- NULL
+  LNG_costs <- rbind(as.data.frame(LNG_costs), as.data.frame(lndf))
+}
+if (nrow(LNG_costs) > 0) {
+  paths_msg <- left_join(paths_msg, LNG_costs, by = c('year_act', 'node_loc', 'technology'))
+  paths_msg$var_cost[is.na(paths_msg$var_cost) & !is.na(paths_msg$LNG_cost)] <- paths_msg$LNG_cost[is.na(paths_msg$var_cost) & !is.na(paths_msg$LNG_cost)]
+  paths_msg$LNG_cost <- NULL
+}
 
 # For landlocked regions, only allow land access to be normal price, otherwise very high
 landacc <- read.csv(file.path(wd, "raw/UserInputs/pipeline_connections.csv"), stringsAsFactors = F)
@@ -42,8 +62,9 @@ landacc <- unique(rbind(landacc, landacc2))
 landacc$partners <- paste0(landacc$node1, " ", landacc$node2)
 landacc$landacc <- 1
 
-paths_msg$partners <- paste0(paths_msg$node_loc, " R14_", 
-                             toupper(substr(paths_msg$technology, nchar(paths_msg$technology) - 2, nchar(paths_msg$technology))))
+paths_msg$partners <- paste0(paths_msg$node_loc, " ", region.number, "_", 
+                             toupper(substr(paths_msg$technology, nchar(paths_msg$technology) - 2, 
+                                            nchar(paths_msg$technology))))
 
 paths_msg <- left_join(paths_msg, landacc[c('partners', 'landacc')], by = c('partners'))
 
@@ -79,7 +100,7 @@ parout <- parout[c('node_loc', 'technology', 'year_vtg',
                          'year_act', 'mode', 'time', 'value', 'unit')]
 
 # Save across technologies
-saveRDS(parout, file.path(output, 'var_cost/var_cost_base.rds'))
+saveRDS(parout, file.path(output, 'analysis/msg_parameters/var_cost/var_cost_base.rds'))
 
 # Save by technology
 for (t in export_technologies) {
@@ -88,8 +109,8 @@ for (t in export_technologies) {
   
   if (t == 'oil_exp') {assign('df', subset(parout, substr(technology, 1, 3) == 'oil'))} # so we don't include foil or loil
   
-  saveRDS(df, file.path(output, paste0('var_cost/', t, '.rds')))
-  write.csv(df, file.path(output, paste0('var_cost/', t, '.csv')))
-  write.csv(df, file.path(output, paste0('SCENARIOS/baseline_no_tariff/var_cost/', t, '.csv')))
+  saveRDS(df, file.path(output, paste0('analysis/msg_parameters/var_cost/', t, '.rds')))
+  write.csv(df, file.path(output, paste0('analysis/msg_parameters/var_cost/', t, '.csv')))
+  write.csv(df, file.path(output, paste0('analysis/msg_parameters/SCENARIOS/baseline_no_tariff/var_cost/', t, '.csv')))
   
 }

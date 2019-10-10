@@ -1,19 +1,6 @@
 ###########################
 # Seaports pre-processing #
 ###########################
-rm(list = ls())
-wd <- "H:/data/"
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('stringr')
-
-raw <-      paste0(wd, "raw")
-output <-   paste0(wd, "output")
-temp <-     paste0(wd, "temp")
-
-#################
 # Import files
 major.ports <- read.csv(file.path(raw, "Ports/seaports_of_the_world.csv"), stringsAsFactors = F)
 
@@ -47,4 +34,4 @@ major.ports$lat <- lat
 major.ports <- major.ports[c('country', 'port_name', 'long', 'lat')]
 
 # Write csv
-write.csv(major.ports, file.path(gwd, 'user_inputs/default/major_ports.csv'))
+write.csv(major.ports, file.path(repo, 'user_inputs/default/major_ports.csv'))

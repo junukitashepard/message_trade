@@ -1,25 +1,8 @@
 #############################################
 # Combine uniform nodes and major sea ports #
 #############################################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('stringr')
-library('maptools')
-
-raw <-      paste0(wd, "raw")
-output <-   paste0(wd, "output")
-temp <-     paste0(wd, "temp")
-
-# User input
-seaport_file <- 'H:/data/temp/major_ports.csv'
-#################
 # Import files
-major.ports <- read.csv(file.path(seaport_file), stringsAsFactors = F)
+major.ports <- read.csv(file.path(major.ports.csv), stringsAsFactors = F)
 uniform.nodes <- read.csv(file.path(temp, 'uniform_nodes.csv'), stringsAsFactors = F)
 
 # Keep only sea nodes

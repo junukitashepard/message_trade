@@ -1,20 +1,6 @@
 ###############################
 # Compile data for validation #
 ###############################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-library('RMySQL')
-
-output <-   paste0(wd, "output/")
-temp <-     paste0(wd, "temp/")
-raw <-      paste0(wd, "raw/")
-
 # Import files
 baci <- readRDS(file.path(temp, 'trade_bytype.rds'))
   isid('baci', c('iso.country', 'year', 'energy', 'trade'))

@@ -1,0 +1,23 @@
+############################
+# Run all files in 2_nodes #
+############################
+print('#####################')
+print('Pre-processing nodes')
+print('#####################')
+print('Running:')
+print('...1_preprocess_ports.R')
+source(paste0(repo, 'derived/2_nodes/1_preprocess_ports.R'))
+print('...2_set_uniform_nodes.R')
+source(paste0(repo, 'derived/2_nodes/2_set_uniform_nodes.R'))
+print('...3_combine_nodes_ports.R')
+source(paste0(repo, 'derived/2_nodes/3_combine_nodes_ports.R'))
+print('...4_calculate_distance.R')
+source(paste0(repo, 'derived/2_nodes/4_calculate_distance.R'))
+print('...5_floyd_warshall.R')
+source(paste0(repo, 'derived/2_nodes/5_floyd_warshall.R'))
+print('...6_map_paths.R')
+source(paste0(repo, 'derived/2_nodes/6_map_paths.R'))
+print('...7_minimum_port_combinations.R')
+source(paste0(repo, 'derived/2_nodes/7_minimum_port_combinations.R'))
+print('...8_regional_aggregation.R')
+source(paste0(repo, 'derived/2_nodes/8_regional_aggregation.R'))

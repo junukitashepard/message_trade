@@ -1,35 +1,13 @@
 #######################################################
 # Compile data frame of variable cost impacts by node #
 #######################################################
-rm(list = ls())
-wd.data <- "H:/data/"
-wd <- 'H:/message_trade/analysis/2_regressions/'
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('maptools')
-library('jsfunctions')
-library('ggplot2')
-
-raw <-      paste0(wd.data, "raw")
-input <-    paste0(wd.data, "output/analysis/regress/")
-output <-   paste0(wd.data, "output/analysis/regress/")
-temp <-     paste0(wd.data, "temp/")
-
-source(paste0(wd, '4_regress.R'))
-#######################################################
 # Import file
-trade <- readRDS(file.path(input, "regdf.rds"))
-paths <- read.csv(file.path(wd.data, 'output/derived/nodes/regional_paths.csv'), stringsAsFactors = F)[c('year', 'energy', 'msg_region1', 'msg_region2', 'port1', 'port2')]
-ijports <- readRDS(file.path(wd.data, 'output/derived/nodes/ij_ports.rds'))[c('port1', 'port2', 'distance')]
-
-region_list <- c('AFR', 'CPA', 'EEU', 'LAM', 'MEA', 'NAM', 'PAO', 'PAS', 'RUS', 'SAS', 'WEU')
-energy_list <- energy_list <- c('oil', 'coal', 'foil', 'LNG')
+trade <- readRDS(file.path(input, "analysis/regress/regdf.rds"))
+paths <- read.csv(file.path(input, 'derived/nodes/regional_paths.csv'), stringsAsFactors = F)[c('year', 'energy', 'msg_region1', 'msg_region2', 'port1', 'port2')]
+ijports <- readRDS(file.path(input, 'derived/nodes/ij_ports.rds'))[c('port1', 'port2', 'distance')]
 
 # Link port information to distance
-paths <- unique(subset(paths, msg_region1 %in% region_list & msg_region2 %in% region_list))
+paths <- unique(subset(paths, msg_region1 %in% region.list.trade & msg_region2 %in% region.list.trade))
 paths <- group_by(paths, year, energy, msg_region1, msg_region2) %>% mutate(count = row_number())
 paths <- subset(paths, count == 1) # drops 1 observation
 paths$count <- NULL
@@ -48,9 +26,9 @@ assert('!is.na(mean_paths$mean_path)')
 
 # Function: compile dataframe for exporters
 make_regdf <- function(varlist, subset_p = NULL) {
-  assign('base_df', expand.grid(region_list, energy_list))
+  assign('base_df', expand.grid(region.list.trade, energy.types.BACI))
   names(base_df) <- c('node_loc', 'technology')
-  base_df$node_loc <- paste0('R14_', base_df$node_loc)
+  base_df$node_loc <- paste0(region.number, '_', base_df$node_loc)
   base_df$technology <- paste0(base_df$technology, '_exp')
   
   for (v in varlist) {
@@ -60,9 +38,9 @@ make_regdf <- function(varlist, subset_p = NULL) {
     
     var_df <- data.frame()
     
-    for (r in c('all', region_list)) {
+    for (r in c('all', region.list.trade)) {
       print(paste0("Running regression for exporter = ", r))
-      assign(paste0('X'), run_reg(variable.rr = v, energy_list.rr = energy_list, exporters = r))
+      assign(paste0('X'), run_reg(variable.rr = v, energy_list.rr = energy.types.BACI, exporters = r))
       X <- as.data.frame(X)
       
       X <- X[2:nrow(X), c('Estimate', 'Std. Error', 'Pr(>|t|)')]
@@ -76,7 +54,7 @@ make_regdf <- function(varlist, subset_p = NULL) {
       X$p <- NULL
       
       X$technology <- paste0(rownames(X), "_exp")
-      X$node_loc <- paste0('R14_', r)
+      X$node_loc <- paste0(region.number, '_', r)
       var_df <- rbind(var_df, X)
     }
     
@@ -110,7 +88,7 @@ plot_hist(df = 'var_cost_df', variable = 'sanction_imposition_eff', vartitle = '
 #####################################
 paths$technology <- paste0(paths$energy, '_exp_', tolower(paths$msg_region2))
 paths$technology.link <- paste0(paths$energy, '_exp')
-paths$node_loc <- paste0('R14_', paths$msg_region1)
+paths$node_loc <- paste0(region.number, '_', paths$msg_region1)
 
 # Post-process: add mean distance where missing (note: not included in regression!)
 paths <- left_join(paths, mean_paths, by = c('msg_region1', 'msg_region2'))
@@ -123,11 +101,11 @@ assert('!is.na(paths$distance)')
 #################################################
 scenario_input <- var_cost_df
 scenario_input$distance_eff <- scenario_input$distance_se <- NULL
-saveRDS(scenario_input, file.path(output, 'scenario_effect.rds'))
+saveRDS(scenario_input, file.path(output, 'analysis/regress/scenario_effect.rds'))
 
 # Combine paths wtih regression results #
 #########################################
-var_cost_df <- subset(var_cost_df, node_loc == 'R14_all')
+var_cost_df <- subset(var_cost_df, node_loc == paste0(region.number, '_all'))
 paths <- left_join(paths, var_cost_df[c('technology', 'distance_eff')], 
                    by = c('technology.link' = 'technology'))
 
@@ -146,7 +124,7 @@ hist <- ggplot(aes(x = var_cost), data = paths) +
         theme(text = element_text(size = 24))
 
 # Save for MESSAGE parameterization
-saveRDS(paths, file.path(output, 'var_cost_from_reg.rds'))
+saveRDS(paths, file.path(output, 'analysis/regress/var_cost_from_reg.rds'))
 
 
 

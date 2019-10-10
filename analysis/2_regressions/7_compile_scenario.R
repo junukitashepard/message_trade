@@ -1,42 +1,19 @@
 ###############################################
 # Compile data frame of scenario coefficients #
 ###############################################
-rm(list = ls())
-wd.data <- "H:/data/"
-wd <- 'H:/message_trade/analysis/2_regressions/'
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('maptools')
-library('jsfunctions')
-library('ggplot2')
-
-raw <-      paste0(wd.data, "raw")
-input <-    paste0(wd.data, "output/analysis/regress/")
-output <-   paste0(wd.data, "output/analysis/regress/")
-temp <-     paste0(wd.data, "temp/")
-
-source(paste0(wd, '4_regress.R'))
-#######################################################
 # Import msg regions
 msg_regions <- read.csv(file.path(raw, 'UserInputs/regional_specification.csv'), stringsAsFactors = F)
 names(msg_regions) <- c('iso', 'msgregion')
 
 # Build base dataframe #
 ########################
-region_list <- c('AFR', 'CPA', 'EEU', 'LAM', 'MEA', 'NAM', 'PAO', 'PAS', 'RUS', 'SAS', 'WEU')
-energy_list <- c('oil', 'coal', 'foil', 'LNG')
-MESSAGE_years <- c(seq(1995, 2055, by = 5), seq(2060, 2110, by = 10))
-
-basedf <- expand.grid(tolower(region_list), energy_list)
+basedf <- expand.grid(tolower(region.list.trade), energy.types.BACI)
 basedf <- paste0(basedf$Var2, '_exp_', basedf$Var1)
-basedf <- expand.grid(basedf, paste0('R14_', region_list))
+basedf <- expand.grid(basedf, paste0(region.number, '_', region.list.trade))
 names(basedf) <- c('technology', 'node_loc')
 
 df <- data.frame()
-for (y in MESSAGE_years) {
+for (y in MESSAGE.years) {
   tdf <- basedf
   tdf$year_act <- y
   df <- rbind(df, tdf)
@@ -45,7 +22,9 @@ basedf <- df
 df <- NULL
 
 basedf$technology <- as.character(basedf$technology)
-basedf$importer <- toupper(substr(basedf$technology, nchar(basedf$technology)-2, nchar(basedf$technology)))
+basedf$importer <- toupper(substr(basedf$technology, 
+                                  nchar(basedf$technology)-2, 
+                                  nchar(basedf$technology)))
 
 # Tariffs #
 ###########

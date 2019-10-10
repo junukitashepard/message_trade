@@ -1,25 +1,8 @@
 ########################### 
 # Add gravity model terms #
 ###########################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('maptools')
-library('jsfunctions')
-library('openxlsx')
-
-raw <-      paste0(wd, "raw")
-input <-    paste0(wd, "output/analysis/regress")
-output <-   paste0(wd, "output/analysis/regress")
-temp <-     paste0(wd, "temp/")
-
-##############################
 # Import file
-trade <- readRDS(file.path(input, "regdf.rds"))
+trade <- readRDS(file.path(input, "analysis/regress/regdf.rds"))
 
 gravity_1993_2004 <- read.csv(file.path(raw, 'USITC/release_1.0_1993_2004.csv'), stringsAsFactors = F)
 gravity_2005_2016 <- read.csv(file.path(raw, 'USITC/release_1.0_2005_2016.csv'), stringsAsFactors = F)
@@ -77,4 +60,4 @@ for (variable in c('q_e_gwa',
 }
 
 # Save file
-saveRDS(trade, file.path(output, 'regdf.rds'))
+saveRDS(trade, file.path(output, 'analysis/regress/regdf.rds'))

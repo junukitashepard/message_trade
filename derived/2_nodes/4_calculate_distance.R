@@ -1,26 +1,6 @@
 #################################################################
 # Generate dataframe of distances for each combination of nodes #
 #################################################################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('stringr')
-library('maptools')
-library('geosphere')
-
-raw <-      paste0(wd, "raw")
-output <-   paste0(wd, "output")
-temp <-     paste0(wd, "temp")
-
-#sink(paste0(temp, "/calculate_distance.txt"))
-
-# User input
-node.interval <- 5 # degrees
-##################
 # Import file
 nodes <- read.csv(file.path(temp, 'ports_nodes.csv'), stringsAsFactors = F)
 data(wrld_simpl)
@@ -115,11 +95,3 @@ longlat.df$distance <- distHaversine(longlat.df[, 1:2],
 
 # Write files
 saveRDS(longlat.df, file.path(temp, "node_combinations.rds"))
-
-sink()
-
-
-
-check <- readRDS(file.path(temp, "node_combinations.rds"))
-  
-  

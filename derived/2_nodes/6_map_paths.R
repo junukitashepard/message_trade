@@ -1,21 +1,6 @@
 ######################
 # Map shortest paths #
 ######################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-library('maptools')
-library('e1071')
-
-output <-   paste0(wd, "output/")
-temp <-     paste0(wd, "temp/")
-raw <-      paste0(wd, "raw/")
-#######################
 # Import shortest path rds
 spath <- readRDS(file.path(temp, 'shortest_path.rds'))
 

@@ -9,7 +9,7 @@ for (t in c(import_technologies)) {
   
   assign('parsave', as.data.frame(matrix(ncol = length(varlist), nrow = 0)))
   
-  for (r_to in regions) {
+  for (r_to in region.list) {
     
     print(paste0('DEST. = ', r_to))
     
@@ -17,7 +17,7 @@ for (t in c(import_technologies)) {
       
     assign('technology.in', t)
       
-    assign('node_loc.in', paste0('R14_', toupper(r_to)))
+    assign('node_loc.in', paste0(region.number, '_', toupper(r_to)))
     assign('varlist', c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')) # re-assign without year_vtg
       
     assign('parout', build_parameter(parname = parname, varlist = varlist, technology = technology.in,
@@ -31,9 +31,9 @@ for (t in c(import_technologies)) {
   
   parsave <- unique(parsave)
   
-  saveRDS(parsave, file.path(output, paste0('var_cost/', t, '.rds')))
-  write.csv(parsave, file.path(output, paste0('var_cost/', t, '.csv')))
-  write.csv(parsave, file.path(output, paste0('SCENARIOS/baseline_no_tariff/var_cost/', t, '.csv')))
+  saveRDS(parsave, file.path(output, paste0('analysis/msg_parameters/var_cost/', t, '.rds')))
+  write.csv(parsave, file.path(output, paste0('analysis/msg_parameters/var_cost/', t, '.csv')))
+  write.csv(parsave, file.path(output, paste0('analysis/msg_parameters/SCENARIOS/baseline_no_tariff/var_cost/', t, '.csv')))
 }
 
 # Clean up

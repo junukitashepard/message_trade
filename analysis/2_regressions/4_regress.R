@@ -60,7 +60,7 @@ ols_regress <- function(variable, export.region = "all", import.region = "all", 
 }
 
 # Function: run for all regions and by region
-run_reg <- function(variable.rr, energy_list.rr = energy_list, exporters = "all", importers = "all", depvar.rr = 'var_cost') {
+run_reg <- function(variable.rr, energy_list.rr = energy.types.BACI, exporters = "all", importers = "all", depvar.rr = 'var_cost') {
   
   assign('tab.names', c('base'))
   

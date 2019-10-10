@@ -1,25 +1,8 @@
 ##################################################################### 
 # Identify port-port combination with shortest distance per ij pair #
 #####################################################################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-
-input <-    paste0(wd, "output/derived/nodes")
-output <-   paste0(wd, "output/derived/nodes")
-temp <-     paste0(wd, "temp/")
-raw <-      paste0(wd, "raw/")
-
-# User input
-node.interval <- 5 # degrees
-#######################################################
 # Import route file
-spath <- readRDS(file.path(input, 'shortest_paths.rds'))
+spath <- readRDS(file.path(input, 'derived/nodes/shortest_paths.rds'))
 
 # Omit same country trade
 spath <- subset(spath, port1.country != port2.country)

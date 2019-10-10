@@ -28,14 +28,14 @@ build_historical_activity <- function(energy) {
   exports <- subset(exports, !is.na(value))
   imports <- subset(imports, !is.na(value) & year_act %in% year_act_base)
   
-  saveRDS(exports, file.path(output, paste0('historical_activity/', energy, '_exp.rds')))
-  saveRDS(imports, file.path(output, paste0('historical_activity/', energy, '_imp.rds')))
-  write.csv(exports, file.path(output, paste0('historical_activity/', energy, '_exp.csv')))
-  write.csv(imports, file.path(output, paste0('historical_activity/', energy, '_imp.csv')))
+  saveRDS(exports, file.path(output, paste0('analysis/msg_parameters/historical_activity/', energy, '_exp.rds')))
+  saveRDS(imports, file.path(output, paste0('analysis/msg_parameters/historical_activity/', energy, '_imp.rds')))
+  write.csv(exports, file.path(output, paste0('analysis/msg_parameters/historical_activity/', energy, '_exp.csv')))
+  write.csv(imports, file.path(output, paste0('analysis/msg_parameters/historical_activity/', energy, '_imp.csv')))
 }
 
 # Run program
-for (e in energy_list) {
+for (e in energy.types) {
   build_historical_activity(e)
 }
 

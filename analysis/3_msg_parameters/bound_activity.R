@@ -21,12 +21,12 @@ build_bound_activity <- function(lo_or_up, energy) {
                                         varlist = varlist))
   
   # Set future bounds on activity
-  exp_tec <- paste0(msg.technology, '_', regions)
+  exp_tec <- paste0(msg.technology, '_', region.list)
   
-  df <- expand.grid(exp_tec, paste0('R14_', toupper(regions)))
+  df <- expand.grid(exp_tec, paste0(region.number, '_', toupper(region.list)))
   names(df) <- c('technology', 'node_loc')
   future_activity <- data.frame()
-  for (y in year_act_base) {
+  for (y in MESSAGE.years) {
     indf <- df
     indf$year_act <- y
     indf$mode <- 'M1'
@@ -64,17 +64,17 @@ build_bound_activity <- function(lo_or_up, energy) {
   }
   
   exports <- subset(exports, !is.na(value))
-  imports <- subset(imports, !is.na(value) & year_act %in% year_act_base)
+  imports <- subset(imports, !is.na(value) & year_act %in% MESSAGE.years)
   
-  saveRDS(exports, file.path(output, paste0('bound_activity_', lo_or_up, '/', energy, '_exp.rds')))
-  saveRDS(imports, file.path(output, paste0('bound_activity_', lo_or_up, '/', energy, '_imp.rds')))
+  saveRDS(exports, file.path(output, paste0('analysis/msg_parameters/bound_activity_', lo_or_up, '/', energy, '_exp.rds')))
+  saveRDS(imports, file.path(output, paste0('analysis/msg_parameters/bound_activity_', lo_or_up, '/', energy, '_imp.rds')))
   
-  write.csv(exports, file.path(output, paste0('bound_activity_', lo_or_up, '/', energy, '_exp.csv')))
-  write.csv(imports, file.path(output, paste0('bound_activity_', lo_or_up, '/', energy, '_imp.csv')))
+  write.csv(exports, file.path(output, paste0('analysis/msg_parameters/bound_activity_', lo_or_up, '/', energy, '_exp.csv')))
+  write.csv(imports, file.path(output, paste0('analysis/msg_parameters/bound_activity_', lo_or_up, '/', energy, '_imp.csv')))
 }
 
 # Run program
-for (e in energy_list) {
+for (e in energy.types) {
   print(paste0('## Building parameters for = ', e, ' ##'))
   
   build_bound_activity(lo_or_up = 'lo', energy = e)

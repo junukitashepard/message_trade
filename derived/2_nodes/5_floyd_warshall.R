@@ -1,22 +1,6 @@
 ###############################
 # Run Floyd-Washall Algorithm #
 ###############################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-library('maptools')
-library('e1071')
-library('tidyr')
-
-output <-   paste0(wd, "output/")
-temp <-     paste0(wd, "temp/")
-raw <-      paste0(wd, "raw/")
-################################
 # Import files
 nodes <- readRDS(file.path(temp, 'node_combinations.rds'))
 

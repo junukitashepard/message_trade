@@ -1,37 +1,14 @@
 #####################################
 # Run regression and compile tables #
 #####################################
-rm(list = ls())
-wd.data <- "H:/data/"
-wd <- 'H:/message_trade/analysis/2_regressions/'
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('maptools')
-library('jsfunctions')
-library('openxlsx')
-
-raw <-      paste0(wd.data, "raw")
-input <-    paste0(wd.data, "output/analysis/regress/")
-output <-   paste0(wd.data, "output/analysis/regress/tables")
-temp <-     paste0(wd.data, "temp/")
-
-source(paste0(wd, '4_regress.R'))
-
-##############################
 # Import file
-trade <- readRDS(file.path(input, "regdf.rds"))
+trade <- readRDS(file.path(input, "analysis/regress/regdf.rds"))
 trade <- subset(trade, var_cost < 1000) # less than $1b/GWa
-
-energy_list <- c('oil', 'coal', 'foil', 'LNG')
-region_list <- c('AFR', 'CPA', 'EEU', 'LAM', 'MEA', 'NAM', 'PAO', 'PAS', 'SAS', 'WEU')
 
 # Function to compile tables
 compile_tables <- function (variable.in) {
   
-  wb <- loadWorkbook(file.path(output, 'base_regression.xlsx'))
+  wb <- loadWorkbook(file.path(output, 'analysis/regress/tables/base_regression.xlsx'))
 
   # All regions
   all_regions <- run_reg(variable.rr = variable.in)
@@ -43,7 +20,7 @@ compile_tables <- function (variable.in) {
 
   # By importing region
   i <- 3
-  for (r in region_list) {
+  for (r in region.list.trade) {
     print(paste0("Running regression for importer = ", r))
     assign(paste0('M_mat'), run_reg(variable.rr = variable.in, importers = r))
     M_mat <- as.data.frame(M_mat)
@@ -55,7 +32,7 @@ compile_tables <- function (variable.in) {
 
   # By exporting region
   i <- 3
-  for (r in region_list) {
+  for (r in region.list.trade) {
     print(paste0("Running regression for exporter = ", r))
     assign(paste0('X_mat'), run_reg(variable.rr = variable.in, exporters = r))
     X_mat <- as.data.frame(X_mat)
@@ -66,7 +43,7 @@ compile_tables <- function (variable.in) {
   }
   
   # Save compiled table
-  saveWorkbook(wb, file.path(output, paste0(variable.in, '_regressions.xlsx')), overwrite = T)
+  saveWorkbook(wb, file.path(output, paste0('analysis/regress/tables/', variable.in, '_regressions.xlsx')), overwrite = T)
 }
 
 # Run program

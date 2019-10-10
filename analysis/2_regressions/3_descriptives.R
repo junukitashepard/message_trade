@@ -2,25 +2,8 @@
 # Regression analysis #
 # Descriptives        #
 #######################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('ggplot2')
-library('jsfunctions')
-
-raw <-      paste0(wd, "raw")
-input <-    paste0(wd, "output/analysis/regress")
-output <-   paste0(wd, "output/analysis/regress")
-temp <-     paste0(wd, "temp/")
-##############################
-energy.types <- c('coal', 'elec', 'foil', 'LNG', 'oil')
-
 # Import file
-regdf <- readRDS(file.path(input, 'regdf.rds'))
+regdf <- readRDS(file.path(input, 'analysis/regress/regdf.rds'))
 regdf <- subset(regdf, energy %in% energy.types)
 regdf <- subset(regdf, q_e > 0.1) # Keep only if trade is > 0.1TJ
 regdf <- subset(regdf, var_cost < 1000) # var_cost less than $b/GWa

@@ -13,18 +13,18 @@ scale_exp_parameter <- function(parname, msg.technology, tra.energy, varlist) {
   
   print(paste0("Trade technology = ", msg.technology))
   
-  assign('df', read.csv(file.path(input, paste0('parameters/', parname, '_', msg.technology, '.csv')), stringsAsFactors = F))
+  assign('df', read.csv(file.path(input, paste0('derived/parameters/', parname, '_', msg.technology, '.csv')), stringsAsFactors = F))
   
   # Add mode if missing
   if (!('mode' %in% colnames(df))) {df$mode <- 'M1'}
   
-  df <- subset(df, node_loc %in% paste0('R14_', toupper(regions)))
+  df <- subset(df, node_loc %in% paste0(region.number, '_', toupper(region.list)))
   
   assign('msgdf_base', df)
   assign('tradf', subset(trade.df, energy == tra.energy))
   
   if (nrow(tradf) == 0) {
-    if (grepl('oil', msg.technology)) {
+    if (energy %in% energy.types.oil.history) {
       assign('tradf', subset(trade.df, energy == 'oil')) # Export behavior for oil products ~ crude oil (when data missing)
     }
   }
@@ -39,8 +39,8 @@ scale_exp_parameter <- function(parname, msg.technology, tra.energy, varlist) {
   tradf$share <- tradf$region_trade/tradf$total_trade
   tradf <- tradf[c('year', 'msg_region1', 'msg_region2', 'share')]
   
-  tradf$msg_region1 <- paste0('R14_', tradf$msg_region1)
-  tradf$msg_region2 <- paste0('R14_', tradf$msg_region2)
+  tradf$msg_region1 <- paste0(region.number, '_', tradf$msg_region1)
+  tradf$msg_region2 <- paste0(region.number, '_', tradf$msg_region2)
   
   tradf$share[is.nan(tradf$share)] <- 0
   
@@ -97,7 +97,7 @@ add_future_year_act <- function() {
   
   assign('msgdf_future_years', sort(unique(msgdf_future$year_act)))
   
-  assign('msgdf_future_base', expand.grid(unique(msgdf_base$node_loc), paste0(msg.technology, '_', regions)))
+  assign('msgdf_future_base', expand.grid(unique(msgdf_base$node_loc), paste0(msg.technology, '_', region.list)))
   names(msgdf_future_base) <- c('node_loc', 'technology')
   
   msgdf_future_years <- rep(msgdf_future_years, nrow(msgdf_future_base))
@@ -109,7 +109,7 @@ add_future_year_act <- function() {
   msgdf_future_base$node_loc <- as.character(msgdf_future_base$node_loc)
   msgdf_future_base$technology <- as.character(msgdf_future_base$technology)
   
-  msgdf_future_base$msg_region2 <- paste0('R14_', 
+  msgdf_future_base$msg_region2 <- paste0(region.number, '_', 
                                           toupper(substr(msgdf_future_base$technology, 
                                                          nchar(msgdf_future_base$technology) - 2,
                                                          nchar(msgdf_future_base$technology))))
@@ -141,12 +141,12 @@ add_future_year_act <- function() {
 expand_imp_parameter <- function(parname, msg.technology, tra.energy, varlist,
                                  figure.path = paste0(repo, 'figures/scale_msg_parameter/')) {
   
-  assign('df', read.csv(file.path(input, paste0('parameters/', parname, '_', msg.technology, '.csv')), stringsAsFactors = F))
+  assign('df', read.csv(file.path(input, paste0('derived/parameters/', parname, '_', msg.technology, '.csv')), stringsAsFactors = F))
   
   assign('tradf', subset(trade.df, energy == tra.energy))
   
   if (nrow(tradf) == 0) {
-    if (grepl('oil', msg.technology)) {
+    if (energy %in% energy.types.oil.history) {
       assign('tradf', subset(trade.df, energy == 'oil')) # Export behavior for oil products ~ crude oil (when data missing)
     }
   }
@@ -179,7 +179,7 @@ expand_imp_parameter <- function(parname, msg.technology, tra.energy, varlist,
   environment(build_parameter) <- environment(isid) <- environment()
   
   tradf$year_act <- tradf$year
-  tradf$node_loc <- paste0('R14_', tradf$msg_region2)
+  tradf$node_loc <- paste0(region.number, '_', tradf$msg_region2)
   tradf$value <- tradf$imports
   tradf <- subset(tradf, !is.na(year_act) & !is.na(node_loc) & !is.na(value))
   tradf <- tradf[c('year_act', 'node_loc', 'value')]

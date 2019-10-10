@@ -1,20 +1,6 @@
 ############################################################
 # Import trade datasets and collapse to energy commodities #
 ############################################################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-library('RMySQL')
-
-output <-   paste0(wd, "output/")
-temp <-     paste0(wd, "temp/")
-raw <-      paste0(wd, "raw/")
-
 # Import code crosswalk
 energyhs4 <- read.csv(file.path(raw, "BACI/energy2hs4_MSG.csv"), stringsAsFactors = F)
 energyhs4$hs4 <- as.character(energyhs4$hs4)

@@ -2,42 +2,26 @@
 # Regression analysis #
 # Pre-process data    #
 #######################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('maptools')
-library('jsfunctions')
-
-raw <-      paste0(wd, "raw")
-input <-    paste0(wd, "output/derived")
-output <-   paste0(wd, "output/analysis/regress")
-temp <-     paste0(wd, "temp/")
-
-##############################
 # Import files
-trade <- readRDS(file.path(input, 'trade/trade.rds'))
+trade <- readRDS(file.path(input, 'derived/trade/trade.rds'))
   isid('trade', c('iso.i', 'iso.j', 'energy', 'year'))
   
-ijports <- readRDS(file.path(input, 'nodes/ij_ports_fixednames.rds'))
+ijports <- readRDS(file.path(input, 'derived/nodes/ij_ports_fixednames.rds'))
   ijports <- unique(ijports[c('port1.iso', 'port2.iso', 'port1', 'port2', 'distance')])
   isid('ijports', c('port1.iso', 'port2.iso'))
   
-regional_spec <- read.csv(file.path(raw, 'UserInputs/regional_specification.csv'), stringsAsFactors = F)
+regional_spec <- read.csv(regional.specification.csv, stringsAsFactors = F)
   names(regional_spec) <- c('iso', 'msg.region')
   regional_spec <- subset(regional_spec, iso != "" & !is.na(iso))
   isid('regional_spec', c('iso'))
 
-disputes <- readRDS(file.path(input, "trade/trade_disputes.rds"))
+disputes <- readRDS(file.path(input, "derived/trade/trade_disputes.rds"))
   names(disputes) <- c('i', 'j', 'year', 'ds_outcome', 'lag1.ds_energy', 'lag1.ds_any')
   all.outcomes <- c('Dropped', 'In progress', 'MAS', 'Ruling', 'Withdrawn')
   td.outcomes <- all.outcomes # make flexible, change if only keeping one kind of ruling
   disputes <- subset(disputes, ds_outcome %in% td.outcomes)[c('i', 'j', 'year', 'lag1.ds_energy', 'lag1.ds_any')]
   
-conflicts <- readRDS(file.path(input, 'conflicts/armed_conflicts.rds'))
+conflicts <- readRDS(file.path(input, 'derived/conflicts/armed_conflicts.rds'))
 
 # Link regions to trade
 trade <- left_join(trade, regional_spec, by = c('iso.i' = 'iso'))
@@ -184,6 +168,6 @@ isid('df', c('iso.i', 'iso.j', 'year', 'energy'))
 df$var_cost <- df$var_cost/10^6
 
 # Write file
-saveRDS(df, file.path(output, "regdf.rds"))
+saveRDS(df, file.path(output, "analysis/regress/regdf.rds"))
 
 

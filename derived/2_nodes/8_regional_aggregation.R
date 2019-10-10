@@ -1,25 +1,10 @@
 #######################################################
 # Subset trade data to energy commodities in TJ units #
 #######################################################
-rm(list = ls())
-wd <- "H:/data/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-library('ggplot2')
-
-input <-    paste0(wd, 'output/derived')
-output <-   paste0(wd, "output/derived")
-temp <-     paste0(wd, "temp/")
-raw <-      paste0(wd, "raw/")
-#######################################################
 # Import trade and port file
-trade <- readRDS(file.path(output, 'trade/trade.rds'))
-ijports <- readRDS(file.path(output, 'nodes/ij_ports.rds'))
-path <- readRDS(file.path(output, 'nodes/shortest_paths.rds'))
+trade <- readRDS(file.path(input, 'derived/trade/trade.rds'))
+ijports <- readRDS(file.path(input, 'derived/nodes/ij_ports.rds'))
+path <- readRDS(file.path(input, 'derived/nodes/shortest_paths.rds'))
 
 # Import country definition
 web.countries <- read.csv(file.path(raw, 'ConversionTables/web_countries.csv'), stringsAsFactors = F)
@@ -53,7 +38,7 @@ names(ijports)[11:12] <- c('port1.iso', 'port2.iso')
 
 ijports <- subset(ijports, !is.na(port1.iso) & !is.na(port2.iso))
 
-saveRDS(ijports, file.path(output, 'nodes/ij_ports_fixednames.rds'))
+saveRDS(ijports, file.path(output, 'derived/nodes/ij_ports_fixednames.rds'))
 
 # Link region names to countries 
 #################################
@@ -196,11 +181,11 @@ plot <- ggplot(aes(x = year, y = diff_from_mean, colour = energy), data = co_byr
 all.trade <- unique(x.df[c('year', 'msg_region1', 'msg_region2', 'energy', 'region_trade')])
 assert("mean(all.trade$region_trade) == mean(unique(m.df[c('year', 'msg_region1', 'msg_region2', 'energy', 'region_trade')])$region_trade)")
 
-write.csv(all.trade, file.path(output, "trade/regional_trade.csv"))
+write.csv(all.trade, file.path(output, "derived/trade/regional_trade.csv"))
 
 # Write files
-write.csv(x.df, file.path(output, "nodes/export_paths_all.csv"))
-write.csv(m.df, file.path(output, "nodes/import_paths_all.csv"))
+write.csv(x.df, file.path(output, "derived/nodes/export_paths_all.csv"))
+write.csv(m.df, file.path(output, "derived/nodes/import_paths_all.csv"))
 
 # Run 2: Only include shortest path (even longer ones) #
 ########################################################
@@ -226,8 +211,8 @@ for (e in c('coal', 'foil', 'LNG', 'oil')) {
 }
 
 # Write files
-write.csv(x.df, file.path(output, "nodes/export_paths_sp.csv"))
-write.csv(m.df, file.path(output, "nodes/import_paths_sp.csv"))
+write.csv(x.df, file.path(output, "derived/nodes/export_paths_sp.csv"))
+write.csv(m.df, file.path(output, "derived/nodes/import_paths_sp.csv"))
 
 # Add coordinates and intermediate nodes
 x.df.co <- x.df[c('year', 'energy', 'msg_region1', 'msg_region2', 
