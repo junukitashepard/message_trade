@@ -71,8 +71,8 @@ paths_msg <- left_join(paths_msg, landacc[c('partners', 'landacc')], by = c('par
 paths_msg$var_cost[paths_msg$landacc == 1] <- mean(paths_msg$var_cost[paths_msg$var_cost > 0], na.rm  = T)
 
 # Fill in with mean where missing (particularly future values)
-mean_var_cost <- group_by(paths_msg, node_loc, technology) %>%
-                 summarise(mean_var_cost = mean(var_cost, na.rm = T))
+mean_var_cost <- dplyr::group_by(paths_msg, node_loc, technology) %>%
+                 dplyr::summarise(mean_var_cost = mean(var_cost, na.rm = T))
 mean_var_cost$mean_var_cost[is.nan(mean_var_cost$mean_var_cost)] <- NA
 paths_msg$var_cost[is.nan(paths_msg$var_cost)] <- NA
 
