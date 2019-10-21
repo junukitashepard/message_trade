@@ -48,19 +48,23 @@ build_bound_activity <- function(lo_or_up, energy) {
   
   # CHECK LATER: Arbitrary number to add to upper bound
   if (lo_or_up == 'up') {
-    exports <- full_join(exports, future_activity, by = c('node_loc', 'year_act', 'technology', 'mode', 'time', 'unit'))
-      exports$value <- exports$value.x
-      exports$value[is.na(exports$value)] <- exports$value.y[is.na(exports$value)]
-    imports <- full_join(imports, future_activity, by = c('node_loc', 'year_act', 'technology', 'mode', 'time', 'unit'))
-      imports$value <- imports$value.x
-      imports$value[is.na(imports$value)] <- imports$value.y[is.na(imports$value)]
     
+    if(nrow(exports) > 0) {
+      exports <- full_join(exports, future_activity, by = c('node_loc', 'year_act', 'technology', 'mode', 'time', 'unit'))
+        exports$value <- exports$value.x
+        exports$value[is.na(exports$value)] <- exports$value.y[is.na(exports$value)]
+    }
+    if (nrow(imports) > 0) {
+      imports <- full_join(imports, future_activity, by = c('node_loc', 'year_act', 'technology', 'mode', 'time', 'unit'))
+        imports$value <- imports$value.x
+        imports$value[is.na(imports$value)] <- imports$value.y[is.na(imports$value)]
+    } 
     exports <- exports[c('technology', 'mode', 'time', 'unit', 'year_act', 'node_loc', 'value')]
     imports <- imports[c('technology', 'mode', 'time', 'unit', 'year_act', 'node_loc', 'value')]
     
   } else {
-    exports$value <- 0
-    imports$value <- 0
+    if (nrow(exports) > 0) {exports$value <- 0}
+    if (nrow(imports) > 0) {imports$value <- 0}
   }
   
   exports <- subset(exports, !is.na(value))

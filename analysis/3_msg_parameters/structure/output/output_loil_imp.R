@@ -7,7 +7,7 @@ value <- 1 # Change later
 unit <- 'GWa'
 
 # Node and year columns
-year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+year_act <- MESSAGE.years
 # year_vtg info in R script
 # node info in R script
 

@@ -81,9 +81,9 @@ plot_hist <- function(df, variable, vartitle, unit) {
 }
 
 plot_hist(df = 'var_cost_df', variable = 'distance_eff', vartitle = 'distance', unit = '$M/GWa/1000km')
-plot_hist(df = 'var_cost_df', variable = 'agree_fta_eff', vartitle = 'Free Trade Agreements', unit = '$M/GWa')
-plot_hist(df = 'var_cost_df', variable = 'agree_pta_eff', vartitle = 'Free Trade Agreements', unit = '$M/GWa')
-plot_hist(df = 'var_cost_df', variable = 'sanction_imposition_eff', vartitle = 'sanction', unit = '$M/GWa')
+# plot_hist(df = 'var_cost_df', variable = 'agree_fta_eff', vartitle = 'Free Trade Agreements', unit = '$M/GWa')
+# plot_hist(df = 'var_cost_df', variable = 'agree_pta_eff', vartitle = 'Free Trade Agreements', unit = '$M/GWa')
+# plot_hist(df = 'var_cost_df', variable = 'sanction_imposition_eff', vartitle = 'sanction', unit = '$M/GWa')
 
 # Put paths onto regression results #
 #####################################

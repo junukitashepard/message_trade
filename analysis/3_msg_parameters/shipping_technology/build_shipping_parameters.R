@@ -1,44 +1,12 @@
 ####################################################
 # Build parameters for shipping technology: solids #
 ####################################################
-rm(list = ls())
-wd <- "H:/data/"
-repo <- "H:/message_trade/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-library('ggplot2')
-library('zoo')
-
-raw <-      paste0(wd, "raw/")
-temp <-     paste0(wd, 'temp/')
-input <-    paste0(wd, "output/derived/")
-output <-   paste0(wd, "output/analysis/msg_parameters/")
-
 # Import functions 
 ###################
 source(paste0(repo, "analysis/3_msg_parameters/shipping_technology/shipping_parameter_base.R"))
 source(paste0(repo, 'analysis/3_msg_parameters/shipping_technology/relation_activity.R'))
 source(paste0(repo, 'analysis/3_msg_parameters/shipping_technology/relation_upper.R'))
 
-# Define parameters of interest and energy commodities
-#######################################################
-# List of parameters
-parameter_list <- c('capacity_factor', 'emission_factor', 'fix_cost', 
-                    'input', 'output', 'inv_cost',
-                    'technical_lifetime',
-                    'var_cost')
-
-# List of energy commodities
-liquid_list <- c('oil', 'loil', 'foil')
-solid_list <- c('coal')
-LNG_list <- c('LNG')
-
-# Technical lifetime
-tech_lifetime <- 25
 
 # Compile shipping parameter (function)
 ########################################
@@ -75,16 +43,16 @@ compile_shipping_parameters <- function(type_of_shipping, shipping_fuel, shippin
                                  var_cost.value, 
                                  no.vintage = F)
 
-  for (p in parameter_list[!(parameter_list %in% 'inv_cost')]) {
+  for (p in shipping_parameter_list[!(shipping_parameter_list %in% 'inv_cost')]) {
     assign('df', get(paste0('par.', p)))
-    write.csv(df, file.path(output, paste0(p, "/", type_of_shipping, '_', shipping_fuel, '.csv')))
+    write.csv(df, file.path(output, paste0('analysis/msg_parameters/', p, "/", type_of_shipping, '_', shipping_fuel, '.csv')))
   }
   
   # Investment cost parameter will be stored in SCENARIOS if it is not baseline
   if (technology_trend == 'BAU') {
-    write.csv(par.inv_cost, file.path(output, paste0("inv_cost/", type_of_shipping, '_', shipping_fuel, '.csv')))
+    write.csv(par.inv_cost, file.path(output, paste0("analysis/msg_parameters/inv_cost/", type_of_shipping, '_', shipping_fuel, '.csv')))
   } else if (technology_trend == 'CLT') {
-    write.csv(par.inv_cost, file.path(output, paste0("SCENARIOS/shipping_CLT/inv_cost/", type_of_shipping, '_', shipping_fuel, '.csv')))
+    write.csv(par.inv_cost, file.path(output, paste0("analysis/msg_parameters/SCENARIOS/shipping_CLT/inv_cost/", type_of_shipping, '_', shipping_fuel, '.csv')))
   }
 }
 
@@ -175,18 +143,17 @@ build_relation_parameters <- function(type_of_shipping, shipped_energy, year_lis
   par.relation_activity <- build_relation_activity(type_of_shipping, shipped_energy, year_act = year_act)
   par.relation_upper <- build_relation_upper(relation = paste0('lim_', type_of_shipping), value = 0, year_rel = year_rel)
   
-  write.csv(par.relation_activity, file.path(output, paste0('relation_activity/', type_of_shipping, '.csv')))
-  write.csv(par.relation_upper, file.path(output, paste0('relation_upper/', type_of_shipping, '.csv')))
+  write.csv(par.relation_activity, file.path(output, paste0('analysis/msg_parameters/relation_activity/', type_of_shipping, '.csv')))
+  write.csv(par.relation_upper, file.path(output, paste0('analysis/msg_parameters/relation_upper/', type_of_shipping, '.csv')))
 }
 
 # Run function
-build_relation_parameters('liquid_shipping', liquid_list, c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10)))
-build_relation_parameters('solid_shipping', solid_list, c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10)))
-build_relation_parameters('LNG_shipping', LNG_list, c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10)))
+build_relation_parameters('liquid_shipping', shipping_liquid_list, MESSAGE.years)
+build_relation_parameters('solid_shipping', shipping_solid_list, MESSAGE.years)
+build_relation_parameters('LNG_shipping', shipping_LNG_list, MESSAGE.years)
 
 # Historical parameters (only for diesel shipping)
 ###################################################
-msg_years <- c(seq(1970, 2055, by = 5), seq(2060, 2110, by = 10))
 source(paste0(repo, 'analysis/3_msg_parameters/shipping_technology/historical_activity.R'))
 source(paste0(repo, 'analysis/3_msg_parameters/shipping_technology/historical_new_capacity.R'))
 

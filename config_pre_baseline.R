@@ -5,6 +5,7 @@ rm(list = ls())
 repo <- "H:/message_trade/"
 wd <- "H:/data/"
 
+library('dplyr')
 library('e1071')
 library('geosphere')
 library('ggplot2')
@@ -17,7 +18,7 @@ library('reticulate')
 library('RMySQL')
 library('stringr')
 library('tidyr')
-library('dplyr')
+library('zoo')
 
 raw <-      paste0(wd, "raw")
 input <-    paste0(wd, "output")
@@ -47,6 +48,9 @@ regional.specification.csv <- config$regional_specification_csv
 region.list <- config$regions_list
 region.list.trade <- config$region_list_trade
 
+# List of UNCTAD economies
+economy_list <- c('Africa', 'Asia', 'Europe', 'Latin America and the Caribbean', 'Northern America', 'Oceania')
+
 # List of technologies
 export_technologies <- config$export_technologies
 import_technologies <- config$import_technologies
@@ -67,6 +71,17 @@ MESSAGE.technical.lifetime = config$MESSAGE_technical_lifetime
 # Capacity factor
 MESSAGE.capacity.factor = config$MESSAGE_capacity_factor
 
+# Shipping parameters
+shipping_liquid_list <- config$shipping_liquid_list
+shipping_solid_list <- config$shipping_solid_list
+shipping_LNG_list <- config$shipping_LNG_list
+
+shipping_technical_lifetime <- config$shipping_technical_lifetime
+
+shipping_parameter_list <- c('capacity_factor', 'emission_factor', 'fix_cost', 
+                             'input', 'output', 'inv_cost',
+                             'technical_lifetime',
+                             'var_cost')
 ###################
 # RUN ALL SCRIPTS #
 ###################
@@ -77,3 +92,5 @@ source(paste0(repo, 'derived/2_nodes/run_all.R'))
 # Analysis
 source(paste0(repo, 'analysis/2_regressions/run_all.R'))
 source(paste0(repo, 'analysis/3_msg_parameters/run_all.R'))
+source(paste0(repo, 'analysis/3_msg_parameters/shipping_technology/build_shipping_parameters.R'))
+

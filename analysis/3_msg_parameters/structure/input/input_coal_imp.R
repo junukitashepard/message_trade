@@ -7,9 +7,9 @@ value <- 1.0 # Change later
 unit <- 'GWa'
 
 # Node and year columns
-year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
-node_loc <- c('R14_AFR', 'R14_CAS', 'R14_CPA', 'R14_EEU', 'R14_LAM', 'R14_MEA', 'R14_PAO', 'R14_PAS', 'R14_RUS', 'R14_SAS', 'R14_SCS', 'R14_UBM', 'R14_WEU')
-node_origin <- 'R14_GLB'
+year_act <- MESSAGE.years
+node_loc <- paste0(region.number, '_', toupper(region.list)) 
+node_origin <- paste0(region.number, '_GLB')
 
 # For value and unit
 value_constant <- TRUE

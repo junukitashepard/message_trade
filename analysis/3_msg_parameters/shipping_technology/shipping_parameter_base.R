@@ -7,18 +7,10 @@ source(paste0(repo, 'analysis/3_msg_parameters/scale_msg_parameter/functions.R')
 source(paste0(repo, 'analysis/3_msg_parameters/build_parameters.R'))
 source(paste0(repo, 'analysis/3_msg_parameters/activity_parameters/build_activity.R'))
 
-# Define parameters of interest and energy commodities
-#######################################################
-# List of regions
-regions <- c('afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'nam', 'pao', 'pas', 'rus', 'sas', 'scs', 'ubm', 'weu')
-
-# List of UNCTAD economies
-economy_list <- c('Africa', 'Asia', 'Europe', 'Latin America and the Caribbean', 'Northern America', 'Oceania')
-
 # Import data files 
 ####################
 # Import regionally aggregated trade data
-trade.df <- read.csv(file.path(input, 'trade/regional_trade.csv'), stringsAsFactors = F)
+trade.df <- read.csv(file.path(input, 'derived/trade/regional_trade.csv'), stringsAsFactors = F)
 
 # MESSAGE regions
 web_countries <- read.csv(file.path(raw, "ConversionTables/web_countries.csv"), stringsAsFactors = F)
@@ -41,8 +33,10 @@ ncv$energy[ncv$energy == 'COAL'] <- 'coal'
 ncv$energy[ncv$energy == 'PET'] <- 'loil.foil'
 ncv$energy[ncv$energy == 'CRU'] <- 'oil'
 ncv$energy[ncv$energy == 'NG'] <- 'LNG'
+ncv$energy[ncv$energy == 'METH'] <- 'meth'
+ncv$energy[ncv$energy == 'ETH'] <- 'eth'
 
-ncv <- subset(ncv, energy %in% c('coal', 'loil.foil', 'oil', 'LNG') & !is.na(msgregion))
+ncv <- subset(ncv, energy %in% c('coal', 'loil.foil', 'oil', 'LNG', 'meth', 'eth') & !is.na(msgregion))
 ncv <- group_by(ncv, msgregion, energy) %>% summarise(ncv = mean(ncv, na.rm = T))
 
 ncv$value <- (ncv$ncv * 0.2778) # from TJ/ton to GWh/ton
@@ -51,7 +45,7 @@ ncv$value <- ncv$value*10^9 # from GWa/ton to GWa/bton
 ncv$value <- 1/ncv$value # to ton/GWa
 
 # Import distances
-distances <- readRDS(file.path(input, 'nodes/ij_ports.rds'))
+distances <- readRDS(file.path(input, 'derived/nodes/ij_ports.rds'))
 distances <- unique(distances[c('port1.country', 'port2.country', 'distance')])
 isid('distances', c('port1.country', 'port2.country'))
 
@@ -67,8 +61,8 @@ distances <- group_by(distances, msgregion1, msgregion2) %>% summarise(mean_dist
 distances <- subset(distances, !is.na(msgregion1) & !is.na(msgregion2) & 
                       msgregion1 != "" & msgregion2 != "" &
                       msgregion1 != msgregion2)
-distances$msgregion1 <- paste0('R14_', distances$msgregion1)
-distances$msgregion2 <- paste0('R14_', distances$msgregion2)
+distances$msgregion1 <- paste0(region.number, '_', distances$msgregion1)
+distances$msgregion2 <- paste0(region.number, '_', distances$msgregion2)
 
 # Function to fix vintage years
 fix_vintage <- function(param, no.vintage = FALSE) {
@@ -77,7 +71,7 @@ fix_vintage <- function(param, no.vintage = FALSE) {
   
   if (no.vintage == FALSE) {
     df$diff <- df$year_act - df$year_vtg
-    df <- subset(df, diff > 0 & diff < tech_lifetime)
+    df <- subset(df, diff > 0 & diff < shipping_technical_lifetime)
     df$diff <- NULL
   } else {
     df$year_vtg <- df$year_act
@@ -93,15 +87,15 @@ build_capacity_factor <- function(technology.in, no.vintage = FALSE) {
   
   parname <- 'capacity_factor'
   varlist <-  c('node_loc', 'technology', 'year_vtg', 'year_act', 'time', 'value', 'unit')
-  year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
-  year_vtg <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+  year_act <- MESSAGE.years
+  year_vtg <- MESSAGE.years
   value <- 1
   unit <- '%'
   time <- 'year'
   
   par.capacity_factor <-
     build_parameter(parname = parname, varlist = varlist, technology = technology.in,
-                    node_loc = paste0('R14_', toupper(regions)),
+                    node_loc = paste0(region.number, '_', toupper(region.list)),
                     year_act = year_act, year_vtg = year_vtg,
                     time = time, 
                     value = value, unit = unit) %>%
@@ -116,12 +110,12 @@ build_fix_cost <- function(technology.in, value.in, no.vintage = FALSE) {
   parname <- 'fix_cost'
   varlist <- c('node_loc', 'technology', 'year_vtg', 'year_act', 'value', 'unit')
   unit <- 'USD/bton-km-y'
-  year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+  year_act <- MESSAGE.years
   year_vtg <- year_act
   
   par.fix_cost <- 
     build_parameter(parname = parname, varlist = varlist, technology = technology.in,
-                    node_loc = paste0('R14_', toupper(regions)),
+                    node_loc = paste0(region.number,'_', toupper(region.list)),
                     year_act = year_act, year_vtg = year_vtg,
                     value = value.in, unit = unit) %>%
     fix_vintage(no.vintage = no.vintage)
@@ -136,11 +130,11 @@ build_inv_cost <- function(technology.in, value.in, cost_scenario = 'BAU',
   parname <- 'inv_cost'
   varlist <- c('node_loc', 'technology', 'year_vtg', 'value', 'unit')
   unit <- 'USD/GWa'
-  year_vtg <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+  year_vtg <- MESSAGE.years
   
   par.inv_cost <- 
     build_parameter(parname = parname, varlist = varlist, technology = technology.in,
-                    node_loc = paste0('R14_', toupper(regions)),
+                    node_loc = paste0(region.number, '_', toupper(region.list)),
                     year_vtg = year_vtg,
                     value = value.in, unit = unit)
   
@@ -177,7 +171,7 @@ build_input <- function(technology.in, fuel_list.in, value.in, no.vintage = FALS
   parname <- 'input'
   varlist <- c('node_loc', 'technology', 'year_vtg', 'year_act', 'mode', 'node_origin', 'commodity', 'level', 'time', 'time_origin', 'value', 'unit')
   unit <- 'GWa'
-  year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+  year_act <- MESSAGE.years
   year_vtg <- year_act
   mode <- 'M1'
   time <- 'year'
@@ -189,7 +183,7 @@ build_input <- function(technology.in, fuel_list.in, value.in, no.vintage = FALS
   for (fuel in fuel_list.in) {
     assign('df',
            build_parameter(parname = parname, varlist = varlist, technology = technology.in,
-                           node_loc = 'dummy', node_origin = paste0('R14_', toupper(regions)),
+                           node_loc = 'dummy', node_origin = paste0(region.number, '_', toupper(region.list)),
                            year_act = year_act, year_vtg = year_vtg,
                            mode = mode, time = time, time_origin = time_origin,
                            commodity = fuel, level = level,
@@ -212,7 +206,7 @@ build_output <- function(technology.in, no.vintage = FALSE) {
   varlist <- c('node_loc', 'technology', 'year_vtg', 'year_act', 'mode', 'node_dest', 'commodity', 'level', 'time', 'time_dest', 'value', 'unit')
   value <- 1 # t-km-y
   unit <- 'bton-km-y'
-  year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+  year_act <- MESSAGE.years
   year_vtg <- year_act
   mode <- 'M1'
   time <- 'year'
@@ -221,7 +215,7 @@ build_output <- function(technology.in, no.vintage = FALSE) {
   
   par.output <- 
     build_parameter(parname = parname, varlist = varlist, technology = technology.in,
-                    node_dest = 'R14_GLB', node_loc = paste0('R14_', toupper(regions)),
+                    node_dest = paste0(region.number, '_GLB'), node_loc = paste0(region.number, '_', toupper(region.list)),
                     year_act = year_act, year_vtg = year_vtg,
                     mode = mode, time = time, time_dest = time_dest,
                     commodity = 'shipping_capacity', level = level,
@@ -236,11 +230,11 @@ build_technical_lifetime <- function(technology.in, value.in) {
   parname <- 'technical_lifetime'
   varlist <- c('node_loc', 'technology', 'year_vtg', 'value', 'unit')
   unit <- 'y'
-  year_vtg <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+  year_vtg <- MESSAGE.years
   
   par.technical_lifetime <- 
     build_parameter(parname = parname, varlist = varlist, technology = technology.in,
-                    node_loc = paste0('R14_', toupper(regions)),
+                    node_loc = paste0(region.number, '_', toupper(region.list)),
                     year_vtg = year_vtg,
                     value = value.in, unit = unit)
   return(par.technical_lifetime)
@@ -252,14 +246,14 @@ build_emission_factor <- function(technology.in, value.in, no.vintage = FALSE) {
   varlist <- c('node_loc', 'technology', 'year_vtg', 'year_act', 'mode', 'emission', 'value', 'unit')
   mode <- 'M1'
   unit <- 'kg/bton-km-y'
-  year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+  year_act <- MESSAGE.years
   year_vtg <- year_act
   time <- 'year'
   emission <- 'CO2'
   
   par.emission_factor <-
     build_parameter(parname = parname, varlist = varlist, technology = technology.in,
-                    node_loc = paste0('R14_', toupper(regions)),
+                    node_loc = paste0(region.number, '_', toupper(region.list)),
                     year_vtg = year_vtg, year_act = year_act,
                     mode = mode, emission = emission,
                     value = value.in, unit = unit) %>%
@@ -275,14 +269,14 @@ build_var_cost <- function(technology.in, value.in, no.vintage = FALSE) {
   varlist <- c('node_loc', 'technology', 'year_vtg', 'year_act', 'mode', 'time', 'value', 'unit')
   mode <- 'M1'
   unit <- 'USD/bton-km-y'
-  year_act <- c(seq(1990, 2055, by = 5), seq(2060, 2110, by = 10))
+  year_act <- MESSAGE.years
   year_vtg <- year_act
   time <- 'year'
   mode <- 'M1'
   
   par.var_cost <- 
     build_parameter(parname = parname, varlist = varlist, technology = technology.in,
-                    node_loc = paste0('R14_', toupper(regions)),
+                    node_loc = paste0(region.number, '_', toupper(region.list)),
                     year_vtg = year_vtg, year_act = year_act, 
                     mode = mode, time = time,
                     value = value.in, unit = unit) %>%

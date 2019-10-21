@@ -109,7 +109,7 @@ seatrade$value <- seatrade$value * seatrade$share
 seatrade$share <- NULL
 
 # Assign MESSAGE regions by disaggregating based on trade data
-trade.df <- read.csv(file.path(input, 'trade/regional_trade.csv'), stringsAsFactors = F)
+trade.df <- read.csv(file.path(input, 'derived/trade/regional_trade.csv'), stringsAsFactors = F)
 trade.df$type[trade.df$energy %in% c('foil', 'oil')] <- 'liquid_shipping'
 trade.df$type[trade.df$energy %in% c('coal')] <- 'solid_shipping'
 trade.df$type[trade.df$energy %in% c('LNG')] <- 'LNG_shipping'
@@ -152,10 +152,10 @@ reformat_activity <- function(shipping) {
   df <- df[c('msg_region1', 'technology', 'year', 'mode', 'time', 'value', 'unit')]
   names(df) <- c('node_loc', 'technology', 'year_act', 'mode', 'time', 'value', 'unit')
   
-  df$node_loc <- paste0('R14_', df$node_loc)
+  df$node_loc <- paste0(region.number, '_', df$node_loc)
   
-  df <- subset(df, year_act %in% msg_years)
-  write.csv(df, file.path(output, paste0('historical_activity/', shipping, '.csv')))
+  df <- subset(df, year_act %in% c(seq(1970, 1995, by = 5), MESSAGE.years))
+  write.csv(df, file.path(output, paste0('analysis/msg_parameters/historical_activity/', shipping, '.csv')))
   
 }
 

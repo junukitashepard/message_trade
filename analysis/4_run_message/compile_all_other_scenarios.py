@@ -11,6 +11,7 @@ plt.style.use('ggplot')
 
 import pandas as pd
 import numpy as np
+import re
 
 import ixmp as ixmp
 import message_ix as message_ix
@@ -26,30 +27,49 @@ ene_mp = ixmp.Platform() # Connect to central ENE database
 for trade_scenario in ['baseline', 'tariff_high', 'tariff_low',
                        'CO2_tax_baseline', 'CO2_tax_tariff_high', 'CO2_tax_tariff_low']:
 
-    # Clone model (MESSAGEix_SSP2) and scenario (test)
-    base_scenario = message_ix.Scenario(ene_mp, 
-                                        model = 'MESSAGEix_SSP2',
-                                        scenario = 'test') 
-    scenario = base_scenario.clone('MESSAGE_TRADE', trade_scenario)
-
-    # Check out scenario so we can make edits #
-    if scenario.has_solution():
-        scenario.remove_solution()
+    if trade_scenario in ['baseline', 'tariff_high', 'tariff_low']:
+        # Clone model (MESSAGEix_SSP2) and scenario (test)
+        base_scenario = message_ix.Scenario(ene_mp, 
+                                            model = 'MESSAGEix_SSP2',
+                                            scenario = 'test') 
+        scenario = base_scenario.clone('MESSAGE_TRADE', trade_scenario)
         
-    scenario.check_out()
+        # Check out scenario so we can make edits #
+        if scenario.has_solution():
+            scenario.remove_solution()
+        
+        scenario.check_out()
     
-    sys.path.insert(1, 'H:/message_trade/analysis/4_run_message')
-    from compile_scenario import *
+        sys.path.insert(1, 'H:/message_trade/analysis/4_run_message')
+        from compile_scenario import *
+    
+        replace_trade_technologies(scenario)
+        add_new_sets(scenario)
+        add_new_units(ene_mp)
+        add_global_relations(scenario)
+        add_export_technologies(scenario, trade_scenario)
+        add_import_technologies(scenario, trade_scenario)
+        add_shipping_technologies(scenario, trade_scenario)
+        adjust_shipping_demand(scenario)
+        update_levels(scenario)
+        commit_and_export(scenario, 'Initial commit')
+        
+    else:
+        scenario = message_ix.Scenario(ene_mp,
+                                       model = 'MESSAGEix_TRADE',
+                                       scenario = re.sub(".*CO2_tax_", "", trade_scenario))
+        
+        scenario = scenario.clone('MESSAGE_TRADE', trade_scenario)
+    
+        # Check out scenario so we can make edits #
+        if scenario.has_solution():
+            scenario.remove_solution()
+        
+        scenario.check_out()
+    
+        sys.path.insert(1, 'H:/message_trade/analysis/4_run_message')
+        from compile_scenario import *
 
-    replace_trade_technologies(scenario)
-    add_new_sets(scenario)
-    add_new_units(ene_mp)
-    add_global_relations(scenario)
-    add_export_technologies(scenario, trade_scenario)
-    add_import_technologies(scenario, trade_scenario)
-    add_shipping_technologies(scenario, trade_scenario)
-    adjust_shipping_demand(scenario)
-    update_levels(scenario)
-    add_bound_emission(scenario, trade_scenario, ene_mp)
-    add_CO2_tax(scenario, trade_scenario)
-    commit_and_export(scenario, 'Initial commit')
+        add_bound_emission(scenario, trade_scenario, ene_mp)
+        add_CO2_tax(scenario, trade_scenario)
+        commit_and_export(scenario, 'Initial commit')

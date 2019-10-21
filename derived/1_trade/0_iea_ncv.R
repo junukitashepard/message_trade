@@ -21,6 +21,8 @@ cfile$energy[cfile$product %in% c('Aviation gasoline', 'Fuel oil', 'Gas/diesel o
                                   'Kerosene type jet fuel excl. biofuels', 'Motor gasoline excl. biofuels', 
                                   'Other kerosene', 'Other oil products')] <- 'PET'
 cfile$energy[cfile$product %in% c('Biodiesels', 'Charcoal', 'Peat', 'Peat products')] <- 'BIO'
+cfile$energy[cfile$product %in% c('Biodiesels')] <- 'METH'
+cfile$energy[cfile$product %in% c('Biogasoline')] <- 'ETH'
 
 cfile <- subset(cfile, !is.na(energy))
 

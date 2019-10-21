@@ -79,7 +79,7 @@ sc <- group_by(sc, type, msgregion) %>% mutate(lag.value = lag(value))
 sc$new_capacity <- sc$value - sc$lag.value
 sc$new_capacity[sc$new_capacity < 0] <- 0
 
-sc <- subset(sc, year %in% msg_years)
+sc <- subset(sc, year %in% c(seq(1970, 1995, by = 5), MESSAGE.years))
 sc <- subset(sc, !is.na(new_capacity))
 
 # Plot historical new capacity
@@ -105,10 +105,10 @@ reformat_capacity <- function(shipping) {
   df <- df[c('msgregion', 'technology', 'year', 'value', 'unit')]
   names(df) <- c('node_loc', 'technology', 'year_vtg', 'value', 'unit')
   
-  df$node_loc <- paste0('R14_', df$node_loc)
+  df$node_loc <- paste0(region.number, '_', df$node_loc)
   
   df <- unique(df)
   
-  write.csv(df, file.path(output, paste0('historical_new_capacity/', shipping, '.csv')))
+  write.csv(df, file.path(output, paste0('analysis/msg_parameters/historical_new_capacity/', shipping, '.csv')))
 }
 

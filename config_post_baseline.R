@@ -66,3 +66,11 @@ MESSAGE.technical.lifetime = config$MESSAGE_technical_lifetime
 
 # Capacity factor
 MESSAGE.capacity.factor = config$MESSAGE_capacity_factor
+
+###################
+# RUN ALL SCRIPTS #
+###################
+# Build scenarios
+source(paste0(repo, 'analysis/4_run_message/build_scenarios/tariffs.R'))
+source(paste0(repo, 'analysis/4_run_message/build_scenarios/emission_tax.R'))
+source(paste0(repo, 'analysis/4_run_message/build_scenarios/build_scenario.R'))

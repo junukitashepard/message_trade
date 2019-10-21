@@ -19,5 +19,5 @@ value_constant <- TRUE
 mode <-'M1'
 time <- 'year'
 time_dest <- 'year'
-commodity <- 'LNG'
-level <- 'shipped-LNG'  
+commodity <- 'methanol'
+level <- 'shipped-meth'  

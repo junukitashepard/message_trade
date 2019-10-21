@@ -3,7 +3,7 @@
 parname <- 'input'
 varlist <- c('node_loc', 'technology', 'year_vtg', 'year_act', 'mode', 'node_origin', 'commodity', 'level', 'time', 'time_origin', 'value', 'unit')
 # Technology in R script
-value <- 1 # Change later
+value <- 1.1 # Change later
 unit <- 'GWa'
 
 # Node and year columns
@@ -18,5 +18,5 @@ value_constant <- TRUE
 mode <-'M1'
 time <- 'year'
 time_origin <- 'year'
-commodity <- 'fueloil'
+commodity <- 'ethanol'
 level <- 'secondary'  
