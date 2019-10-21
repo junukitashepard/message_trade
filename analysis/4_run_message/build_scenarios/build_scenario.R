@@ -19,8 +19,6 @@ msg_dir <- "C:/ProgramData/Anaconda3/Lib/site-packages/message_ix/model/output"
 
 # Import baseline parameters (import variable costs)
 #####################################################
-import_technologies <- c('oil_imp', 'foil_imp', 'loil_imp', 'coal_imp', 'LNG_imp')
-
 var_cost.base <- data.frame()
 for (t in import_technologies) {
   indf <- readRDS(file.path(input, paste0('var_cost/', t, '.rds')))
@@ -33,7 +31,9 @@ var_cost.base$value <- NA
 # Import model commodity prices for importers # 
 ###############################################
 for (t in c('shipped', 'secondary', 'primary')) {
-  price_df <- read_MESSAGE(msg_scenario = 'baseline_no_tariff', msg_version = 3, msg_variable = 'PRICE_COMMODITY')
+  price_df <- read_MESSAGE(msg_scenario = 'baseline_no_tariff', 
+                           msg_version = baseline_no_tariff_version, 
+                           msg_variable = 'PRICE_COMMODITY')
   price_df <- subset(price_df, grepl(t, level))
   
   price_df$importer <- paste0('R14_', toupper(substr(price_df$commodity, nchar(price_df$commodity)-2, nchar(price_df$commodity))))
@@ -65,41 +65,18 @@ names(prices) <- c('importer', 'energy', 'year_all', 'baseline_price')
 
 # Combine historic prices with import variable costs #
 ######################################################
+var_cost.base$node_loc <- as.character(var_cost.base$node_loc)
 df <- inner_join(var_cost.base, prices, by = c('node_loc' = 'importer', 'year_vtg' = 'year_all', 'energy'))
 df$value <- df$baseline_price
 
 var_cost.base <- df[c('technology', 'time', 'value', 'unit', 'year_act', 'year_vtg', 'node_loc', 'mode')]
-
-# Define parameters of interest and energy commodities
-#######################################################
-# List of parameters
-parameter_list <- c('bound_activity_lo', 'bound_activity_up',
-                    'capacity_factor', 'fix_cost',
-                    'growth_activity_lo', 'growth_activity_up',
-                    'historical_activity', 'historical_new_capacity',
-                    'initial_activity_lo', 'initial_activity_up',
-                    'input', 'inv_cost',
-                    'level_cost_activity_soft_lo', 'level_cost_activity_soft_up',
-                    'output', 'soft_activity_lo', 'soft_activity_up', 'technical_lifetime')
-
-# Technical lifetime
-tech_lifetime = 5
-
-# List of energy commodities
-energy_list <- c('oil', 'coal', 'loil', 'foil', 'LNG')
-
-# List of technologies
-export_technologies <- c('oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp')
-
-# List of regions
-regions <- c('afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'nam', 'pao', 'pas', 'rus', 'sas', 'scs', 'ubm', 'weu')
 
 # Build scenario #
 ##################
 # Adjust var_cost
 adj_var_cost <- function(scenario, adjust_variable) {
   
-  df <- readRDS(file.path(wd, paste0('var_cost_effects/', scenario, '.rds')))
+  df <- readRDS(file.path(repo, paste0('analysis/4_run_message/build_scenarios/var_cost_effects/', scenario, '.rds')))
   suppressWarnings(df <- left_join(var_cost.base, df, by = c('technology', 'node_loc', 'year_act')))
   names(df)[names(df) == adjust_variable] <- 'adj_var'
   df$adj_var[is.nan(df$adj_var) | is.na(df$adj_var) | is.infinite(df$adj_var)] <- 0

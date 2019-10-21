@@ -15,7 +15,7 @@ modelPath = 'C:\ProgramData\Anaconda3\Lib\site-packages\message_ix\model'
 
 # Temporal specification #
 ##########################
-MESSAGE_years = list(range(1990, 2060, 5)) + list(range(2060, 2110, 10))
+MESSAGE_years = list(range(1990, 2060, 5)) + list(range(2060, 2120, 10))
 MESSAGE_model_horizon_start = 2020 # When does the model horizon start?
 
 # Regional specification #
@@ -24,7 +24,7 @@ region_number = 'R14'
 regional_specification_csv = 'H:/message_trade/user_inputs/default/regional_specification.csv'
 regions_list = ['afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'nam', 'pao', 
                 'pas', 'rus', 'sas', 'scs', 'ubm', 'weu']
-region_list_trade = ['AFR', 'CPA', 'EEU', 'LAM', 'MEA', 'NAM', 'PAO', 'PAS', 'SAS', 'WEU']
+region_list_trade = ['AFR', 'CPA', 'EEU', 'LAM', 'MEA', 'NAM', 'PAO', 'PAS', 'RUS', 'SAS', 'WEU']
 
 # List of technologies #
 ########################

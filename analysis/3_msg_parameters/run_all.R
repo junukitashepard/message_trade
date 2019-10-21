@@ -1,51 +1,11 @@
 ########################
 # Build all parameters #
 ########################
-rm(list = ls())
-wd <- "H:/data/"
-repo <- "H:/message_trade/"
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-library('ggplot2')
-
-input <-   paste0(wd, "output/derived/")
-output <-   paste0(wd, "output/analysis/msg_parameters/")
-
-
 # Import functions 
 ###################
 source(paste0(repo, 'analysis/3_msg_parameters/scale_msg_parameter/functions.R'))
 source(paste0(repo, 'analysis/3_msg_parameters/build_parameters.R'))
 source(paste0(repo, 'analysis/3_msg_parameters/activity_parameters/build_activity.R'))
-
-# Define parameters of interest and energy commodities
-#######################################################
-# List of parameters
-parameter_list <- c('bound_activity_lo', 'bound_activity_up',
-                    'capacity_factor', 'fix_cost',
-                    'growth_activity_lo', 'growth_activity_up',
-                    'historical_activity', 'historical_new_capacity',
-                    'initial_activity_lo', 'initial_activity_up',
-                    'input', 'inv_cost',
-                    'level_cost_activity_soft_lo', 'level_cost_activity_soft_up',
-                    'output', 'soft_activity_lo', 'soft_activity_up', 'technical_lifetime')
-
-# Technical lifetime
-tech_lifetime = 5
-
-# List of energy commodities
-energy_list <- c('oil', 'coal', 'loil', 'foil', 'LNG')
-
-# List of technologies
-export_technologies <- c('oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp')
-import_technologies <- c('oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp')
-
-# List of regions
-regions <- c('afr', 'cas', 'cpa', 'eeu', 'lam', 'mea', 'nam', 'pao', 'pas', 'rus', 'sas', 'scs', 'ubm', 'weu')
 
 # Import data files 
 ####################
@@ -90,8 +50,8 @@ varlist <-  c('node_loc', 'technology', 'year_act', 'time', 'value', 'unit')
 year_act <- MESSAGE.years
 unit <- '%'
 time <- 'year'
-value_lo <- -0.4
-value_up <- 0.4 
+value_lo <- -0.2
+value_up <- 0.2
 source(paste0(repo, 'analysis/3_msg_parameters/growth_activity.R'))
 
 # historical_activity

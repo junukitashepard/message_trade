@@ -5,7 +5,6 @@ rm(list = ls())
 repo <- "H:/message_trade/"
 wd <- "H:/data/"
 
-library('dplyr')
 library('e1071')
 library('geosphere')
 library('ggplot2')
@@ -18,6 +17,7 @@ library('reticulate')
 library('RMySQL')
 library('stringr')
 library('tidyr')
+library('dplyr')
 
 raw <-      paste0(wd, "raw")
 input <-    paste0(wd, "output")
@@ -76,4 +76,4 @@ source(paste0(repo, 'derived/2_nodes/run_all.R'))
 
 # Analysis
 source(paste0(repo, 'analysis/2_regressions/run_all.R'))
-
+source(paste0(repo, 'analysis/3_msg_parameters/run_all.R'))

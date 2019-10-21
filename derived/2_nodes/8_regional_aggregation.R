@@ -139,7 +139,7 @@ m.df <- data.frame(year = numeric(0),
 
 # Run 1: Include all paths (even longer ones) #
 ###############################################
-for (e in c('coal', 'foil', 'LNG', 'oil')) {
+for (e in energy.types.BACI) {
   energy2ports(e, allports = T)
   
   assign('x.in', get(paste0(e, '.exports')))
@@ -160,12 +160,13 @@ m.df.co <- m.df[c('year', 'energy', 'msg_region1', 'msg_region2',
 co <- inner_join(x.df.co, m.df.co, by = c('year', 'energy', 'msg_region1', 'msg_region2'))
 co <- inner_join(co, unique(ijports[c('port1', 'port2', 'distance')]), by = c('port1', 'port2'))
 
-co_byregion <- group_by(co, msg_region1, msg_region2, year, energy) %>% 
-                summarise(wtd_distance = weighted.mean(distance, port_exports, na.rm = T))
-co_byregion <- group_by(co_byregion, msg_region1, msg_region2, energy) %>%
-               mutate(constant_mean = mean(wtd_distance, na.rm = T))
+co_byregion <- dplyr::group_by(co, msg_region1, msg_region2, year, energy) %>% 
+               dplyr::summarise(wtd_distance = weighted.mean(distance, port_exports, na.rm = T))
+co_byregion <- dplyr::group_by(co_byregion, msg_region1, msg_region2, energy) %>%
+               dplyr::mutate(constant_mean = mean(wtd_distance, na.rm = T))
 co_byregion$diff_from_mean <- (co_byregion$wtd_distance-co_byregion$constant_mean)/co_byregion$constant_mean
 
+# Plot example of MEA to NAM
 co_byregion <- subset(co_byregion, !is.na(year) & 
                         msg_region1 == 'MEA' & msg_region2 == 'NAM')
 co_byregion$energy <- toupper(co_byregion$energy)
@@ -200,7 +201,7 @@ m.df <- data.frame(year = numeric(0),
                    msg_region1 = character(0), msg_region2 = character(0),
                    port_imports = numeric(0), region_trade = numeric(0), share = numeric(0), energy = character(0))
 
-for (e in c('coal', 'foil', 'LNG', 'oil')) {
+for (e in energy.types.BACI) {
   energy2ports(e, allports = FALSE)
   
   assign('x.in', get(paste0(e, '.exports')))
@@ -226,4 +227,4 @@ co.out <- inner_join(x.df.co, m.df.co, by = c('year', 'energy', 'msg_region1', '
 co.out <- inner_join(co.out, path[c('port1', 'port2', 'node', 'node.long', 'node.lat', 'route_id', 'step_id')],
                      by = c('port1', 'port2'))
                      
-write.csv(co.out, file.path(output, 'nodes/regional_paths.csv'))
+write.csv(co.out, file.path(output, 'derived/nodes/regional_paths.csv'))

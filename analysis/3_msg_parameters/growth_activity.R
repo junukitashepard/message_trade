@@ -46,13 +46,8 @@ scale_growth_activity <- function(msg.technology, lo_or_up, input_values = FALSE
 }
 
 for (tec in c(export_technologies, import_technologies)) {
-  if (tec %in% c('none')) {
     scale_growth_activity(tec, 'lo', input_values = TRUE)
     scale_growth_activity(tec, 'up', input_values = TRUE)
-  } else {
-    scale_growth_activity(tec, 'lo')
-    scale_growth_activity(tec, 'up')
   }
   
-}
 clean_up()

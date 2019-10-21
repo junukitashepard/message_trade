@@ -32,17 +32,13 @@ names(msg_regions) <- c('iso', 'msgregion')
 
 # Build base dataframe #
 ########################
-region_list <- c('AFR', 'CAS', 'CPA', 'EEU', 'LAM', 'MEA', 'NAM', 'PAO', 'PAS', 'RUS', 'SAS', 'WEU', 'UBM', 'SCS')
-energy_list <- c('oil', 'coal', 'foil', 'loil', 'LNG')
-MESSAGE_years <- c(seq(1995, 2055, by = 5), seq(2060, 2110, by = 10))
-
-basedf <- expand.grid(tolower(region_list), energy_list)
+basedf <- expand.grid(region.list, energy.types)
 basedf <- paste0(basedf$Var2, '_imp')
-basedf <- expand.grid(basedf, paste0('R14_', region_list))
+basedf <- expand.grid(basedf, paste0(region.number, '_', toupper(region.list)))
 names(basedf) <- c('technology', 'node_loc')
 
 df <- data.frame()
-for (y in MESSAGE_years) {
+for (y in MESSAGE.years) {
   tdf <- basedf
   tdf$year_act <- y
   df <- rbind(df, tdf)
@@ -51,7 +47,7 @@ basedf <- df
 df <- NULL
 
 basedf$technology <- as.character(basedf$technology)
-basedf$importer <- toupper(stringr::str_replace(basedf$node_loc, 'R14_', ''))
+basedf$importer <- toupper(stringr::str_replace(basedf$node_loc, paste0(region.number, '_'), ''))
                            
 basedf <- unique(basedf)
 
@@ -220,16 +216,28 @@ tariff.out <- group_by(tariff.out, msg.region, year, msg.energy) %>% summarize(t
 
 # Clean up #
 ############
-tariff.loil <- subset(tariff.out, msg.energy == 'foil') # assign foil tariffs to loil tariffs
-tariff.loil$msg.energy <- 'loil'
+# Assign tariffs for fuel oil to fuel oil-adjacent energy
+for (e in energy.types.trade.foil) {
+  tariff.foil <- subset(tariff.out, msg.energy == 'foil') # assign foil tariffs to loil tariffs
+  tariff.foil$msg.energy <- e
 
-tariff.out <- subset(tariff.out, msg.energy != 'loil')
-tariff.out <- rbind(tariff.out, tariff.loil)
+  tariff.out <- subset(tariff.out, msg.energy != e)
+  tariff.out <- rbind(tariff.out, tariff.foil)
+}
+
+# Assign tariffs for LNG to LNG-adjacent energy
+for (e in energy.types.trade.LNG) {
+  tariff.LNG <- subset(tariff.out, msg.energy == 'LNG') # assign foil tariffs to loil tariffs
+  tariff.LNG$msg.energy <- e
+  
+  tariff.out <- subset(tariff.out, msg.energy != e)
+  tariff.out <- rbind(tariff.out, tariff.LNG)
+}
 
 tariff.out <- subset(tariff.out, !is.na(tariff))
 
 # Only include energy of interest
-tariff.out <- subset(tariff.out, msg.energy %in% energy_list)
+tariff.out <- subset(tariff.out, msg.energy %in% energy.types)
 
 # Plot tariff data #
 ####################
@@ -247,7 +255,9 @@ hist_med_tariff <- group_by(tariff.out, msg.region) %>% summarise(hist_tariff = 
 hist_med_tariff$high_tariff <- hist_med_tariff$hist_tariff * 5
 hist_med_tariff$low_tariff <- 0
 
-scen.tariff <- left_join(basedf, tariff.out, by = c('importer' = 'msg.region', 'year_act' = 'year'))
+tariff.out$technology <- paste0(tariff.out$msg.energy, '_imp')
+scen.tariff <- left_join(basedf, tariff.out[c('msg.region', 'year', 'tariff', 'technology')], 
+                         by = c('importer' = 'msg.region', 'year_act' = 'year', 'technology'))
   scen.tariff <- left_join(scen.tariff, hist_med_tariff, by = c('importer' = 'msg.region'))
   scen.tariff$tariff[is.na(scen.tariff$tariff)] <- 0
 
@@ -260,11 +270,12 @@ scen.tariff_hi <- arrange(scen.tariff_hi, technology, node_loc, importer, year_a
 scen.tariff_hi$tariff <- zoo::na.approx(scen.tariff_hi$tariff)
 
 hi_tariff_plot <-
-ggplot(aes(x = year_act, y = tariff, colour = importer), data = unique(scen.tariff_hi[c('year_act', 'importer', 'tariff')])) +
-  geom_point(size = 2) + 
-  geom_line(size = 1) +
-  labs(x = "Year", y = "AVE on primary products (%)", colour = 'Importer', title = 'High tariff scenario') +
-  theme(legend.position = 'bottom', text = element_text(size = 15))
+ggplot(aes(x = year_act, y = tariff, colour = importer), 
+       data = group_by(scen.tariff_hi, year_act, importer)%>%summarize(tariff = mean(tariff, na.rm = T))) +
+       geom_point(size = 2) + 
+       geom_line(size = 1) +
+       labs(x = "Year", y = "AVE on primary products (%)", colour = 'Importer', title = 'High tariff scenario') +
+       theme(legend.position = 'bottom', text = element_text(size = 15))
 
 scen.tariff_hi <- scen.tariff_hi[c('technology', 'node_loc', 'year_act', 'tariff')]
 
@@ -275,7 +286,8 @@ scen.tariff_lo <- arrange(scen.tariff_lo, technology, node_loc, importer, year_a
 scen.tariff_lo$tariff <- zoo::na.approx(scen.tariff_lo$tariff)
 
 lo_tariff_plot <-
-  ggplot(aes(x = year_act, y = tariff, colour = importer), data = unique(scen.tariff_lo[c('year_act', 'importer', 'tariff')])) +
+  ggplot(aes(x = year_act, y = tariff, colour = importer), 
+         data = group_by(scen.tariff_lo, year_act, importer)%>%summarize(tariff = mean(tariff, na.rm = T))) +
   geom_point() + 
   geom_line(size = 1) +
   labs(x = "Year", y = "AVE on primary products (%)", colour = 'Importer', title = 'Low tariff scenario') +
@@ -285,19 +297,22 @@ scen.tariff_lo <- scen.tariff_lo[c('technology', 'node_loc', 'year_act', 'tariff
 
 # Baseline tariffs
 scen.tariff_baseline <- scen.tariff
-scen.tariff_baseline$tariff[scen.tariff_baseline$year_act >= 2015] <- scen.tariff_baseline$hist_tariff[scen.tariff_baseline$year_act > 2015]
-scen.tariff_baseline <- scen.tariff_baseline[c('technology', 'node_loc', 'year_act', 'tariff')]
+scen.tariff_baseline$tariff[scen.tariff_baseline$year_act >= 2015] <- 
+  scen.tariff_baseline$hist_tariff[scen.tariff_baseline$year_act >= 2015]
 
 baseline_tariff_plot <-
-    ggplot(aes(x = year_act, y = tariff, colour = node_loc), data = unique(scen.tariff_baseline[c('year_act', 'node_loc', 'tariff')])) +
+    ggplot(aes(x = year_act, y = tariff, colour = importer), 
+           data = group_by(scen.tariff_baseline, year_act, importer)%>%summarize(tariff = mean(tariff, na.rm = T))) +
     geom_point() + 
     geom_line(size = 1) +
     labs(x = "Year", y = "AVE on primary products (%)", colour = 'Importer', title = 'Baseline') +
     theme(legend.position = 'bottom', text = element_text(size = 15))
   
+scen.tariff_baseline <- scen.tariff_baseline[c('technology', 'node_loc', 'year_act', 'tariff')]
+
 # Save for compilation
-saveRDS(scen.tariff_baseline, file.path(wd, 'var_cost_effects/baseline.rds'))
-saveRDS(scen.tariff_hi, file.path(wd, 'var_cost_effects/tariff_high.rds'))
-saveRDS(scen.tariff_lo, file.path(wd, 'var_cost_effects/tariff_low.rds'))
+saveRDS(scen.tariff_baseline, file.path(repo, 'analysis/4_run_message/build_scenarios/var_cost_effects/baseline.rds'))
+saveRDS(scen.tariff_hi, file.path(repo, 'analysis/4_run_message/build_scenarios/var_cost_effects/tariff_high.rds'))
+saveRDS(scen.tariff_lo, file.path(repo, 'analysis/4_run_message/build_scenarios/var_cost_effects/tariff_low.rds'))
 
 

@@ -8,7 +8,8 @@ ijports <- readRDS(file.path(input, 'derived/nodes/ij_ports.rds'))[c('port1', 'p
 
 # Link port information to distance
 paths <- unique(subset(paths, msg_region1 %in% region.list.trade & msg_region2 %in% region.list.trade))
-paths <- group_by(paths, year, energy, msg_region1, msg_region2) %>% mutate(count = row_number())
+paths <- dplyr::group_by(paths, year, energy, msg_region1, msg_region2) %>% 
+         dplyr::mutate(count = row_number())
 paths <- subset(paths, count == 1) # drops 1 observation
 paths$count <- NULL
 isid('paths', c('year', 'energy', 'msg_region1', 'msg_region2'))
@@ -20,8 +21,8 @@ paths <- left_join(paths, ijports, by = c('port1', 'port2'))
 paths$distance <- paths$distance/1000 # in 1000 km
 
 # Get mean paths for when distance is missing
-mean_paths <- group_by(paths, msg_region1, msg_region2) %>%
-              summarise(mean_path = mean(distance, na.rm = T))
+mean_paths <- dplyr::group_by(paths, msg_region1, msg_region2) %>%
+              dplyr::summarise(mean_path = mean(distance, na.rm = T))
 assert('!is.na(mean_paths$mean_path)')
 
 # Function: compile dataframe for exporters

@@ -22,9 +22,9 @@ build_initial_activity <- function(lo_or_up, energy) {
   exports$mode <- 'M1'
   
   # Set future bounds on activity
-  exp_tec <- paste0(msg.technology, '_', regions)
+  exp_tec <- paste0(msg.technology, '_', region.list)
   
-  df <- expand.grid(exp_tec, paste0('R14_', toupper(regions)))
+  df <- expand.grid(exp_tec, paste0(region.number, '_', toupper(region.list)))
   names(df) <- c('technology', 'node_loc')
   future_activity <- data.frame()
   for (y in year_act) {
@@ -59,13 +59,13 @@ build_initial_activity <- function(lo_or_up, energy) {
   
   #exports <- rbind(as.data.frame(exports), as.data.frame(exports.total))
   
-  saveRDS(exports, file.path(output, paste0('initial_activity_', lo_or_up, '/', energy, '_exp.rds')))
-  write.csv(exports, file.path(output, paste0('initial_activity_', lo_or_up, '/', energy, '_exp.csv')))
+  saveRDS(exports, file.path(output, paste0('analysis/msg_parameters/initial_activity_', lo_or_up, '/', energy, '_exp.rds')))
+  write.csv(exports, file.path(output, paste0('analysis/msg_parameters/initial_activity_', lo_or_up, '/', energy, '_exp.csv')))
 }
 
 # Run programs
 # Exports
-for (e in energy_list) {
+for (e in energy.types) {
   build_initial_activity('lo', e)
   build_initial_activity('up', e)
 }
