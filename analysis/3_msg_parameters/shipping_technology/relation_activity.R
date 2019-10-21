@@ -16,7 +16,7 @@ build_relation_activity <- function(general_shipping_type, energy_list, year_act
   for (f in c('diesel', 'LNG', 'elec')) {
     sa.in <- 
       build_parameter(parname = parname, varlist = varlist, technology = paste0(general_shipping_type, '_', f),
-                      node_loc = paste0('R14_', toupper(regions)),
+                      node_loc = paste0('R14_', toupper(region.list)),
                       year_act = year_act, 
                       mode = mode, relation = paste0('lim_', general_shipping_type),
                       value = value, unit = unit)
@@ -35,7 +35,7 @@ build_relation_activity <- function(general_shipping_type, energy_list, year_act
   mode <- 'M1'
   
   trade_activity <- data.frame()
-  for (r in regions) {
+  for (r in region.list) {
     
     for (e in energy_list) {
       
@@ -44,7 +44,7 @@ build_relation_activity <- function(general_shipping_type, energy_list, year_act
       
       assign('ta.in',  
              build_parameter(parname = parname, varlist = varlist, technology = tec.in,
-                             node_loc = paste0('R14_', toupper(regions)),
+                             node_loc = paste0('R14_', toupper(region.list)),
                              year_act = year_act, 
                              mode = mode, relation = paste0('lim_', general_shipping_type),
                              value = value, unit = unit))
