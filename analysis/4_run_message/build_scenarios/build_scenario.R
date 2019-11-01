@@ -1,22 +1,6 @@
 ########################
 # Build all parameters #
 ########################
-rm(list = ls())
-wd <- 'H:/message_trade/analysis/4_run_message/build_scenarios/'
-wd.data <- 'H:/data/'
-setwd(wd)
-
-library('plyr')
-library('dplyr')
-library('magrittr')
-library('jsfunctions')
-library('ggplot2')
-
-reg.input <- paste0(wd.data, "output/analysis/regress/")
-input <-   paste0(wd.data, "output/analysis/msg_parameters/")
-output <-  paste0(wd.data, "output/analysis/msg_parameters/SCENARIOS/")
-msg_dir <- "C:/ProgramData/Anaconda3/Lib/site-packages/message_ix/model/output"
-
 # Import baseline parameters (import variable costs)
 #####################################################
 var_cost.base <- data.frame()
@@ -36,7 +20,7 @@ for (t in c('shipped', 'secondary', 'primary')) {
                            msg_variable = 'PRICE_COMMODITY')
   price_df <- subset(price_df, grepl(t, level))
   
-  price_df$importer <- paste0('R14_', toupper(substr(price_df$commodity, nchar(price_df$commodity)-2, nchar(price_df$commodity))))
+  price_df$importer <- paste0(region.number, '_', toupper(substr(price_df$commodity, nchar(price_df$commodity)-2, nchar(price_df$commodity))))
   price_df$energy <- sub('\\_.*', '', price_df$commodity)
   price_df$energy[price_df$energy == 'fueloil'] <- 'foil'
   price_df$energy[price_df$energy == 'lightoil'] <- 'loil'
@@ -51,11 +35,11 @@ for (t in c('shipped', 'secondary', 'primary')) {
 }
 
 # Minus price of secondary/primary product
-prices_secondary <- group_by(prices_secondary, energy, year_all) %>% summarize(price_secondary = min(price_secondary, na.rm = T))
-prices_primary <- group_by(prices_primary, energy, year_all) %>% summarize(price_primary = min(price_primary, na.rm = T))
+prices_secondary <- dplyr::group_by(prices_secondary, energy, year_all) %>% dplyr::summarize(price_secondary = min(price_secondary, na.rm = T))
+prices_primary <- dplyr::group_by(prices_primary, energy, year_all) %>% dplyr::summarize(price_primary = min(price_primary, na.rm = T))
 
-prices <- left_join(prices_shipped, prices_secondary, by = c('energy', 'year_all'))
-prices <- left_join(prices, prices_primary, by = c('energy', 'year_all'))
+prices <- dplyr::left_join(prices_shipped, prices_secondary, by = c('energy', 'year_all'))
+prices <- dplyr::left_join(prices, prices_primary, by = c('energy', 'year_all'))
 
 prices$value <- 0
 prices$value[!is.na(prices$price_shipped)] <- prices$price_shipped[!is.na(prices$price_shipped)]
@@ -66,7 +50,7 @@ names(prices) <- c('importer', 'energy', 'year_all', 'baseline_price')
 # Combine historic prices with import variable costs #
 ######################################################
 var_cost.base$node_loc <- as.character(var_cost.base$node_loc)
-df <- inner_join(var_cost.base, prices, by = c('node_loc' = 'importer', 'year_vtg' = 'year_all', 'energy'))
+df <- dplyr::inner_join(var_cost.base, prices, by = c('node_loc' = 'importer', 'year_vtg' = 'year_all', 'energy'))
 df$value <- df$baseline_price
 
 var_cost.base <- df[c('technology', 'time', 'value', 'unit', 'year_act', 'year_vtg', 'node_loc', 'mode')]

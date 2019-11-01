@@ -40,12 +40,18 @@ build_relation_activity <- function(energy) {
   ############################################################
   assign('varlist',  c('relation', 'node_loc', 'technology', 'year_act', 'mode', 'value', 'unit')) # add year_rel, node_rel ex-post
   
+  if (energy == 'lh2') {
+    energy.in <- 'liquidh2'
+  } else {
+    energy.in <- energy
+  }
+  
   # All exports
   assign('region_exports', 
          build_parameter(parname = 'all_exports', varlist = varlist, technology = paste0(energy, '_exp'),
                          node_loc = paste0(region.number, '_', toupper(region.list)),
                          year_act = year_act, 
-                         mode = 'M1', relation = paste0('lim_', energy, '_trd'),
+                         mode = 'M1', relation = paste0('lim_', energy.in, '_trd'),
                          value = -1, unit = '???'))
   
   region_exports$year_rel <- region_exports$year_act
@@ -53,10 +59,10 @@ build_relation_activity <- function(energy) {
   
   # Global trade
   assign('global_trade', 
-         build_parameter(parname = 'all_exports', varlist = varlist, technology = paste0(energy, '_trd'),
+         build_parameter(parname = 'all_exports', varlist = varlist, technology = paste0(energy.in, '_trd'),
                          node_loc = paste0(region.number, '_GLB'),
                          year_act = year_act, 
-                         mode = 'M1', relation = paste0('lim_', energy, '_trd'),
+                         mode = 'M1', relation = paste0('lim_', energy.in, '_trd'),
                          value = 1, unit = '???'))
   
   global_trade$year_rel <- global_trade$year_act
@@ -148,6 +154,11 @@ build_relation_limits <- function(relation, value, node_rel, year_rel) {
 }
 
 for (e in energy.types) {
+  if (e == 'lh2') {
+    e.in <- 'liquidh2'
+  } else {
+    e.in <- e
+  }
   ul_export_relation <- build_relation_limits(relation = paste0('lim_', e, '_exp'), 
                                        value = 0, 
                                        node_rel = paste0(region.number, '_', toupper(region.list)),
@@ -157,12 +168,12 @@ for (e in energy.types) {
                                        value = 0, 
                                        node_rel = paste0(region.number, '_', toupper(region.list)),
                                        year_rel = year_act)
-  ul_glb_relation <- build_relation_limits(relation = paste0('lim_', e, '_trd'), 
+  ul_glb_relation <- build_relation_limits(relation = paste0('lim_', e.in, '_trd'), 
                                               value = 0, 
                                               node_rel = paste0(region.number, '_', toupper(region.list)),
                                               year_rel = year_act)
   
-  ll_glb_relation <- build_relation_limits(relation = paste0('lim_', e, '_trd'), 
+  ll_glb_relation <- build_relation_limits(relation = paste0('lim_', e.in, '_trd'), 
                                               value = 0, 
                                               node_rel = paste0(region.number, '_', toupper(region.list)),
                                               year_rel = year_act)

@@ -26,10 +26,15 @@ tax_scenarios <- function(scen.value) {
   return(df)
 }
 
-tax_df <- tax_scenarios(100) # in $/tCO2
+tax_df <- tax_scenarios(100) # Equal to $27/tCO2
+low_tax_df <- tax_scenarios(55) # Equal to $15/tCO2
+high_tax_df <- tax_scenarios(222) # Equal to $60/tCO2
 
 for (scenario in c('baseline', 'tariff_high', 'tariff_low')) {
   write.csv(tax_df, file.path(output, paste0('CO2_tax_', scenario, '/tax_emission/tax_emission.csv')))
 }
   
+write.csv(low_tax_df, file.path(output, ('low_CO2_tax_baseline/tax_emission/tax_emission.csv')))
+write.csv(high_tax_df, file.path(output, ('high_CO2_tax_baseline/tax_emission/tax_emission.csv')))
+
   

@@ -16,7 +16,7 @@ build_relation_activity <- function(general_shipping_type, energy_list, year_act
   for (f in c('diesel', 'LNG', 'elec')) {
     sa.in <- 
       build_parameter(parname = parname, varlist = varlist, technology = paste0(general_shipping_type, '_', f),
-                      node_loc = paste0('R14_', toupper(region.list)),
+                      node_loc = paste0(region.number, '_', toupper(region.list)),
                       year_act = year_act, 
                       mode = mode, relation = paste0('lim_', general_shipping_type),
                       value = value, unit = unit)
@@ -44,7 +44,7 @@ build_relation_activity <- function(general_shipping_type, energy_list, year_act
       
       assign('ta.in',  
              build_parameter(parname = parname, varlist = varlist, technology = tec.in,
-                             node_loc = paste0('R14_', toupper(region.list)),
+                             node_loc = paste0(region.number, '_', toupper(region.list)),
                              year_act = year_act, 
                              mode = mode, relation = paste0('lim_', general_shipping_type),
                              value = value, unit = unit))
@@ -57,14 +57,14 @@ build_relation_activity <- function(general_shipping_type, energy_list, year_act
   }
   
   trade_activity$node_loc <- as.character(trade_activity$node_loc)
-  trade_activity$tec_node <- paste0('R14_', toupper(substr(trade_activity$technology, 
+  trade_activity$tec_node <- paste0(region.number, '_', toupper(substr(trade_activity$technology, 
                                                            nchar(trade_activity$technology)-2, 
                                                            nchar(trade_activity$technology))))
   
   trade_activity <- subset(trade_activity, node_loc != tec_node) # don't allow node_loc to export to itself
   
   # Generate V = ('energy'_heat_rate)^-1 * mean(distance_'exporter'_'importer')
-  ncv$msgregion_new <- paste0('R14_', ncv$msgregion)
+  ncv$msgregion_new <- paste0(region.number, '_', ncv$msgregion)
   
   trade_activity_out <- data.frame()
   for (e in energy_list) {
@@ -74,6 +74,9 @@ build_relation_activity <- function(general_shipping_type, energy_list, year_act
     assign('ncv.df', subset(ncv, grepl(e, energy))[c('msgregion_new', 'energy', 'value')])
     if (e == 'oil') {ncv.df <- subset(ncv.df, energy == 'oil')}
     names(ncv.df) <- c('msgregion', 'energy', 'ncv')
+    
+    ncv.mean <- mean(ncv.df$ncv, na.rm = T)
+    ncv.df$ncv[is.nan(ncv.df$ncv)] <- ncv.mean
     
     df <- inner_join(df, ncv.df, by = c('node_loc' = 'msgregion'))
     df <- inner_join(df, distances, by = c('node_loc' = 'msgregion1', 'tec_node' = 'msgregion2'))

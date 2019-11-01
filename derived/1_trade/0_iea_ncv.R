@@ -24,6 +24,14 @@ cfile$energy[cfile$product %in% c('Biodiesels', 'Charcoal', 'Peat', 'Peat produc
 cfile$energy[cfile$product %in% c('Biodiesels')] <- 'METH'
 cfile$energy[cfile$product %in% c('Biogasoline')] <- 'ETH'
 
+clh2 <- expand.grid(unique(cfile$iso.country), unique(cfile$year))
+clh2$product <- 'hydrogen'
+clh2$ncv <- (14310/10^9)*10^3 # convert 14310kJ/kg to TJ/t
+clh2$energy <- 'LH2'
+names(clh2) <- c('iso.country', 'year', 'product', 'ncv', 'energy')
+
+cfile <- rbind(as.data.frame(cfile), as.data.frame(clh2))
+
 cfile <- subset(cfile, !is.na(energy))
 
 # Hold NCV constant for all petroleum, all natural gas, all crude (only coal differentiate by type)

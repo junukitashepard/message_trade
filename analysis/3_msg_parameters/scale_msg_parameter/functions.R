@@ -161,7 +161,7 @@ expand_imp_parameter <- function(parname, msg.technology, tra.energy, varlist,
       }
     }
     
-    tradf <- group_by(tradf, year, msg_region2) %>% summarise(imports = sum(region_trade, na.rm = T))
+    tradf <- dplyr::group_by(tradf, year, msg_region2) %>% dplyr::summarise(imports = sum(region_trade, na.rm = T))
     tradf$imports <- convert_tj_gwa(tradf$imports)
     
     # Compare existing MESSAGE parameter with expanded parameter

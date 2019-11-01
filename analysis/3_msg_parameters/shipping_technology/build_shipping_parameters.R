@@ -79,7 +79,7 @@ runall_shipping_parameters <- function(tech_scenario) {
   # liquid_shipping (Electricity)
   compile_shipping_parameters(type_of_shipping = 'liquid_shipping',
                               shipping_fuel = 'elec', shipping_fuel.msg = 'electr',
-                              fix_cost.value = 0, inv_cost.value = 1.48e-3, var_cost.value = 0,
+                              fix_cost.value = 0, inv_cost.value = 7.4e-7, var_cost.value = 0,
                               input.value = 0.003, technical_lifetime.value = 25, emission_factor.value = 0,
                               technology_trend = tech_scenario)
   
@@ -102,7 +102,7 @@ runall_shipping_parameters <- function(tech_scenario) {
   # Solid shipping (Electricity)
   compile_shipping_parameters(type_of_shipping = 'solid_shipping',
                               shipping_fuel = 'elec', shipping_fuel.msg = 'electr',
-                              fix_cost.value = 0, inv_cost.value = 2.2e-3, var_cost.value = 0,
+                              fix_cost.value = 0, inv_cost.value = 1.1e-6, var_cost.value = 0,
                               input.value = .003, technical_lifetime.value = 25, emission_factor.value = 0,
                               technology_trend = tech_scenario)
   
@@ -111,7 +111,7 @@ runall_shipping_parameters <- function(tech_scenario) {
   # LNG shipping (diesel)
   compile_shipping_parameters(type_of_shipping = 'LNG_shipping',
                               shipping_fuel = 'diesel', shipping_fuel.msg = 'fueloil',
-                              fix_cost.value = 0, inv_cost.value = 1.3e-7, var_cost.value = 0,
+                              fix_cost.value = 0, inv_cost.value = 1.38e-7, var_cost.value = 0,
                               input.value = 0.024, technical_lifetime.value = 25, emission_factor.value = 0.052,
                               technology_trend = tech_scenario)
   
@@ -125,7 +125,30 @@ runall_shipping_parameters <- function(tech_scenario) {
   # LNG shipping (Electricity)
   compile_shipping_parameters(type_of_shipping = 'LNG_shipping',
                               shipping_fuel = 'elec', shipping_fuel.msg = 'electr',
-                              fix_cost.value = 0, inv_cost.value = 3.08e-3, var_cost.value = 0,
+                              fix_cost.value = 0, inv_cost.value = 1.54e-6, var_cost.value = 0,
+                              input.value = 0.003, technical_lifetime.value = 25, emission_factor.value = 0,
+                              technology_trend = tech_scenario)
+  
+  # Liquid hydrogen shipping technologies
+  #######################################
+  # LH2 shipping (diesel)
+  compile_shipping_parameters(type_of_shipping = 'lh2_shipping',
+                              shipping_fuel = 'diesel', shipping_fuel.msg = 'fueloil',
+                              fix_cost.value = 0, inv_cost.value = 6.6e-6, var_cost.value = 0,
+                              input.value = 0.024, technical_lifetime.value = 25, emission_factor.value = 0.052,
+                              technology_trend = tech_scenario)
+  
+  # LH2 shipping (LNG)
+  compile_shipping_parameters(type_of_shipping = 'lh2_shipping',
+                              shipping_fuel = 'LNG', shipping_fuel.msg = 'LNG',
+                              fix_cost.value = 0, inv_cost.value = 7.71e-6, var_cost.value = 0,
+                              input.value = 0.007, technical_lifetime.value = 25, emission_factor.value = 0.014,
+                              technology_trend = tech_scenario)
+  
+  # LH2 shipping (Electricity)
+  compile_shipping_parameters(type_of_shipping = 'lh2_shipping',
+                              shipping_fuel = 'elec', shipping_fuel.msg = 'electr',
+                              fix_cost.value = 0, inv_cost.value = 7.71e-5, var_cost.value = 0,
                               input.value = 0.003, technical_lifetime.value = 25, emission_factor.value = 0,
                               technology_trend = tech_scenario)
 }
@@ -151,6 +174,7 @@ build_relation_parameters <- function(type_of_shipping, shipped_energy, year_lis
 build_relation_parameters('liquid_shipping', shipping_liquid_list, MESSAGE.years)
 build_relation_parameters('solid_shipping', shipping_solid_list, MESSAGE.years)
 build_relation_parameters('LNG_shipping', shipping_LNG_list, MESSAGE.years)
+build_relation_parameters('lh2_shipping', shipping_lh2_list, MESSAGE.years)
 
 # Historical parameters (only for diesel shipping)
 ###################################################
@@ -169,5 +193,7 @@ build_historical_parameters <- function(shipping_type) {
 build_historical_parameters('liquid_shipping_diesel')
 build_historical_parameters('LNG_shipping_diesel')
 build_historical_parameters('solid_shipping_diesel')
+# No historical LH2 shipping
+
 
 

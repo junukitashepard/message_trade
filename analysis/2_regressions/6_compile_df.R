@@ -65,7 +65,7 @@ make_regdf <- function(varlist, subset_p = NULL) {
 }
 
 # Run program
-var_cost_df <- make_regdf(varlist = c('distance', 'agree_fta', 'agree_pta', 'sanction_imposition', 'sanction_threat'))
+var_cost_df <- make_regdf(varlist = c('distance'))
 
 # Visualize results
 plot_hist <- function(df, variable, vartitle, unit) {

@@ -149,7 +149,7 @@ ref_group.out <- inner_join(ref_group.out, web_countries[c('iso.country', 'baci.
 # Build product-importer-exporter weights for energy aggregation #
 ##################################################################
 # Assign reference group by importer
-wt.energy <- inner_join(baci.df, ref_group.out, by = c('j' = 'baci.country', 'iso.country' = 'iso.country', 't' = 'year'))
+wt.energy <- dplyr::inner_join(baci.df, ref_group.out, by = c('j' = 'baci.country', 'iso.country' = 'iso.country', 't' = 'year'))
 
 # Build weight to aggregate to importer-exporter-energy-year
 wt.energy <- group_by(wt.energy, j, t) %>% mutate(reporter_imports = sum(q))
@@ -159,16 +159,17 @@ wt.energy$weight <- wt.energy$q * (wt.energy$reporter_imports/wt.energy$refgroup
 # Build importer-exporter weights for regional aggregation #
 ############################################################
 # Assign reference group
-wt.region <- inner_join(baci.df, ref_group.out, by = c('j' = 'baci.country', 'iso.country' = 'iso.country', 't' = 'year'))
+wt.region <- dplyr::inner_join(baci.df, ref_group.out, by = c('j' = 'baci.country', 'iso.country' = 'iso.country', 't' = 'year'))
 
 # Assign MESSAGE regions
-wt.region <- inner_join(wt.region, message_regions, by = c('iso.country'))
+wt.region <- dplyr::inner_join(wt.region, message_regions, by = c('iso.country'))
 
 # Build weight to aggregate to importer-exporter-year
-wt.region <- group_by(wt.region, i, j, t, iso.country, msg.energy, msg.region, ref_group) %>% summarize(q = sum(q))
+wt.region <- dplyr::group_by(wt.region, i, j, t, iso.country, msg.energy, msg.region, ref_group) %>% 
+             dplyr::summarize(q = sum(q))
 
-wt.region <- group_by(wt.region, j, t) %>% mutate(reporter_imports = sum(q))
-wt.region <- group_by(wt.region, ref_group, t) %>% mutate(refgroup_imports = sum(q))
+wt.region <- dplyr::group_by(wt.region, j, t) %>% dplyr::mutate(reporter_imports = sum(q))
+wt.region <- dplyr::group_by(wt.region, ref_group, t) %>% dplyr::mutate(refgroup_imports = sum(q))
 wt.region$weight <- wt.region$q * (wt.region$reporter_imports/wt.region$refgroup_imports)
 
 # Link weights to tariff data and aggregate #
@@ -176,18 +177,19 @@ wt.region$weight <- wt.region$q * (wt.region$reporter_imports/wt.region$refgroup
 tariff$hs6 <- as.character(tariff$hs6)
 
 # Link energy weights
-tariff.out <- inner_join(tariff, wt.energy[c('i', 'j', 't', 'hs6', 'msg.energy', 'weight')], 
+tariff.out <- dplyr::inner_join(tariff, wt.energy[c('i', 'j', 't', 'hs6', 'msg.energy', 'weight')], 
                          by = c('importer.baci.code' = 'j', 'hs6', 'msg.energy', 'year' = 't'))
 
 # Aggregate to importer-energy level
-tariff.out <- group_by(tariff.out, importer.baci.code, importer, year, msg.energy) %>% summarize(tariff = weighted.mean(tariff, weight))
+tariff.out <- dplyr::group_by(tariff.out, importer.baci.code, importer, year, msg.energy) %>% 
+              dplyr::summarize(tariff = weighted.mean(tariff, weight))
 
 # Link region weights
-tariff.out <- inner_join(tariff.out, wt.region[c('i', 'j', 't', 'msg.energy', 'msg.region', 'weight')],
+tariff.out <- dplyr::inner_join(tariff.out, wt.region[c('i', 'j', 't', 'msg.energy', 'msg.region', 'weight')],
                          by = c('importer.baci.code' = 'j', 'msg.energy', 'year' = 't'))
 
 # Aggregate to region-energy level
-tariff.out <- group_by(tariff.out, msg.region, year, msg.energy) %>% summarize(tariff = weighted.mean(tariff, weight))
+tariff.out <- dplyr::group_by(tariff.out, msg.region, year, msg.energy) %>% dplyr::summarize(tariff = weighted.mean(tariff, weight))
 
 # Clean up #
 ############
@@ -226,14 +228,15 @@ ggplot(aes(x = year, y = tariff, colour = msg.region), data = tariff.out) +
 
 # Build parameter #
 ###################
-hist_med_tariff <- group_by(tariff.out, msg.region) %>% summarise(hist_tariff = median(tariff, na.rm = T))
+hist_med_tariff <- dplyr::group_by(tariff.out, msg.region) %>% 
+                   dplyr::summarise(hist_tariff = median(tariff, na.rm = T))
 hist_med_tariff$high_tariff <- hist_med_tariff$hist_tariff * 5
 hist_med_tariff$low_tariff <- 0
 
 tariff.out$technology <- paste0(tariff.out$msg.energy, '_imp')
-scen.tariff <- left_join(basedf, tariff.out[c('msg.region', 'year', 'tariff', 'technology')], 
+scen.tariff <- dplyr::left_join(basedf, tariff.out[c('msg.region', 'year', 'tariff', 'technology')], 
                          by = c('importer' = 'msg.region', 'year_act' = 'year', 'technology'))
-  scen.tariff <- left_join(scen.tariff, hist_med_tariff, by = c('importer' = 'msg.region'))
+  scen.tariff <- dplyr::left_join(scen.tariff, hist_med_tariff, by = c('importer' = 'msg.region'))
   scen.tariff$tariff[is.na(scen.tariff$tariff)] <- 0
 
 scen.tariff_hi <- scen.tariff_lo <- scen.tariff

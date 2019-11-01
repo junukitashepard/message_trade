@@ -28,30 +28,32 @@ region_list_trade = ['AFR', 'CPA', 'EEU', 'LAM', 'MEA', 'NAM', 'PAO', 'PAS', 'RU
 
 # List of technologies #
 ########################
-export_technologies = ['oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp', 'meth_exp', 'eth_exp']
-import_technologies = ['oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp', 'meth_imp', 'eth_imp']
+export_technologies = ['oil_exp', 'coal_exp', 'loil_exp', 'foil_exp', 'LNG_exp', 'meth_exp', 'eth_exp', 'lh2_exp']
+import_technologies = ['oil_imp', 'coal_imp', 'loil_imp', 'foil_imp', 'LNG_imp', 'meth_imp', 'eth_imp', 'lh2_imp']
 
-commodities_list = ['fueloil', 'crudeoil', 'lightoil', 'coal', 'LNG', 'methanol', 'ethanol']
+commodities_list = ['fueloil', 'crudeoil', 'lightoil', 'coal', 'LNG', 'methanol', 'ethanol', 'lh2']
 level_list = ['shipped-foil', 'shipped-oil', 'shipped-loil', 
-              'shipped-coal', 'shipped-LNG', 'shipped-methanol', 'shipped-ethanol']
+              'shipped-coal', 'shipped-LNG', 'shipped-methanol', 'shipped-ethanol', 'shipped-lh2']
 
 # Shipping parameters
 shipping_technologies = ['liquid_shipping_diesel', 'liquid_shipping_LNG', 'liquid_shipping_elec',
                          'LNG_shipping_diesel', 'LNG_shipping_LNG', 'LNG_shipping_elec',
-                         'solid_shipping_diesel', 'solid_shipping_LNG', 'solid_shipping_elec']
+                         'solid_shipping_diesel', 'solid_shipping_LNG', 'solid_shipping_elec',
+                         'lh2_shipping_diesel', 'lh2_shipping_LNG', 'lh2_shipping_elec']
 
 shipping_liquid_list = ['oil', 'loil', 'foil', 'meth', 'eth']
 shipping_solid_list = ['coal']
 shipping_LNG_list = ['LNG']
+shipping_lh2_list = ['lh2']
 shipping_technical_lifetime = 25
 
 # Energy commodities modeled #
 ##############################
-energy_types = ['coal', 'foil', 'loil', 'LNG', 'oil', 'meth', 'eth']
-energy_types_BACI = ['oil', 'coal', 'foil', 'LNG'] # Energy types found in BACI
+energy_types = ['coal', 'foil', 'loil', 'LNG', 'oil', 'meth', 'eth', 'lh2']
+energy_types_BACI = ['oil', 'coal', 'foil', 'LNG', 'lh2'] # Energy types found in BACI
 energy_types_oil_history = ['loil', 'meth', 'eth'] # Energy types for which historical activity can be proxied by oil
 energy_types_trade_foil = ['loil', 'meth', 'eth'] # Energy types for which trade variable costs behave like fuel oil
-energy_types_trade_LNG = [] # Energy types for which trade variable costs behave like LNG
+energy_types_trade_LNG = ['lh2'] # Energy types for which trade variable costs behave like LNG
 
 # Technical lifetime or trade #
 ###############################

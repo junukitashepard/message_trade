@@ -5,7 +5,6 @@ rm(list = ls())
 repo <- "H:/message_trade/"
 wd <- "H:/data/"
 
-library('dplyr')
 library('e1071')
 library('geosphere')
 library('ggplot2')
@@ -19,6 +18,7 @@ library('RMySQL')
 library('stringr')
 library('tidyr')
 library('zoo')
+library('dplyr')
 
 raw <-      paste0(wd, "raw")
 input <-    paste0(wd, "output")
@@ -75,6 +75,7 @@ MESSAGE.capacity.factor = config$MESSAGE_capacity_factor
 shipping_liquid_list <- config$shipping_liquid_list
 shipping_solid_list <- config$shipping_solid_list
 shipping_LNG_list <- config$shipping_LNG_list
+shipping_lh2_list <- config$shipping_lh2_list
 
 shipping_technical_lifetime <- config$shipping_technical_lifetime
 

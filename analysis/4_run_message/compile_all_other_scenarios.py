@@ -25,7 +25,9 @@ from config import *
 ene_mp = ixmp.Platform() # Connect to central ENE database
 
 for trade_scenario in ['baseline', 'tariff_high', 'tariff_low',
-                       'CO2_tax_baseline', 'CO2_tax_tariff_high', 'CO2_tax_tariff_low']:
+                       'CO2_tax_baseline', 'CO2_tax_tariff_high', 'CO2_tax_tariff_low',
+                       'low_CO2_tax_baseline', 'high_CO2_tax_baseline',
+                       'low_MEA_emission_factor_CO2_tax_baseline']:
 
     if trade_scenario in ['baseline', 'tariff_high', 'tariff_low']:
         # Clone model (MESSAGEix_SSP2) and scenario (test)
@@ -56,7 +58,7 @@ for trade_scenario in ['baseline', 'tariff_high', 'tariff_low',
         
     else:
         scenario = message_ix.Scenario(ene_mp,
-                                       model = 'MESSAGEix_TRADE',
+                                       model = 'MESSAGE_TRADE',
                                        scenario = re.sub(".*CO2_tax_", "", trade_scenario))
         
         scenario = scenario.clone('MESSAGE_TRADE', trade_scenario)
@@ -72,4 +74,16 @@ for trade_scenario in ['baseline', 'tariff_high', 'tariff_low',
 
         add_bound_emission(scenario, trade_scenario, ene_mp)
         add_CO2_tax(scenario, trade_scenario)
+        
+        if 'low_MEA_emission_factor' in trade_scenario:
+                rmdf = scenario.par('emission_factor', {'node_loc':'R14_MEA', 'emission':'CO2'})
+                chdf = scenario.par('emission_factor', {'node_loc':'R14_MEA', 'emission':'CO2'})
+                
+                tecnames_chdf = np.unique(chdf.technology)
+                tecnames_chdf = [s for s in tecnames_chdf if 'oil_extr' in s]
+                chdf.loc[chdf.technology.isin(tecnames_chdf), 'value'] = 0.50*chdf.loc[chdf.technology.isin(tecnames_chdf), 'value']
+                
+                scenario.remove_par('emission_factor', rmdf)
+                scenario.add_par('emission_factor', chdf)
+                
         commit_and_export(scenario, 'Initial commit')

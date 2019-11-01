@@ -17,5 +17,4 @@ source(paste0(repo, 'analysis/2_regressions/4_regress.R'))
 #source(paste0(repo, 'analysis/2_regressions/5_compile_tables.R'))
 print('...6_compile_df.R')
 source(paste0(repo, 'analysis/2_regressions/6_compile_df.R'))
-print('...7_compile_scenario.R')
-source(paste0(repo, 'analysis/2_regressions/7_compile_scenario.R'))
+

@@ -61,6 +61,10 @@ def replace_technology(tecname, scenario, rlist = regions_list):
         
 def replace_parameter(parname, tecname, scenario, trade_scenario, new_tecname = 'all', remove_existing_par = False): 
     
+    # Liquid hydrogen requires a different relation_activity
+#    if (parname == 'relation_activity'):
+#        remove_existing_par = False
+    
     df_base = scenario.par(parname)
             
     if (remove_existing_par == True and 'technology' in df_base.columns):
@@ -124,6 +128,7 @@ def add_new_sets(scenario):
     scenario.add_set('relation', 'lim_liquid_shipping')
     scenario.add_set('relation', 'lim_LNG_shipping')
     scenario.add_set('relation', 'lim_solid_shipping')
+    scenario.add_set('relation', 'lim_lh2_shipping')
 
 def add_new_units(ene_mp):
     ene_mp.add_unit('USD/bton-km-y')
@@ -133,24 +138,17 @@ def add_new_units(ene_mp):
 
 def add_global_relations(scenario):
     print('Remove global trade technology')
-    scenario.remove_set('technology', 'oil_trd')
-    scenario.remove_set('technology', 'loil_trd')
-    scenario.remove_set('technology', 'foil_trd')
-    scenario.remove_set('technology', 'coal_trd')
-    scenario.remove_set('technology', 'LNG_trd')
-    
-    scenario.add_set('technology', 'oil_trd')
-    scenario.add_set('technology', 'loil_trd')
-    scenario.add_set('technology', 'foil_trd')
-    scenario.add_set('technology', 'coal_trd')
-    scenario.add_set('technology', 'LNG_trd')
+    for ene in ['coal', 'foil', 'loil', 'oil', 'LNG', 'meth', 'eth', 'liquidh2']:
+        trd = ene + '_trd'
+        lim_trd = 'lim_' + ene + '_trd'
+        
+#        if (ene != 'liquidh2'):
+#            scenario.remove_set('technology', trd)
+            
+        scenario.add_set('technology', trd)
 
-    print('Add relations for global trade')
-    scenario.add_set('relation', 'lim_oil_trd')
-    scenario.add_set('relation', 'lim_loil_trd')
-    scenario.add_set('relation', 'lim_foil_trd')
-    scenario.add_set('relation', 'lim_coal_trd')
-    scenario.add_set('relation', 'lim_LNG_trd')
+        print('Add relations for global trade... ' + lim_trd)
+        scenario.add_set('relation', lim_trd)
 
 def add_export_technologies(scenario, trade_scenario):
     print("EXPORT TECHNOLOGIES")
@@ -177,10 +175,11 @@ def add_shipping_technologies(scenario, trade_scenario):
         for par in parameter_list_shipping:
             replace_parameter(par, tec, scenario, trade_scenario)
     
-    for rel in ['liquid_shipping', 'LNG_shipping', 'solid_shipping']:
+    for rel in ['liquid_shipping', 'LNG_shipping', 'solid_shipping', 'lh2_shipping']:
         replace_parameter('relation_activity', rel, scenario = scenario, trade_scenario = trade_scenario)
         replace_parameter('relation_upper', rel, scenario = scenario, trade_scenario = trade_scenario)
-        
+    
+    for rel in ['liquid_shipping', 'LNG_shipping', 'solid_shipping']:
         historic_tec = rel + '_diesel'
         replace_parameter('historical_activity', historic_tec, scenario = scenario, trade_scenario = trade_scenario)
         replace_parameter('historical_new_capacity', historic_tec, scenario = scenario, trade_scenario = trade_scenario)

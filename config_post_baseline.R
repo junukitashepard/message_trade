@@ -6,7 +6,6 @@ repo <- "H:/message_trade/"
 wd <- "H:/data/"
 
 library('cluster')
-library('dplyr')
 library('e1071')
 library('gdxrrw')
 library('geosphere')
@@ -21,6 +20,7 @@ library('reticulate')
 library('RMySQL')
 library('stringr')
 library('tidyr')
+library('dplyr')
 
 raw <-       paste0(wd, 'raw/')
 reg.input <- paste0(wd, "output/analysis/regress/")
@@ -33,7 +33,7 @@ config <- reticulate::import('config')
 
 # Scenario inputs #
 ###################
-baseline_no_tariff_version = 11
+baseline_no_tariff_version = 15
 
 # MESSAGE parameterization #
 ############################
@@ -72,5 +72,5 @@ MESSAGE.capacity.factor = config$MESSAGE_capacity_factor
 ###################
 # Build scenarios
 source(paste0(repo, 'analysis/4_run_message/build_scenarios/tariffs.R'))
-source(paste0(repo, 'analysis/4_run_message/build_scenarios/emission_tax.R'))
+source(paste0(repo, 'analysis/4_run_message/build_scenarios/emission_taxes.R'))
 source(paste0(repo, 'analysis/4_run_message/build_scenarios/build_scenario.R'))
