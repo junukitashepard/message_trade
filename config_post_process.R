@@ -4,6 +4,7 @@
 rm(list = ls())
 repo <- "H:/message_trade/"
 wd <- "H:/data/"
+setwd(repo)
 
 library('shiny')
 library('tidyr')

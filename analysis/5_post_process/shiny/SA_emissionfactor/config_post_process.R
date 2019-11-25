@@ -20,7 +20,7 @@ library('gridExtra')
 library('htmltools')
 library('plotly')
 
-msg_dir <- "C:/ProgramData/Anaconda3/Lib/site-packages/message_ix/model/output"
+msg_dir <- "H:/data/model_files/output/"
 
 #setwd(repo)
 #config <- reticulate::import('config')
