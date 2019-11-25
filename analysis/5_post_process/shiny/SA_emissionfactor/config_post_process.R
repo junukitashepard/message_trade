@@ -18,7 +18,7 @@ library('dplyr')
 library('chorddiag') # install from github (mattflor/chorddiag)
 library('gridExtra')
 library('htmltools')
-library('plotly')
+#library('plotly')
 
 msg_dir <- "H:/data/model_files/output/"
 
