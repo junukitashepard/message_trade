@@ -39,7 +39,7 @@ vsn_tariff_high <- 3
 vsn_CO2_tax_baseline <- 2
 vsn_CO2_tax_low <- 1
 vsn_CO2_tax_high <- 1
-vsn_low_ef_baseline <- 1
+vsn_low_ef_baseline <- 2
 
 # Energy commodities modeled
 energy.types <- c('coal', 'foil', 'loil', 'LNG', 'oil', 'meth', 'eth', 'lh2')
