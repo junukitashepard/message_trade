@@ -108,7 +108,15 @@ import_baci <- function(year) {
 
 baci.df <- data.frame()
 for (y in 1995:2014) {
-  in.baci <- import_baci(y)
+  # in.baci <- import_baci(y)
+  print(paste0('Importing BACI, year = ', y))
+  in.baci <- read.csv(file.path(raw, paste0('BACI/baci92_', y, '.csv')), stringsAsFactors = F)
+  
+  in.baci$hs6 <- as.character(in.baci$hs6)
+  in.baci$hs6[nchar(in.baci$hs6) == 5] <- paste0('0', in.baci$hs6[nchar(in.baci$hs6) == 5])
+  
+  in.baci <- subset(in.baci, substr(hs6, 1, 2) %in% c('22', '27', '28', '38'))
+  
   baci.df <- rbind(baci.df, in.baci)
 }
 
@@ -149,6 +157,7 @@ ref_group.out <- inner_join(ref_group.out, web_countries[c('iso.country', 'baci.
 # Build product-importer-exporter weights for energy aggregation #
 ##################################################################
 # Assign reference group by importer
+baci.df <- left_join(baci.df, web_countries[c('baci.country', 'iso.country')], by = c('j' = 'baci.country'))
 wt.energy <- dplyr::inner_join(baci.df, ref_group.out, by = c('j' = 'baci.country', 'iso.country' = 'iso.country', 't' = 'year'))
 
 # Build weight to aggregate to importer-exporter-energy-year
@@ -287,6 +296,11 @@ baseline_tariff_plot <-
     theme(legend.position = 'bottom', text = element_text(size = 15))
   
 scen.tariff_baseline <- scen.tariff_baseline[c('technology', 'node_loc', 'year_act', 'tariff')]
+
+# Save figures
+ggsave(file.path(output, 'figures/baseline_tariff.pdf'), plot = baseline_tariff_plot, device = 'pdf')
+ggsave(file.path(output, 'figures/low_tariff.pdf'), plot = lo_tariff_plot, device = 'pdf')
+ggsave(file.path(output, 'figures/high_tariff.pdf'), plot = hi_tariff_plot, device = 'pdf')
 
 # Save for compilation
 saveRDS(scen.tariff_baseline, file.path(repo, 'analysis/4_run_message/build_scenarios/var_cost_effects/baseline.rds'))
