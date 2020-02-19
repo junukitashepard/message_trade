@@ -3,12 +3,13 @@
 # Variable = ACT #
 ###############################
 rm(list = ls())
-wd <- "H:/data/"
-repo <- "H:/message_trade/"
-msg_dir <- "C:/ProgramData/Anaconda3/Lib/site-packages/message_ix/model/output"
+wd <- "C:/Users/jus3/message_trade"
+repo <- "C:/Users/jus3/message_trade"
+msg_dir <- "C:/Users/jus3/message_trade/gdx_files"
 output <- paste0(repo, 'tables')
-
 setwd(wd)
+
+igdx('C:/GAMS/win64/29.1') # Set GDX path
 
 library('plyr')
 library('dplyr')
@@ -31,7 +32,7 @@ gwa_to_ej <- 8760*3600*(10^-9)
 add_scenario <- function(scenario_name, message_version) {
   
   df <- read_MESSAGE(msg_scenario = scenario_name, msg_version = message_version, msg_variable = 'ACT') # Baseline (global schema)
-  
+
   df <- subset(df, grepl('_exp_', tec))
   
   df$exporter <- gsub('R14_', '', df$node)
@@ -51,12 +52,12 @@ add_scenario <- function(scenario_name, message_version) {
 # Build base activity df
 activity <- data.frame()
 
-add_scenario('baseline', 16)
-add_scenario('tariff_high', 17)
-add_scenario('tariff_low', 11)
-add_scenario('CO2_tax_baseline', 27)
-add_scenario('CO2_tax_tariff_high', 11)
-add_scenario('CO2_tax_tariff_low', 7)
+add_scenario('baseline', 5)
+add_scenario('tariff_high', 4)
+add_scenario('tariff_low', 4)
+add_scenario('CO2_tax_baseline', 2)
+add_scenario('CO2_tax_tariff_high', 2)
+add_scenario('CO2_tax_tariff_low', 2)
 
 activity <- subset(activity, importer != 'GLB' & exporter != 'GLB')
 
@@ -65,17 +66,18 @@ activity$value <- as.numeric(activity$value) * gwa_to_ej
 
 scenario_list <- c('baseline', 'tariff_high', 'tariff_low', 
                    'CO2_tax_baseline', 'CO2_tax_tariff_high', 'CO2_tax_tariff_low') 
+
 # Build table of network statistics
 build_table <- function(table_year) {
 
   df <- subset(activity, year == table_year)
   
-  basemat <- matrix(nrow = 22, ncol = 6)
+  basemat <- matrix(nrow = 23, ncol = 6)
   colnames(basemat) <- scenario_list
   rownames(basemat) <- c('N_exporter', 'N_importer', 'N_link', 'total_trade',
                          'mean_trade', 'sd_trade', 'min_trade', 'min_pair', 'max_trade', 'max_pair',
                          'mean_links', 'sd_links', 'outdegree', 'sd_outdegree', 'indegree', 'sd_indegree',
-                         'space', 'coal', 'foil', 'loil', 'LNG', 'oil')
+                         'space', 'coal', 'eth', 'foil', 'loil', 'LNG', 'oil')
   
   # Fill in for each scenario
   for (scen in colnames(basemat)) {

@@ -2,15 +2,15 @@
 # Post-process model output #
 #############################
 rm(list = ls())
-repo <- "H:/message_trade/"
-wd <- "H:/data/"
+repo <- "C:/Users/jus3/message_trade/"
+#wd <- "H:/data/"
 setwd(repo)
 
 library('shiny')
 library('tidyr')
 library('plyr')
 library('magrittr')
-library('jsfunctions')
+library('jsfunctions') # install from source
 library('ggplot2')
 library('readxl')
 library('gdxrrw') # install from github (lolow/gdxtools)
@@ -22,7 +22,7 @@ library('gridExtra')
 library('htmltools')
 library('plotly')
 
-msg_dir <- "data/"
+msg_dir <- "C:/Users/jus3/message_trade/gdx_files"
 
 #setwd(repo)
 config <- reticulate::import('config')
@@ -36,12 +36,12 @@ names(color_regions) <- c('AFR', 'CPA', 'EEU', 'LAM', 'MEA', 'NAM',
 
 # MESSAGE versions
 vsn_baseline <- 5
-vsn_tariff_low <- 3
-vsn_tariff_high <- 3
+vsn_tariff_low <- 4
+vsn_tariff_high <- 4
 vsn_CO2_tax_baseline <- 2
 vsn_CO2_tax_low <- 1
 vsn_CO2_tax_high <- 1
-vsn_low_ef_baseline <- 1
+vsn_low_ef_baseline <- 2
 
 # Energy commodities modeled
 energy.types <-config$energy_types

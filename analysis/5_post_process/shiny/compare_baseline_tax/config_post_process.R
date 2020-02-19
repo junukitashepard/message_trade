@@ -2,7 +2,7 @@
 # Post-process model output #
 #############################
 #rm(list = ls())
-repo <- "H:/message_trade/"
+repo <- "C:/Users/jus3/message_trade/"
 wd <- "H:/data/"
 
 library('shiny')

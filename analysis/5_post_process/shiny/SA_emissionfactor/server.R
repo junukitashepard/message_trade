@@ -2,7 +2,7 @@
 # Interactive chord diagrams #
 ##############################
 co2_tax <- readRDS('data/co2_tax.rds')
-low_ef <- readRDS('data/low_ef.rds')
+low_ef <- readRDS('data/low_ef2.rds')
 baseline <- readRDS('data/baseline.rds')
 
 source('config_post_process.R')

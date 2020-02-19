@@ -20,7 +20,7 @@ library('gridExtra')
 library('htmltools')
 #library('plotly')
 
-msg_dir <- "H:/data/model_files/output/"
+msg_dir <- "C:/Users/jus3/Downloads/"
 
 #setwd(repo)
 #config <- reticulate::import('config')
@@ -59,6 +59,8 @@ read_MESSAGE <- function(msg_scenario, msg_version, msg_variable, model = 'MESSA
 
   return(var_out)
 }
+# lowef <- read_MESSAGE('low_MEA_emission_factor_CO2_tax_baseline', 2, 'ACT')
+# saveRDS(lowef, 'low_ef2.rds')
 
 # Check unique identifiers
 isid <- function(data, variables, not_id = FALSE) {

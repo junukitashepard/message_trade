@@ -1,5 +1,5 @@
 library('rsconnect')
 library('shiny')
-setwd("H:/message_trade/analysis/5_post_process/shiny/SA_emissionfactor")
+setwd("C:/Users/jus3/message_trade/analysis/5_post_process/shiny/SA_emissionfactor")
 
 deployApp()
