@@ -1,0 +1,80 @@
+﻿energy_type,GJ_kg,region
+Crude Oil,0.046527093,Northern America
+Crude Oil,0.046108322,Southern Europe
+Crude Oil,0.046108322,Northern Europe
+Crude Oil,0.046108322,Eastern Europe
+Crude Oil,0.046108322,Western Europe
+Crude Oil,0.044188501,Northern Africa
+Crude Oil,0.044650781,Western Asia
+Crude Oil,0.044650781,Central Asia
+Crude Oil,0.045276218,IDN
+Crude Oil,0.045276218,Australia and New Zealand
+Crude Oil,0.045276218,Polynesia
+Crude Oil,0.045276218,South-Eastern Asia
+Crude Oil,0.048049897,Eastern Asia
+Crude Oil,0.048049897,Southern Asia
+Crude Oil,0.044705167,Northern Africa
+Crude Oil,0.044705167,Southern Africa
+Crude Oil,0.044705167,Western Africa
+Crude Oil,0.044705167,Middle Africa
+Crude Oil,0.044705167,Eastern Africa
+Crude Oil,0.044933588,Central America
+Crude Oil,0.044933588,Cariebbean
+Crude Oil,0.044933588,South America
+Coal,0.024143,Northern America
+Coal,0.0233906,Central America
+Coal,0.0233906,Cariebbean
+Coal,0.0233906,South America
+Coal,0.0233906,Northern Europe
+Coal,0.0233906,Southern Europe
+Coal,0.0233906,Western Europe
+Coal,0.0233906,Eastern Europe
+Coal,0.03104,Western Asia
+Coal,0.03104,Central Europe
+Coal,0.03104,Northern Africa
+Coal,0.0223874,Central Asia
+Coal,0.0223874,Eastern Asia
+Coal,0.0223874,South-Eastern Asia
+Coal,0.0223874,Southern Asia
+Coal,0.0223874,Polynesia
+Coal,0.0290336,Eastern Africa
+Coal,0.0290336,Middle Africa
+Coal,0.0290336,Southern Africa
+Coal,0.0290336,Western Africa
+Coal,0.024160726,USA
+Coal,0.025116957,CAN
+Coal,0.027405367,MEX
+Coal,0.0185,BRA
+Coal,0.030317304,COL
+Coal,0.03104,VEN
+Coal,0.018522936,BUL
+Coal,0.023229604,CZE
+Coal,0.03104,FRA
+Coal,0.018840528,DEU
+Coal,0.0185,GRC
+Coal,0.019239625,HUN
+Coal,0.02978596,KAZ
+Coal,0.03104,POL
+Coal,0.019058462,ROM
+Coal,0.022420537,RUS
+Coal,0.023232075,ESP
+Coal,0.019332805,TUR
+Coal,0.024475345,UKR
+Coal,0.03104,GBR
+Coal,0.03104,ZAF
+Coal,0.029027122,ZWE
+Coal,0.024666166,AUS
+Coal,0.025312122,CHN
+Coal,0.03071987,IND
+Coal,0.020367874,IDN
+Coal,0.03104,JPN
+Coal,0.019224729,NZL
+Coal,0.02477,PKR
+Coal,0.0185,PAK
+Coal,0.0185,KOR
+Coal,0.0185,THA
+Coal,0.03104,VNM
+LNG,0.048,all
+NUC,500,all
+Fuel Oil,0.045,all
+BIO,0.03,all

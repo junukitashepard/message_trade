@@ -1,0 +1,452 @@
+"","export_region","import_region","energy","energy_EJ"
+"1","Africa (AFR)","Centrally Planned Asia (CPA)","Coal",7.46080026792453e-09
+"2","Centrally Planned Asia (CPA)","South Caucasus States (SCS)","Coal",3.25788278366038e-08
+"3","Pacific Asia (PAS)","North America (NAM)","Coal",7.46080026792453e-08
+"4","Middle East (MEA)","Central Asian States (CAS)","Coal",1.16388484179623e-07
+"5","South Asia (SAS)","Central Asian States (CAS)","Coal",6.44115756464151e-07
+"6","North America (NAM)","Africa (AFR)","Coal",6.71472024113208e-07
+"7","South Asia (SAS)","Latin America (LAM)","Coal",7.28373060823245e-07
+"8","South Asia (SAS)","South Caucasus States (SCS)","Coal",7.95818695245283e-07
+"9","Eastern Europe (EEU)","Africa (AFR)","Coal",8.6694499113283e-07
+"10","South Asia (SAS)","Centrally Planned Asia (CPA)","Coal",1.06870989971174e-06
+"11","Belarus, Moldova, Ukraine (UBM)","South Caucasus States (SCS)","Coal",1.09425070596226e-06
+"12","South Asia (SAS)","Africa (AFR)","Coal",1.6402208416002e-06
+"13","South Asia (SAS)","North America (NAM)","Coal",2.56154142532075e-06
+"14","South Caucasus States (SCS)","Centrally Planned Asia (CPA)","Coal",3.28275211788679e-06
+"15","Western Europe (WEU)","Central Asian States (CAS)","Coal",3.87127576189291e-06
+"16","Eastern Europe (EEU)","Central Asian States (CAS)","Coal",3.88956387301132e-06
+"17","Eastern Europe (EEU)","Centrally Planned Asia (CPA)","Coal",4.5799365911366e-06
+"18","Western Europe (WEU)","Centrally Planned Asia (CPA)","Coal",5.42605138871034e-06
+"19","Eastern Europe (EEU)","Pacific OECD (PAO)","Coal",5.85379706352822e-06
+"20","South Caucasus States (SCS)","Western Europe (WEU)","Coal",6.39937708314113e-06
+"21","Eastern Europe (EEU)","Pacific Asia (PAS)","Coal",7.29469161664078e-06
+"22","South Asia (SAS)","Western Europe (WEU)","Coal",1.23790344125431e-05
+"23","Middle East (MEA)","Latin America (LAM)","Coal",2.30371608719091e-05
+"24","Middle East (MEA)","Pacific OECD (PAO)","Coal",2.48236243901069e-05
+"25","Centrally Planned Asia (CPA)","North America (NAM)","Coal",2.63117556115472e-05
+"26","South Asia (SAS)","Pacific Asia (PAS)","Coal",3.35380678363754e-05
+"27","Centrally Planned Asia (CPA)","Belarus, Moldova, Ukraine (UBM)","Coal",4.79682205492517e-05
+"28","Centrally Planned Asia (CPA)","Africa (AFR)","Coal",5.81791933903669e-05
+"29","Middle East (MEA)","South Caucasus States (SCS)","Coal",6.52914526913457e-05
+"30","Central Asian States (CAS)","South Asia (SAS)","Coal",8.08675146266971e-05
+"31","South Caucasus States (SCS)","Belarus, Moldova, Ukraine (UBM)","Coal",9.79220669674012e-05
+"32","Centrally Planned Asia (CPA)","Eastern Europe (EEU)","Coal",0.000113101255581575
+"33","Western Europe (WEU)","Belarus, Moldova, Ukraine (UBM)","Coal",0.00018993939093824
+"34","Central Asian States (CAS)","South Caucasus States (SCS)","Coal",0.000217755330066206
+"35","Central Asian States (CAS)","Pacific OECD (PAO)","Coal",0.000217929975826075
+"36","Western Europe (WEU)","South Caucasus States (SCS)","Coal",0.000258436218693979
+"37","Middle East (MEA)","Pacific Asia (PAS)","Coal",0.000277931248610112
+"38","Eastern Europe (EEU)","North America (NAM)","Coal",0.000280498259332352
+"39","Belarus, Moldova, Ukraine (UBM)","Middle East (MEA)","Coal",0.000445349169427585
+"40","Western Europe (WEU)","North America (NAM)","Coal",0.000445373029545274
+"41","Western Europe (WEU)","Latin America (LAM)","Coal",0.00045671812243279
+"42","Middle East (MEA)","Eastern Europe (EEU)","Coal",0.000532509197608252
+"43","Western Europe (WEU)","Pacific OECD (PAO)","Coal",0.000647785698424786
+"44","South Asia (SAS)","Middle East (MEA)","Coal",0.000778778180873219
+"45","Eastern Europe (EEU)","Latin America (LAM)","Coal",0.0010455644355287
+"46","Latin America (LAM)","Belarus, Moldova, Ukraine (UBM)","Coal",0.00122805841791409
+"47","Middle East (MEA)","Centrally Planned Asia (CPA)","Coal",0.00156549069265028
+"48","Central Asian States (CAS)","Eastern Europe (EEU)","Coal",0.00160675416900004
+"49","Belarus, Moldova, Ukraine (UBM)","Western Europe (WEU)","Coal",0.00192004465844399
+"50","North America (NAM)","Pacific Asia (PAS)","Coal",0.00200307565593238
+"51","Western Europe (WEU)","Africa (AFR)","Coal",0.00223372936639913
+"52","Latin America (LAM)","Africa (AFR)","Coal",0.00291114582160872
+"53","Centrally Planned Asia (CPA)","Central Asian States (CAS)","Coal",0.00314794939475183
+"54","Middle East (MEA)","Africa (AFR)","Coal",0.00340379925010038
+"55","Latin America (LAM)","Pacific Asia (PAS)","Coal",0.00386434826236875
+"56","Pacific Asia (PAS)","Africa (AFR)","Coal",0.00493275611982269
+"57","Pacific Asia (PAS)","Middle East (MEA)","Coal",0.0053341809561475
+"58","North America (NAM)","Middle East (MEA)","Coal",0.00542711774301553
+"59","Western Europe (WEU)","Middle East (MEA)","Coal",0.00585194161986033
+"60","Central Asian States (CAS)","Centrally Planned Asia (CPA)","Coal",0.00589823094956415
+"61","Western Europe (WEU)","Pacific Asia (PAS)","Coal",0.00732323808914181
+"62","Middle East (MEA)","Western Europe (WEU)","Coal",0.00767137960235249
+"63","Latin America (LAM)","Centrally Planned Asia (CPA)","Coal",0.0082988764655942
+"64","Eastern Europe (EEU)","Belarus, Moldova, Ukraine (UBM)","Coal",0.00948288774566381
+"65","Eastern Europe (EEU)","Middle East (MEA)","Coal",0.00993030158974936
+"66","North America (NAM)","Belarus, Moldova, Ukraine (UBM)","Coal",0.00995969477655337
+"67","Africa (AFR)","Latin America (LAM)","Coal",0.012126165057945
+"68","Pacific OECD (PAO)","Belarus, Moldova, Ukraine (UBM)","Coal",0.0124393786334461
+"69","Belarus, Moldova, Ukraine (UBM)","Eastern Europe (EEU)","Coal",0.01280217424724
+"70","Western Europe (WEU)","Eastern Europe (EEU)","Coal",0.0138896198950007
+"71","Pacific OECD (PAO)","Middle East (MEA)","Coal",0.0156486031991819
+"72","Centrally Planned Asia (CPA)","Middle East (MEA)","Coal",0.0166138425290233
+"73","Africa (AFR)","Eastern Europe (EEU)","Coal",0.0234044829400509
+"74","Central Asian States (CAS)","Belarus, Moldova, Ukraine (UBM)","Coal",0.0243338843528443
+"75","Centrally Planned Asia (CPA)","Western Europe (WEU)","Coal",0.0244270459038331
+"76","Pacific Asia (PAS)","Eastern Europe (EEU)","Coal",0.0248872025943634
+"77","Middle East (MEA)","South Asia (SAS)","Coal",0.0253634528879768
+"78","Africa (AFR)","Middle East (MEA)","Coal",0.0255006616738333
+"79","Centrally Planned Asia (CPA)","Latin America (LAM)","Coal",0.0268630437883069
+"80","North America (NAM)","Latin America (LAM)","Coal",0.0277775457794027
+"81","Eastern Europe (EEU)","South Asia (SAS)","Coal",0.0279680668857314
+"82","North America (NAM)","Eastern Europe (EEU)","Coal",0.029178231868466
+"83","Latin America (LAM)","Pacific OECD (PAO)","Coal",0.036327863606737
+"84","Latin America (LAM)","South Asia (SAS)","Coal",0.0381055144441466
+"85","Western Europe (WEU)","South Asia (SAS)","Coal",0.0394627651624909
+"86","Africa (AFR)","Western Europe (WEU)","Coal",0.041562450082537
+"87","Centrally Planned Asia (CPA)","South Asia (SAS)","Coal",0.053302770266519
+"88","Centrally Planned Asia (CPA)","Pacific Asia (PAS)","Coal",0.0548859539350825
+"89","Latin America (LAM)","Eastern Europe (EEU)","Coal",0.0613726612937139
+"90","North America (NAM)","Centrally Planned Asia (CPA)","Coal",0.0777943847484774
+"91","Central Asian States (CAS)","Western Europe (WEU)","Coal",0.0835158668401379
+"92","Latin America (LAM)","North America (NAM)","Coal",0.0852625272348091
+"93","North America (NAM)","Western Europe (WEU)","Coal",0.0949039114017207
+"94","Pacific OECD (PAO)","Eastern Europe (EEU)","Coal",0.100746466009407
+"95","Centrally Planned Asia (CPA)","Pacific OECD (PAO)","Coal",0.106520158463289
+"96","North America (NAM)","South Asia (SAS)","Coal",0.112163782787508
+"97","Latin America (LAM)","Middle East (MEA)","Coal",0.1403910470694
+"98","Eastern Europe (EEU)","Western Europe (WEU)","Coal",0.150714382823411
+"99","Pacific Asia (PAS)","Western Europe (WEU)","Coal",0.163309798154771
+"100","North America (NAM)","Pacific OECD (PAO)","Coal",0.188872756496757
+"101","Africa (AFR)","South Asia (SAS)","Coal",0.27342713683163
+"102","Pacific OECD (PAO)","Latin America (LAM)","Coal",0.316398561125098
+"103","Pacific Asia (PAS)","Pacific OECD (PAO)","Coal",0.710554115562572
+"104","Pacific OECD (PAO)","Pacific Asia (PAS)","Coal",0.728237340377409
+"105","Pacific OECD (PAO)","Western Europe (WEU)","Coal",0.917019125055686
+"106","Latin America (LAM)","Western Europe (WEU)","Coal",1.19644154073035
+"107","Pacific Asia (PAS)","South Asia (SAS)","Coal",3.0413643292039
+"108","Pacific OECD (PAO)","Centrally Planned Asia (CPA)","Coal",3.06899864481419
+"109","Pacific Asia (PAS)","Centrally Planned Asia (CPA)","Coal",3.50711304990363
+"110","Pacific OECD (PAO)","South Asia (SAS)","Coal",3.51077125237897
+"111","Centrally Planned Asia (CPA)","Latin America (LAM)","Crude Oil",2.27723107367727e-08
+"112","Eastern Europe (EEU)","Centrally Planned Asia (CPA)","Crude Oil",1.21270509073273e-07
+"113","Western Europe (WEU)","South Caucasus States (SCS)","Crude Oil",1.71633224235636e-07
+"114","Centrally Planned Asia (CPA)","Africa (AFR)","Crude Oil",1.36974767275977e-06
+"115","South Asia (SAS)","Africa (AFR)","Crude Oil",1.60160706810564e-06
+"116","South Asia (SAS)","Latin America (LAM)","Crude Oil",1.62997018567e-06
+"117","North America (NAM)","Middle East (MEA)","Crude Oil",3.89638327540445e-06
+"118","Pacific Asia (PAS)","Latin America (LAM)","Crude Oil",4.19183241669991e-05
+"119","Eastern Europe (EEU)","Middle East (MEA)","Crude Oil",4.34300237887228e-05
+"120","Middle East (MEA)","South Caucasus States (SCS)","Crude Oil",9.28083933197181e-05
+"121","North America (NAM)","Pacific Asia (PAS)","Crude Oil",0.000108421399312069
+"122","Belarus, Moldova, Ukraine (UBM)","Central Asian States (CAS)","Crude Oil",0.000166334684789358
+"123","Eastern Europe (EEU)","Belarus, Moldova, Ukraine (UBM)","Crude Oil",0.000295442209212766
+"124","Central Asian States (CAS)","Belarus, Moldova, Ukraine (UBM)","Crude Oil",0.000307386468400356
+"125","Centrally Planned Asia (CPA)","South Asia (SAS)","Crude Oil",0.000914392365452409
+"126","Western Europe (WEU)","Pacific OECD (PAO)","Crude Oil",0.00161559403953799
+"127","Middle East (MEA)","Belarus, Moldova, Ukraine (UBM)","Crude Oil",0.00180421972568609
+"128","Latin America (LAM)","Eastern Europe (EEU)","Crude Oil",0.00190714693391918
+"129","Central Asian States (CAS)","South Caucasus States (SCS)","Crude Oil",0.00262365540947838
+"130","South Asia (SAS)","Pacific OECD (PAO)","Crude Oil",0.00292622019200171
+"131","Western Europe (WEU)","Africa (AFR)","Crude Oil",0.00347135780942977
+"132","Latin America (LAM)","Middle East (MEA)","Crude Oil",0.00367557167797962
+"133","South Caucasus States (SCS)","Pacific OECD (PAO)","Crude Oil",0.00490626153065614
+"134","South Asia (SAS)","Pacific Asia (PAS)","Crude Oil",0.00624099120973383
+"135","South Caucasus States (SCS)","Centrally Planned Asia (CPA)","Crude Oil",0.00626874752986621
+"136","South Caucasus States (SCS)","Latin America (LAM)","Crude Oil",0.00639468383804665
+"137","Pacific Asia (PAS)","Western Europe (WEU)","Crude Oil",0.00656834958339295
+"138","South Asia (SAS)","Middle East (MEA)","Crude Oil",0.00732063660742484
+"139","Pacific OECD (PAO)","Middle East (MEA)","Crude Oil",0.00785431206142302
+"140","North America (NAM)","Eastern Europe (EEU)","Crude Oil",0.00811968758235435
+"141","Pacific OECD (PAO)","South Asia (SAS)","Crude Oil",0.0116467262372616
+"142","Latin America (LAM)","North America (NAM)","Crude Oil",0.0132835842982426
+"143","Western Europe (WEU)","Latin America (LAM)","Crude Oil",0.0163310807491892
+"144","North America (NAM)","Latin America (LAM)","Crude Oil",0.0183922360943074
+"145","North America (NAM)","South Asia (SAS)","Crude Oil",0.0209813434959537
+"146","Centrally Planned Asia (CPA)","Pacific Asia (PAS)","Crude Oil",0.0240616417466629
+"147","South Caucasus States (SCS)","Belarus, Moldova, Ukraine (UBM)","Crude Oil",0.0269057737361211
+"148","Central Asian States (CAS)","Middle East (MEA)","Crude Oil",0.0292376297047331
+"149","Middle East (MEA)","Africa (AFR)","Crude Oil",0.0295885031504259
+"150","Africa (AFR)","Eastern Europe (EEU)","Crude Oil",0.0305589228546999
+"151","North America (NAM)","Centrally Planned Asia (CPA)","Crude Oil",0.0386199457890635
+"152","Eastern Europe (EEU)","Western Europe (WEU)","Crude Oil",0.0402797277436773
+"153","Western Europe (WEU)","Pacific Asia (PAS)","Crude Oil",0.0501897001996714
+"154","South Caucasus States (SCS)","North America (NAM)","Crude Oil",0.0519845036795054
+"155","Pacific OECD (PAO)","Centrally Planned Asia (CPA)","Crude Oil",0.0550952433758626
+"156","South Caucasus States (SCS)","Eastern Europe (EEU)","Crude Oil",0.056314283309397
+"157","South Caucasus States (SCS)","Pacific Asia (PAS)","Crude Oil",0.0630311781111116
+"158","Central Asian States (CAS)","South Asia (SAS)","Crude Oil",0.0645380660031388
+"159","Western Europe (WEU)","North America (NAM)","Crude Oil",0.0658988355314426
+"160","South Caucasus States (SCS)","South Asia (SAS)","Crude Oil",0.0680296573973115
+"161","Centrally Planned Asia (CPA)","Pacific OECD (PAO)","Crude Oil",0.0690710320531893
+"162","Western Europe (WEU)","South Asia (SAS)","Crude Oil",0.0698558598464227
+"163","Africa (AFR)","North America (NAM)","Crude Oil",0.069855928241845
+"164","Central Asian States (CAS)","Pacific Asia (PAS)","Crude Oil",0.0700547650769921
+"165","Central Asian States (CAS)","Pacific OECD (PAO)","Crude Oil",0.0731015341827796
+"166","Belarus, Moldova, Ukraine (UBM)","Western Europe (WEU)","Crude Oil",0.0745304549203318
+"167","Central Asian States (CAS)","Centrally Planned Asia (CPA)","Crude Oil",0.0748903386011022
+"168","Latin America (LAM)","Pacific Asia (PAS)","Crude Oil",0.0752997553422257
+"169","Pacific Asia (PAS)","Centrally Planned Asia (CPA)","Crude Oil",0.0807433818136551
+"170","Africa (AFR)","Middle East (MEA)","Crude Oil",0.0858438447796034
+"171","Africa (AFR)","Pacific OECD (PAO)","Crude Oil",0.0902589558783757
+"172","Latin America (LAM)","Pacific OECD (PAO)","Crude Oil",0.0969254581145716
+"173","Western Europe (WEU)","Eastern Europe (EEU)","Crude Oil",0.102278016551747
+"174","South Caucasus States (SCS)","Middle East (MEA)","Crude Oil",0.131766817081791
+"175","North America (NAM)","Western Europe (WEU)","Crude Oil",0.191658269546239
+"176","Africa (AFR)","Latin America (LAM)","Crude Oil",0.195528118486659
+"177","Pacific Asia (PAS)","South Asia (SAS)","Crude Oil",0.206065337478125
+"178","Middle East (MEA)","Latin America (LAM)","Crude Oil",0.271337727779931
+"179","Western Europe (WEU)","Middle East (MEA)","Crude Oil",0.272799445994269
+"180","Central Asian States (CAS)","Eastern Europe (EEU)","Crude Oil",0.343846190282594
+"181","Pacific OECD (PAO)","Pacific Asia (PAS)","Crude Oil",0.397795156268071
+"182","Western Europe (WEU)","Centrally Planned Asia (CPA)","Crude Oil",0.403147117585708
+"183","Middle East (MEA)","Eastern Europe (EEU)","Crude Oil",0.459131535144208
+"184","Africa (AFR)","Pacific Asia (PAS)","Crude Oil",0.502715224741811
+"185","Pacific Asia (PAS)","Pacific OECD (PAO)","Crude Oil",0.520600840563746
+"186","Latin America (LAM)","Western Europe (WEU)","Crude Oil",0.574904380920439
+"187","South Caucasus States (SCS)","Western Europe (WEU)","Crude Oil",0.758696792237307
+"188","Latin America (LAM)","South Asia (SAS)","Crude Oil",1.02203744082743
+"189","Africa (AFR)","South Asia (SAS)","Crude Oil",1.23466428002339
+"190","Central Asian States (CAS)","Western Europe (WEU)","Crude Oil",2.3669540968681
+"191","Africa (AFR)","Western Europe (WEU)","Crude Oil",2.4270688802449
+"192","Africa (AFR)","Centrally Planned Asia (CPA)","Crude Oil",2.49107839159581
+"193","Latin America (LAM)","Centrally Planned Asia (CPA)","Crude Oil",2.70848620318224
+"194","Middle East (MEA)","Pacific Asia (PAS)","Crude Oil",4.47322198739688
+"195","Middle East (MEA)","Pacific OECD (PAO)","Crude Oil",6.33052204991616
+"196","Middle East (MEA)","Western Europe (WEU)","Crude Oil",6.55321473701562
+"197","Middle East (MEA)","South Asia (SAS)","Crude Oil",6.68895123592969
+"198","Middle East (MEA)","Centrally Planned Asia (CPA)","Crude Oil",9.79238053529313
+"199","Latin America (LAM)","Central Asian States (CAS)","Fuel Oil",1.215e-08
+"200","Belarus, Moldova, Ukraine (UBM)","Pacific OECD (PAO)","Fuel Oil",1.32279384733107e-08
+"201","South Caucasus States (SCS)","Pacific OECD (PAO)","Fuel Oil",2.78824125945572e-07
+"202","South Asia (SAS)","Central Asian States (CAS)","Fuel Oil",2.00598973079299e-06
+"203","South Caucasus States (SCS)","North America (NAM)","Fuel Oil",2.327985e-06
+"204","North America (NAM)","Central Asian States (CAS)","Fuel Oil",3.72968094824785e-06
+"205","North America (NAM)","South Caucasus States (SCS)","Fuel Oil",4.57966202244048e-06
+"206","South Caucasus States (SCS)","Latin America (LAM)","Fuel Oil",5.175045e-06
+"207","Pacific OECD (PAO)","South Caucasus States (SCS)","Fuel Oil",5.57458022251043e-06
+"208","Pacific Asia (PAS)","Eastern Europe (EEU)","Fuel Oil",5.97037920516223e-06
+"209","Central Asian States (CAS)","Pacific OECD (PAO)","Fuel Oil",6.732855e-06
+"210","North America (NAM)","Africa (AFR)","Fuel Oil",7.33837065428059e-06
+"211","South Caucasus States (SCS)","Africa (AFR)","Fuel Oil",1.171008e-05
+"212","Africa (AFR)","Belarus, Moldova, Ukraine (UBM)","Fuel Oil",1.655181e-05
+"213","Centrally Planned Asia (CPA)","Belarus, Moldova, Ukraine (UBM)","Fuel Oil",1.84170706494232e-05
+"214","South Asia (SAS)","South Caucasus States (SCS)","Fuel Oil",1.86286984738247e-05
+"215","North America (NAM)","Belarus, Moldova, Ukraine (UBM)","Fuel Oil",1.8795792312997e-05
+"216","Pacific Asia (PAS)","Belarus, Moldova, Ukraine (UBM)","Fuel Oil",2.3737542144129e-05
+"217","North America (NAM)","South Asia (SAS)","Fuel Oil",2.85205387990391e-05
+"218","Belarus, Moldova, Ukraine (UBM)","Centrally Planned Asia (CPA)","Fuel Oil",4.67537806904072e-05
+"219","Pacific Asia (PAS)","South Caucasus States (SCS)","Fuel Oil",5.14377188959449e-05
+"220","Africa (AFR)","Eastern Europe (EEU)","Fuel Oil",5.633937e-05
+"221","Pacific OECD (PAO)","Eastern Europe (EEU)","Fuel Oil",5.67346240652012e-05
+"222","Central Asian States (CAS)","Pacific Asia (PAS)","Fuel Oil",6.10682330942437e-05
+"223","Belarus, Moldova, Ukraine (UBM)","Africa (AFR)","Fuel Oil",7.14811562774301e-05
+"224","Pacific OECD (PAO)","Central Asian States (CAS)","Fuel Oil",7.67580372376646e-05
+"225","South Caucasus States (SCS)","Centrally Planned Asia (CPA)","Fuel Oil",8.08434e-05
+"226","South Caucasus States (SCS)","Eastern Europe (EEU)","Fuel Oil",8.252856e-05
+"227","Belarus, Moldova, Ukraine (UBM)","Pacific Asia (PAS)","Fuel Oil",9.42907523584404e-05
+"228","Pacific Asia (PAS)","Central Asian States (CAS)","Fuel Oil",0.000101655937205203
+"229","Middle East (MEA)","Central Asian States (CAS)","Fuel Oil",0.000128671145192388
+"230","Pacific OECD (PAO)","Belarus, Moldova, Ukraine (UBM)","Fuel Oil",0.000138004060241367
+"231","Latin America (LAM)","Belarus, Moldova, Ukraine (UBM)","Fuel Oil",0.000153278920812393
+"232","North America (NAM)","Pacific Asia (PAS)","Fuel Oil",0.000195570940730892
+"233","Africa (AFR)","Centrally Planned Asia (CPA)","Fuel Oil",0.00029473713
+"234","South Caucasus States (SCS)","Central Asian States (CAS)","Fuel Oil",0.000301013590901463
+"235","North America (NAM)","Middle East (MEA)","Fuel Oil",0.000305255799287464
+"236","Central Asian States (CAS)","Latin America (LAM)","Fuel Oil",0.00037144939684779
+"237","Africa (AFR)","Pacific OECD (PAO)","Fuel Oil",0.00038644137
+"238","Latin America (LAM)","South Asia (SAS)","Fuel Oil",0.00039585583582083
+"239","Centrally Planned Asia (CPA)","Central Asian States (CAS)","Fuel Oil",0.000418385945372806
+"240","Central Asian States (CAS)","Africa (AFR)","Fuel Oil",0.000672625035
+"241","Pacific OECD (PAO)","Middle East (MEA)","Fuel Oil",0.000816639310670519
+"242","South Asia (SAS)","Eastern Europe (EEU)","Fuel Oil",0.00083021243778334
+"243","Africa (AFR)","South Asia (SAS)","Fuel Oil",0.000835043230744817
+"244","South Caucasus States (SCS)","Pacific Asia (PAS)","Fuel Oil",0.000922929067075155
+"245","Eastern Europe (EEU)","Central Asian States (CAS)","Fuel Oil",0.000938586420488052
+"246","Centrally Planned Asia (CPA)","South Caucasus States (SCS)","Fuel Oil",0.00102608271694854
+"247","South Caucasus States (SCS)","Belarus, Moldova, Ukraine (UBM)","Fuel Oil",0.00105995416215814
+"248","Belarus, Moldova, Ukraine (UBM)","Latin America (LAM)","Fuel Oil",0.00110962955407838
+"249","Africa (AFR)","North America (NAM)","Fuel Oil",0.00129265318441534
+"250","South Asia (SAS)","Belarus, Moldova, Ukraine (UBM)","Fuel Oil",0.00129468856017444
+"251","Pacific OECD (PAO)","Africa (AFR)","Fuel Oil",0.00166324030093356
+"252","Belarus, Moldova, Ukraine (UBM)","Middle East (MEA)","Fuel Oil",0.00174570268220861
+"253","Central Asian States (CAS)","South Asia (SAS)","Fuel Oil",0.00176433237
+"254","Belarus, Moldova, Ukraine (UBM)","Central Asian States (CAS)","Fuel Oil",0.00200079222164767
+"255","Belarus, Moldova, Ukraine (UBM)","South Asia (SAS)","Fuel Oil",0.00207222691389307
+"256","Western Europe (WEU)","Central Asian States (CAS)","Fuel Oil",0.0023087012166714
+"257","Latin America (LAM)","Eastern Europe (EEU)","Fuel Oil",0.0025251405622647
+"258","Belarus, Moldova, Ukraine (UBM)","North America (NAM)","Fuel Oil",0.00278411132555602
+"259","Middle East (MEA)","Belarus, Moldova, Ukraine (UBM)","Fuel Oil",0.00319073097905476
+"260","Central Asian States (CAS)","Eastern Europe (EEU)","Fuel Oil",0.00337205114937096
+"261","South Asia (SAS)","North America (NAM)","Fuel Oil",0.00338185980872643
+"262","Eastern Europe (EEU)","Pacific OECD (PAO)","Fuel Oil",0.00338536482882731
+"263","South Caucasus States (SCS)","Middle East (MEA)","Fuel Oil",0.00364362891149094
+"264","Africa (AFR)","Pacific Asia (PAS)","Fuel Oil",0.00386996930871864
+"265","Pacific OECD (PAO)","South Asia (SAS)","Fuel Oil",0.0039313181590406
+"266","Eastern Europe (EEU)","Centrally Planned Asia (CPA)","Fuel Oil",0.00412434927046967
+"267","Belarus, Moldova, Ukraine (UBM)","South Caucasus States (SCS)","Fuel Oil",0.00468166952108959
+"268","North America (NAM)","Eastern Europe (EEU)","Fuel Oil",0.00478091709195055
+"269","Centrally Planned Asia (CPA)","Eastern Europe (EEU)","Fuel Oil",0.00483476772455076
+"270","Pacific Asia (PAS)","North America (NAM)","Fuel Oil",0.00493702331300463
+"271","Pacific OECD (PAO)","North America (NAM)","Fuel Oil",0.00510904270759645
+"272","South Caucasus States (SCS)","South Asia (SAS)","Fuel Oil",0.00529554071391481
+"273","Eastern Europe (EEU)","North America (NAM)","Fuel Oil",0.00555049369932485
+"274","Central Asian States (CAS)","Middle East (MEA)","Fuel Oil",0.00674806109059558
+"275","Eastern Europe (EEU)","South Asia (SAS)","Fuel Oil",0.00703210398818816
+"276","Centrally Planned Asia (CPA)","North America (NAM)","Fuel Oil",0.00703792005160271
+"277","Middle East (MEA)","South Caucasus States (SCS)","Fuel Oil",0.00721263733112525
+"278","Pacific OECD (PAO)","Western Europe (WEU)","Fuel Oil",0.00739660240893822
+"279","Latin America (LAM)","North America (NAM)","Fuel Oil",0.00872916202123863
+"280","Middle East (MEA)","North America (NAM)","Fuel Oil",0.00879462435954887
+"281","Western Europe (WEU)","South Caucasus States (SCS)","Fuel Oil",0.0102428701601385
+"282","South Asia (SAS)","Latin America (LAM)","Fuel Oil",0.0114190222298531
+"283","Eastern Europe (EEU)","Latin America (LAM)","Fuel Oil",0.0116540417569485
+"284","Central Asian States (CAS)","Belarus, Moldova, Ukraine (UBM)","Fuel Oil",0.0117709199001672
+"285","Latin America (LAM)","Pacific OECD (PAO)","Fuel Oil",0.0129102007104489
+"286","Central Asian States (CAS)","North America (NAM)","Fuel Oil",0.0153165555
+"287","Central Asian States (CAS)","Centrally Planned Asia (CPA)","Fuel Oil",0.0154632550704984
+"288","Middle East (MEA)","Eastern Europe (EEU)","Fuel Oil",0.0173948483833067
+"289","Latin America (LAM)","Africa (AFR)","Fuel Oil",0.0181372812409516
+"290","Africa (AFR)","Middle East (MEA)","Fuel Oil",0.020191130997115
+"291","Eastern Europe (EEU)","South Caucasus States (SCS)","Fuel Oil",0.020334266730072
+"292","Africa (AFR)","Latin America (LAM)","Fuel Oil",0.023713721775
+"293","Eastern Europe (EEU)","Africa (AFR)","Fuel Oil",0.0243269732103239
+"294","Western Europe (WEU)","Belarus, Moldova, Ukraine (UBM)","Fuel Oil",0.0247977768281735
+"295","North America (NAM)","Pacific OECD (PAO)","Fuel Oil",0.025079136500122
+"296","Central Asian States (CAS)","South Caucasus States (SCS)","Fuel Oil",0.0264297970932225
+"297","North America (NAM)","Centrally Planned Asia (CPA)","Fuel Oil",0.0271715489753285
+"298","Latin America (LAM)","Middle East (MEA)","Fuel Oil",0.0299733735630549
+"299","Pacific OECD (PAO)","Latin America (LAM)","Fuel Oil",0.0373410985748348
+"300","North America (NAM)","Latin America (LAM)","Fuel Oil",0.0388148517116567
+"301","Pacific Asia (PAS)","Latin America (LAM)","Fuel Oil",0.0421656424346262
+"302","Pacific Asia (PAS)","Africa (AFR)","Fuel Oil",0.0427274612892893
+"303","Eastern Europe (EEU)","Belarus, Moldova, Ukraine (UBM)","Fuel Oil",0.046446126844891
+"304","South Caucasus States (SCS)","Western Europe (WEU)","Fuel Oil",0.0465712996105644
+"305","Pacific Asia (PAS)","Middle East (MEA)","Fuel Oil",0.0540433546001969
+"306","Western Europe (WEU)","South Asia (SAS)","Fuel Oil",0.0562241026618078
+"307","Western Europe (WEU)","Pacific OECD (PAO)","Fuel Oil",0.0581742538806011
+"308","Africa (AFR)","Western Europe (WEU)","Fuel Oil",0.0608248076286293
+"309","North America (NAM)","Western Europe (WEU)","Fuel Oil",0.0780633748035743
+"310","Pacific Asia (PAS)","Western Europe (WEU)","Fuel Oil",0.0792088495821241
+"311","Centrally Planned Asia (CPA)","Middle East (MEA)","Fuel Oil",0.0800268885414403
+"312","Latin America (LAM)","Centrally Planned Asia (CPA)","Fuel Oil",0.0844254565899856
+"313","Belarus, Moldova, Ukraine (UBM)","Eastern Europe (EEU)","Fuel Oil",0.0875752504552954
+"314","Centrally Planned Asia (CPA)","Africa (AFR)","Fuel Oil",0.0898463183748894
+"315","South Asia (SAS)","Pacific OECD (PAO)","Fuel Oil",0.102398441953257
+"316","Western Europe (WEU)","Centrally Planned Asia (CPA)","Fuel Oil",0.111714473018772
+"317","Pacific OECD (PAO)","Centrally Planned Asia (CPA)","Fuel Oil",0.115858148623131
+"318","Eastern Europe (EEU)","Pacific Asia (PAS)","Fuel Oil",0.117679087584808
+"319","Eastern Europe (EEU)","Middle East (MEA)","Fuel Oil",0.131119543158825
+"320","Central Asian States (CAS)","Western Europe (WEU)","Fuel Oil",0.139039282335708
+"321","Middle East (MEA)","Latin America (LAM)","Fuel Oil",0.140729397980793
+"322","Centrally Planned Asia (CPA)","Western Europe (WEU)","Fuel Oil",0.141566688061607
+"323","Centrally Planned Asia (CPA)","South Asia (SAS)","Fuel Oil",0.142663234148375
+"324","South Asia (SAS)","Africa (AFR)","Fuel Oil",0.176479108988077
+"325","Latin America (LAM)","Western Europe (WEU)","Fuel Oil",0.188137680366646
+"326","Pacific OECD (PAO)","Pacific Asia (PAS)","Fuel Oil",0.196718154039752
+"327","Centrally Planned Asia (CPA)","Pacific OECD (PAO)","Fuel Oil",0.201860825406502
+"328","Western Europe (WEU)","North America (NAM)","Fuel Oil",0.205736813436073
+"329","Centrally Planned Asia (CPA)","Latin America (LAM)","Fuel Oil",0.220042432823761
+"330","South Asia (SAS)","Centrally Planned Asia (CPA)","Fuel Oil",0.248676313264524
+"331","Latin America (LAM)","Pacific Asia (PAS)","Fuel Oil",0.307891173598426
+"332","Middle East (MEA)","Centrally Planned Asia (CPA)","Fuel Oil",0.318015930266191
+"333","Western Europe (WEU)","Latin America (LAM)","Fuel Oil",0.359934176360566
+"334","Pacific Asia (PAS)","South Asia (SAS)","Fuel Oil",0.365862980302591
+"335","Belarus, Moldova, Ukraine (UBM)","Western Europe (WEU)","Fuel Oil",0.373943284962951
+"336","Middle East (MEA)","Africa (AFR)","Fuel Oil",0.388389536717497
+"337","Western Europe (WEU)","Eastern Europe (EEU)","Fuel Oil",0.486502011295856
+"338","Western Europe (WEU)","Pacific Asia (PAS)","Fuel Oil",0.49456834312647
+"339","Middle East (MEA)","Pacific OECD (PAO)","Fuel Oil",0.519873917366302
+"340","South Asia (SAS)","Western Europe (WEU)","Fuel Oil",0.548422052416463
+"341","Pacific Asia (PAS)","Pacific OECD (PAO)","Fuel Oil",0.559305843649105
+"342","Eastern Europe (EEU)","Western Europe (WEU)","Fuel Oil",0.570380962735143
+"343","Middle East (MEA)","South Asia (SAS)","Fuel Oil",0.589707507880734
+"344","South Asia (SAS)","Middle East (MEA)","Fuel Oil",0.680985073761153
+"345","South Asia (SAS)","Pacific Asia (PAS)","Fuel Oil",0.697532159967695
+"346","Western Europe (WEU)","Africa (AFR)","Fuel Oil",0.704991989315302
+"347","Pacific Asia (PAS)","Centrally Planned Asia (CPA)","Fuel Oil",0.797593557833912
+"348","Centrally Planned Asia (CPA)","Pacific Asia (PAS)","Fuel Oil",0.947392443130432
+"349","Middle East (MEA)","Pacific Asia (PAS)","Fuel Oil",1.09577889621814
+"350","Middle East (MEA)","Western Europe (WEU)","Fuel Oil",1.31029673165987
+"351","Western Europe (WEU)","Middle East (MEA)","Fuel Oil",1.35286873023112
+"352","North America (NAM)","Pacific OECD (PAO)","LNG",1.1952e-08
+"353","Centrally Planned Asia (CPA)","South Caucasus States (SCS)","LNG",5.76e-08
+"354","Belarus, Moldova, Ukraine (UBM)","Central Asian States (CAS)","LNG",7.056e-08
+"355","Eastern Europe (EEU)","South Caucasus States (SCS)","LNG",7.18972262963938e-08
+"356","Pacific Asia (PAS)","South Caucasus States (SCS)","LNG",1.152e-07
+"357","Pacific Asia (PAS)","North America (NAM)","LNG",1.73952e-07
+"358","Pacific Asia (PAS)","Eastern Europe (EEU)","LNG",3.5808e-07
+"359","Pacific OECD (PAO)","Latin America (LAM)","LNG",4.59696e-07
+"360","Middle East (MEA)","Central Asian States (CAS)","LNG",5.17056e-07
+"361","Centrally Planned Asia (CPA)","Central Asian States (CAS)","LNG",5.2392e-07
+"362","Belarus, Moldova, Ukraine (UBM)","South Caucasus States (SCS)","LNG",8.64e-07
+"363","Pacific OECD (PAO)","Western Europe (WEU)","LNG",9.20592e-07
+"364","South Asia (SAS)","North America (NAM)","LNG",9.23664e-07
+"365","Centrally Planned Asia (CPA)","Belarus, Moldova, Ukraine (UBM)","LNG",1.1581015765002e-06
+"366","Pacific OECD (PAO)","North America (NAM)","LNG",1.52256e-06
+"367","Western Europe (WEU)","South Caucasus States (SCS)","LNG",1.57292325799269e-06
+"368","Eastern Europe (EEU)","Africa (AFR)","LNG",2.019648e-06
+"369","Centrally Planned Asia (CPA)","Eastern Europe (EEU)","LNG",2.07368518011629e-06
+"370","South Asia (SAS)","Middle East (MEA)","LNG",2.34499920099953e-06
+"371","North America (NAM)","Africa (AFR)","LNG",2.76024e-06
+"372","Western Europe (WEU)","Central Asian States (CAS)","LNG",2.80434416512882e-06
+"373","Centrally Planned Asia (CPA)","North America (NAM)","LNG",5.82215425195554e-06
+"374","Pacific OECD (PAO)","Middle East (MEA)","LNG",6.800592e-06
+"375","Middle East (MEA)","North America (NAM)","LNG",1.38393337141462e-05
+"376","Centrally Planned Asia (CPA)","Africa (AFR)","LNG",2.67256424807724e-05
+"377","Centrally Planned Asia (CPA)","Latin America (LAM)","LNG",3.56044632211393e-05
+"378","North America (NAM)","Centrally Planned Asia (CPA)","LNG",4.7345232e-05
+"379","Eastern Europe (EEU)","Latin America (LAM)","LNG",4.943616e-05
+"380","South Asia (SAS)","Western Europe (WEU)","LNG",6.3352272e-05
+"381","Centrally Planned Asia (CPA)","Western Europe (WEU)","LNG",7.11497905785099e-05
+"382","Eastern Europe (EEU)","North America (NAM)","LNG",7.3817808e-05
+"383","South Caucasus States (SCS)","Eastern Europe (EEU)","LNG",8.04528e-05
+"384","Belarus, Moldova, Ukraine (UBM)","Western Europe (WEU)","LNG",0.00024452064
+"385","Centrally Planned Asia (CPA)","Pacific OECD (PAO)","LNG",0.000248337151214856
+"386","South Asia (SAS)","Africa (AFR)","LNG",0.000250412832
+"387","Centrally Planned Asia (CPA)","South Asia (SAS)","LNG",0.000269267343143137
+"388","Centrally Planned Asia (CPA)","Middle East (MEA)","LNG",0.000295501521233266
+"389","Central Asian States (CAS)","South Caucasus States (SCS)","LNG",0.000587509108335595
+"390","North America (NAM)","Western Europe (WEU)","LNG",0.000797467064570818
+"391","Middle East (MEA)","Eastern Europe (EEU)","LNG",0.00122546482397366
+"392","South Caucasus States (SCS)","Middle East (MEA)","LNG",0.0013051344
+"393","Pacific Asia (PAS)","Africa (AFR)","LNG",0.001590068832
+"394","Pacific OECD (PAO)","Africa (AFR)","LNG",0.001645741248
+"395","Eastern Europe (EEU)","Middle East (MEA)","LNG",0.00228407278044434
+"396","South Asia (SAS)","Centrally Planned Asia (CPA)","LNG",0.00246128448
+"397","South Caucasus States (SCS)","South Asia (SAS)","LNG",0.00268719936
+"398","Western Europe (WEU)","Pacific Asia (PAS)","LNG",0.00319250825378222
+"399","Pacific Asia (PAS)","Western Europe (WEU)","LNG",0.003844165968
+"400","Latin America (LAM)","Middle East (MEA)","LNG",0.00601896611268852
+"401","Middle East (MEA)","Pacific OECD (PAO)","LNG",0.006109166832
+"402","Pacific Asia (PAS)","Middle East (MEA)","LNG",0.00620067146233894
+"403","Western Europe (WEU)","Africa (AFR)","LNG",0.00748338608671331
+"404","Latin America (LAM)","Africa (AFR)","LNG",0.00772393569419821
+"405","Western Europe (WEU)","Pacific OECD (PAO)","LNG",0.00802696762917393
+"406","Western Europe (WEU)","North America (NAM)","LNG",0.00802982508014371
+"407","Africa (AFR)","Pacific OECD (PAO)","LNG",0.008472859872
+"408","Pacific Asia (PAS)","Latin America (LAM)","LNG",0.0111088777966806
+"409","Middle East (MEA)","Africa (AFR)","LNG",0.0126056638876577
+"410","Centrally Planned Asia (CPA)","Pacific Asia (PAS)","LNG",0.0152423783861332
+"411","Central Asian States (CAS)","Middle East (MEA)","LNG",0.016952274048
+"412","Latin America (LAM)","Pacific Asia (PAS)","LNG",0.02253245616
+"413","Western Europe (WEU)","Latin America (LAM)","LNG",0.023233542547691
+"414","Latin America (LAM)","Centrally Planned Asia (CPA)","LNG",0.0233623955244303
+"415","Eastern Europe (EEU)","Western Europe (WEU)","LNG",0.0234764177578069
+"416","Latin America (LAM)","Pacific OECD (PAO)","LNG",0.0245271133733419
+"417","Central Asian States (CAS)","Eastern Europe (EEU)","LNG",0.0248395261431718
+"418","Latin America (LAM)","North America (NAM)","LNG",0.0282692352
+"419","Central Asian States (CAS)","South Asia (SAS)","LNG",0.028711675152
+"420","Latin America (LAM)","South Asia (SAS)","LNG",0.029070408
+"421","Belarus, Moldova, Ukraine (UBM)","Eastern Europe (EEU)","LNG",0.0296982290435548
+"422","Western Europe (WEU)","Centrally Planned Asia (CPA)","LNG",0.0361529888211189
+"423","Central Asian States (CAS)","Western Europe (WEU)","LNG",0.0380665097566294
+"424","Pacific Asia (PAS)","South Asia (SAS)","LNG",0.0485227381767989
+"425","Middle East (MEA)","South Caucasus States (SCS)","LNG",0.053165817168
+"426","North America (NAM)","Latin America (LAM)","LNG",0.05654450723646
+"427","Western Europe (WEU)","South Asia (SAS)","LNG",0.0583999334727479
+"428","Africa (AFR)","Middle East (MEA)","LNG",0.0648753440461737
+"429","Eastern Europe (EEU)","Belarus, Moldova, Ukraine (UBM)","LNG",0.0704798302880915
+"430","Africa (AFR)","Pacific Asia (PAS)","LNG",0.0728334652358851
+"431","Pacific OECD (PAO)","South Asia (SAS)","LNG",0.073907516448
+"432","Middle East (MEA)","Latin America (LAM)","LNG",0.0772499258247201
+"433","Central Asian States (CAS)","Belarus, Moldova, Ukraine (UBM)","LNG",0.0974974434033767
+"434","Western Europe (WEU)","Eastern Europe (EEU)","LNG",0.12847408246947
+"435","Pacific OECD (PAO)","Pacific Asia (PAS)","LNG",0.155450922587982
+"436","Africa (AFR)","Latin America (LAM)","LNG",0.158350240989288
+"437","Western Europe (WEU)","Middle East (MEA)","LNG",0.159324361835882
+"438","Africa (AFR)","Centrally Planned Asia (CPA)","LNG",0.174524937871285
+"439","South Caucasus States (SCS)","Western Europe (WEU)","LNG",0.20513712
+"440","Latin America (LAM)","Western Europe (WEU)","LNG",0.206517802315052
+"441","Western Europe (WEU)","Belarus, Moldova, Ukraine (UBM)","LNG",0.278949420893594
+"442","Africa (AFR)","South Asia (SAS)","LNG",0.290020531447853
+"443","Africa (AFR)","Western Europe (WEU)","LNG",0.349360645069241
+"444","Middle East (MEA)","Pacific Asia (PAS)","LNG",0.363422581959861
+"445","Pacific Asia (PAS)","Centrally Planned Asia (CPA)","LNG",0.826944790739595
+"446","Pacific Asia (PAS)","Pacific OECD (PAO)","LNG",1.01204630464771
+"447","Middle East (MEA)","Centrally Planned Asia (CPA)","LNG",1.13851686354532
+"448","Pacific OECD (PAO)","Centrally Planned Asia (CPA)","LNG",1.13962682727195
+"449","Middle East (MEA)","South Asia (SAS)","LNG",1.42761843871039
+"450","Central Asian States (CAS)","Centrally Planned Asia (CPA)","LNG",1.5255067514972
+"451","Middle East (MEA)","Western Europe (WEU)","LNG",2.31878320328498
