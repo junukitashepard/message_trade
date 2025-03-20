@@ -8,8 +8,9 @@ Run trade diagnostics
 ################
 repo = '/Users/junshepard/Documents/GitHub/message_trade'
 
-smip_scenarios = {'SSP1_baseline': ['SSP1_v2.3_baseline',
-                                    'MsgOutput_SSP_SSP1_v2.3_baseline.gdx']}
+smip_scenarios = {'SSP1_baseline': {'model': 'SSP_SSP1_v2.3.1',
+                                    'scenario': 'baseline',
+                                    'gdx_file': 'MsgOutput_SSP_SSP1_v2.3_baseline.gdx'}}
 
 import_from_gdx = False # If true, will draw on GDX files saved to a local directory. If False, will connect to ixmp-dev and use Reporting
 
@@ -25,9 +26,7 @@ import csv
 import os
 
 # Import MESSAGEix packages
-from message_ix import Scenario
-from message_ix import Reporter
-from ixmp import Platform
+import message_ix
 import ixmp
 
 # Import helper packages
@@ -44,6 +43,14 @@ from import_trade_gdx import *
 cwd = repo + '/data/crosswalks/'
 gdxd = repo + '/data/gdx/'
 iead = repo + '/data/IEA/WEB/'
+
+## FUNCTION: Import scenario using Reporter and parse imports/exports
+scenario = 'SSP1_baseline'
+model_name = smip_scenarios[scenario]['model']
+scenario_name = smip_scenarios[scenario]['scenario']
+
+mp = ixmp.Platform()
+scen = message_ix.Scenario(mp, model_name, scenario_name)
 
 # Import MESSAGE exports and imports
 exports = dict(); imports = dict()
